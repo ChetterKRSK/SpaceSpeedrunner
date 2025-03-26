@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var planet: StaticBody2D = $"../Planet"
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var camera: Camera2D = $"../PlanetCamera"
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
@@ -13,19 +14,19 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept") and is_on_wall():
 		velocity += JUMP_VELOCITY * position.direction_to(planet.position)
-
-	var direction := Input.get_axis("ui_left", "ui_right")
+	
+	var direction := Input.get_axis("Move_Left", "Move_Right")
 	if direction and is_on_wall():
 		if direction > 0:
 			anim.flip_h = false
 		elif direction < 0:
 			anim.flip_h = true
 		anim.play("run")
-		velocity = right_direction(position.direction_to(planet.position)) * SPEED * direction
+		velocity = velocity.lerp(right_direction(position.direction_to(planet.position)) * SPEED * direction, 0.1)
 	
 	if !direction and is_on_wall():
 		anim.play("idle")
-		velocity = velocity.move_toward(Vector2(), 20)
+		velocity = velocity.lerp(Vector2(), 0.2)
 	
 	move_and_slide()
 

@@ -1,0 +1,296 @@
+[gd_scene load_steps=20 format=3 uid="uid://cjoafyepp6opj"]
+
+[ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
+[ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
+[ext_resource type="Texture2D" uid="uid://cg8d6scweyojp" path="res://assets/Sprites/Planet2.png" id="2_vdwas"]
+[ext_resource type="Texture2D" uid="uid://ck5wuiqdc7snw" path="res://assets/Sprites/Planet3.png" id="3_2aj80"]
+[ext_resource type="Texture2D" uid="uid://yq0luvem7lf" path="res://assets/Sprites/Planet4.png" id="4_ftf7w"]
+[ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
+[ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
+
+[sub_resource type="Curve2D" id="Curve2D_7l8cf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, -825, 1500, 0, 825, 0, -825, 0, 0, -1500, 0, -825, 0, 825, -1500, 0, -825, 0, 825, 0, 0, 1500, 0, 825, 0, 0, 1500, 0)
+}
+point_count = 5
+
+[sub_resource type="GDScript" id="GDScript_oqr1i"]
+script/source = "@tool
+extends Path2D
+
+@export var line: Line2D
+
+@export var update_curve_at_runtime: bool = false
+@export var orbitRadius: float = 10
+@export var line_width: float = 10
+
+@export_tool_button(\"Обновить орбиту\") var updateButton: Callable = updateButtonEvent
+
+func _ready():
+	if Engine.is_editor_hint():
+		if line == null:
+			line = Line2D.new()
+			set_line_defaults()
+			line.points= curve.tessellate()
+			lock_node(line)
+			add_child(line)
+			line.owner=owner
+
+	if Engine.is_editor_hint() or update_curve_at_runtime:
+		if not curve.changed.is_connected(curve_changed):
+			curve.changed.connect(curve_changed)
+
+func _enter_tree():
+	if Engine.is_editor_hint() or update_curve_at_runtime:
+		if not curve.changed.is_connected(curve_changed):
+			curve.changed.connect(curve_changed)
+
+func _exit_tree():
+	if curve.changed.is_connected(curve_changed):
+		curve.changed.disconnect(curve_changed)
+
+func curve_changed():
+	line.points=curve.tessellate()
+	line.width = line_width
+
+func lock_node(node:Node):
+	node.set_meta(\"_edit_lock_\", true);
+
+func set_line_defaults():
+	line.begin_cap_mode= Line2D.LINE_CAP_ROUND
+	line.joint_mode=Line2D.LINE_JOINT_ROUND
+	line.width = line_width
+	line.width_curve = null
+	line.name = name+\"_line\"
+
+func make_default_curve():
+	var retval = Curve.new()
+	retval.min_value = 0
+	retval.max_value = 1
+	retval.add_point(Vector2(0,1))
+	retval.add_point(Vector2(1,0))
+
+	return retval
+
+
+func updateButtonEvent():
+	line.width = line_width
+	
+	curve.clear_points()
+	var orbitSmooth = orbitRadius / (20./11)
+	curve.add_point(Vector2(orbitRadius, 0), Vector2(), Vector2(0, -orbitSmooth))
+	curve.add_point(Vector2(0, -orbitRadius), Vector2(orbitSmooth, 0), Vector2(-orbitSmooth, 0))
+	curve.add_point(Vector2(-orbitRadius, 0), Vector2(0, -orbitSmooth), Vector2(0, orbitSmooth))
+	curve.add_point(Vector2(0, orbitRadius), Vector2(-orbitSmooth, 0), Vector2(orbitSmooth, 0))
+	curve.add_point(Vector2(orbitRadius, 0), Vector2(0, orbitSmooth), Vector2())
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7l8cf"]
+radius = 128.0
+
+[sub_resource type="Curve2D" id="Curve2D_oqr1i"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, -1375, 2500, 0, 1375, 0, -1375, 0, 0, -2500, 0, -1375, 0, 1375, -2500, 0, -1375, 0, 1375, 0, 0, 2500, 0, 1375, 0, 0, 2500, 0)
+}
+point_count = 5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tp0y7"]
+radius = 160.0
+
+[sub_resource type="Curve2D" id="Curve2D_tp0y7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, -1925, 3500, 0, 1925, 0, -1925, 0, 0, -3500, 0, -1925, 0, 1925, -3500, 0, -1925, 0, 1925, 0, 0, 3500, 0, 1925, 59.1484, -737.683, 3500, 0)
+}
+point_count = 5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c3h2c"]
+radius = 224.0
+
+[sub_resource type="Curve2D" id="Curve2D_c3h2c"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, -2475, 4500, 0, 2475, 0, -2475, 0, 0, -4500, 0, -2475, 0, 2475, -4500, 0, -2475, 0, 2475, 0, 0, 4500, 0, 2475, 0, 0, 4500, 0)
+}
+point_count = 5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mv7c2"]
+radius = 168.0
+
+[sub_resource type="Curve2D" id="Curve2D_mv7c2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, -3025, 5500, 0, 3025, 0, -3025, 0, 0, -5500, 0, -3025, 0, 3025, -5500, 0, -3025, 0, 3025, 0, 0, 5500, 0, 3025, 0, 0, 5500, 0)
+}
+point_count = 5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yqr88"]
+radius = 192.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oqr1i"]
+radius = 640.0
+
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("planetPaths")]
+script = ExtResource("1_vdwas")
+planetPaths = [NodePath("Planet1_Orbit/PathFollow2D"), NodePath("Planet2_Orbit/PathFollow2D"), NodePath("Planet3_Orbit/PathFollow2D"), NodePath("Planet4_Orbit/PathFollow2D"), NodePath("Planet5_Orbit/PathFollow2D")]
+planetOrbitSpeed = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
+
+[node name="Camera" type="Camera2D" parent="."]
+ignore_rotation = false
+zoom = Vector2(0.08, 0.08)
+
+[node name="Planet1_Orbit" type="Path2D" parent="." node_paths=PackedStringArray("line")]
+curve = SubResource("Curve2D_7l8cf")
+script = SubResource("GDScript_oqr1i")
+line = NodePath("Planet1_Orbit_line")
+orbitRadius = 1500.0
+line_width = 30.0
+
+[node name="Planet1_Orbit_line" type="Line2D" parent="Planet1_Orbit"]
+points = PackedVector2Array(1500, 0, 1492.22, -152.802, 1469.38, -301.318, 1432.27, -444.781, 1381.64, -582.422, 1318.27, -713.47, 1242.92, -837.158, 1156.37, -952.716, 1059.38, -1059.38, 952.716, -1156.37, 837.158, -1242.92, 713.47, -1318.27, 582.422, -1381.64, 444.781, -1432.27, 301.318, -1469.38, 152.802, -1492.22, 0, -1500, -152.802, -1492.22, -301.318, -1469.38, -444.781, -1432.27, -582.422, -1381.64, -713.47, -1318.27, -837.158, -1242.92, -952.716, -1156.37, -1059.38, -1059.38, -1156.37, -952.716, -1242.92, -837.158, -1318.27, -713.47, -1381.64, -582.422, -1432.27, -444.781, -1469.38, -301.318, -1492.22, -152.802, -1500, 0, -1492.22, 152.802, -1469.38, 301.318, -1432.27, 444.781, -1381.64, 582.422, -1318.27, 713.47, -1242.92, 837.158, -1156.37, 952.716, -1059.38, 1059.38, -952.716, 1156.37, -837.158, 1242.92, -713.47, 1318.27, -582.422, 1381.64, -444.781, 1432.27, -301.318, 1469.38, -152.802, 1492.22, 0, 1500, 152.802, 1492.22, 301.318, 1469.38, 444.781, 1432.27, 582.422, 1381.64, 713.47, 1318.27, 837.158, 1242.92, 952.716, 1156.37, 1059.38, 1059.38, 1156.37, 952.716, 1242.92, 837.158, 1318.27, 713.47, 1381.64, 582.422, 1432.27, 444.781, 1469.38, 301.318, 1492.22, 152.802, 1500, 0)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Planet1_Orbit"]
+position = Vector2(1500, 0)
+rotation = -1.5708
+rotates = false
+
+[node name="Planet1" type="StaticBody2D" parent="Planet1_Orbit/PathFollow2D"]
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Planet1_Orbit/PathFollow2D/Planet1"]
+texture = ExtResource("1_ijlju")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Planet1_Orbit/PathFollow2D/Planet1"]
+shape = SubResource("CircleShape2D_7l8cf")
+
+[node name="Planet2_Orbit" type="Path2D" parent="." node_paths=PackedStringArray("line")]
+curve = SubResource("Curve2D_oqr1i")
+script = SubResource("GDScript_oqr1i")
+line = NodePath("Planet2_Orbit_line")
+orbitRadius = 2500.0
+line_width = 35.0
+
+[node name="Planet2_Orbit_line" type="Line2D" parent="Planet2_Orbit"]
+points = PackedVector2Array(2500, 0, 2487.03, -254.669, 2448.97, -502.197, 2387.12, -741.302, 2302.73, -970.703, 2197.11, -1189.12, 2071.53, -1395.26, 1927.28, -1587.86, 1765.63, -1765.63, 1587.86, -1927.28, 1395.26, -2071.53, 1189.12, -2197.11, 970.703, -2302.73, 741.302, -2387.12, 502.197, -2448.97, 254.669, -2487.03, 0, -2500, -254.669, -2487.03, -502.197, -2448.97, -741.302, -2387.12, -970.703, -2302.73, -1189.12, -2197.11, -1395.26, -2071.53, -1587.86, -1927.28, -1765.63, -1765.63, -1927.28, -1587.86, -2071.53, -1395.26, -2197.11, -1189.12, -2302.73, -970.703, -2387.12, -741.302, -2448.97, -502.197, -2487.03, -254.669, -2500, 0, -2487.03, 254.669, -2448.97, 502.197, -2387.12, 741.302, -2302.73, 970.703, -2197.11, 1189.12, -2071.53, 1395.26, -1927.28, 1587.86, -1765.63, 1765.63, -1587.86, 1927.28, -1395.26, 2071.53, -1189.12, 2197.11, -970.703, 2302.73, -741.302, 2387.12, -502.197, 2448.97, -254.669, 2487.03, 0, 2500, 254.669, 2487.03, 502.197, 2448.97, 741.302, 2387.12, 970.703, 2302.73, 1189.12, 2197.11, 1395.26, 2071.53, 1587.86, 1927.28, 1765.63, 1765.63, 1927.28, 1587.86, 2071.53, 1395.26, 2197.11, 1189.12, 2302.73, 970.703, 2387.12, 741.302, 2448.97, 502.197, 2487.03, 254.669, 2500, 0)
+width = 35.0
+joint_mode = 2
+begin_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Planet2_Orbit"]
+position = Vector2(2500, 0)
+rotation = -1.5708
+rotates = false
+
+[node name="Planet2" type="StaticBody2D" parent="Planet2_Orbit/PathFollow2D"]
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Planet2_Orbit/PathFollow2D/Planet2"]
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_vdwas")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Planet2_Orbit/PathFollow2D/Planet2"]
+shape = SubResource("CircleShape2D_tp0y7")
+
+[node name="Planet3_Orbit" type="Path2D" parent="." node_paths=PackedStringArray("line")]
+curve = SubResource("Curve2D_tp0y7")
+script = SubResource("GDScript_oqr1i")
+line = NodePath("Planet3_Orbit_line")
+orbitRadius = 3500.0
+line_width = 30.0
+
+[node name="Planet3_Orbit_line" type="Line2D" parent="Planet3_Orbit"]
+points = PackedVector2Array(3500, 0, 3481.84, -356.537, 3428.56, -703.076, 3341.96, -1037.82, 3223.83, -1358.98, 3075.96, -1664.76, 2900.15, -1953.37, 2698.19, -2223, 2471.88, -2471.88, 2223, -2698.19, 1953.37, -2900.15, 1664.76, -3075.96, 1358.98, -3223.83, 1037.82, -3341.96, 703.076, -3428.56, 356.537, -3481.84, 0, -3500, -356.537, -3481.84, -703.076, -3428.56, -1037.82, -3341.96, -1358.98, -3223.83, -1664.76, -3075.96, -1953.37, -2900.15, -2223, -2698.19, -2471.88, -2471.88, -2698.19, -2223, -2900.15, -1953.37, -3075.96, -1664.76, -3223.83, -1358.98, -3341.96, -1037.82, -3428.56, -703.076, -3481.84, -356.537, -3500, 0, -3481.84, 356.537, -3428.56, 703.076, -3341.96, 1037.82, -3223.83, 1358.98, -3075.96, 1664.76, -2900.15, 1953.37, -2698.19, 2223, -2471.88, 2471.88, -2223, 2698.19, -1953.37, 2900.15, -1664.76, 3075.96, -1358.98, 3223.83, -1037.82, 3341.96, -703.076, 3428.56, -356.537, 3481.84, 0, 3500, 356.537, 3481.84, 703.076, 3428.56, 1037.82, 3341.96, 1358.98, 3223.83, 1664.76, 3075.96, 1953.37, 2900.15, 2223, 2698.19, 2471.88, 2471.88, 2698.19, 2223, 2900.15, 1953.37, 3075.96, 1664.76, 3223.83, 1358.98, 3341.96, 1037.82, 3428.56, 703.076, 3481.84, 356.537, 3500, 0)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Planet3_Orbit"]
+position = Vector2(3500, 0)
+rotation = -1.5708
+rotates = false
+
+[node name="Planet3" type="StaticBody2D" parent="Planet3_Orbit/PathFollow2D"]
+position = Vector2(-1.74841e-07, 4)
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Planet3_Orbit/PathFollow2D/Planet3"]
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("3_2aj80")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Planet3_Orbit/PathFollow2D/Planet3"]
+shape = SubResource("CircleShape2D_c3h2c")
+
+[node name="Planet4_Orbit" type="Path2D" parent="." node_paths=PackedStringArray("line")]
+curve = SubResource("Curve2D_c3h2c")
+script = SubResource("GDScript_oqr1i")
+line = NodePath("Planet4_Orbit_line")
+orbitRadius = 4500.0
+line_width = 30.0
+
+[node name="Planet4_Orbit_line" type="Line2D" parent="Planet4_Orbit"]
+points = PackedVector2Array(4500, 0, 4476.65, -458.405, 4408.15, -903.955, 4296.81, -1334.34, 4144.92, -1747.27, 3954.8, -2140.41, 3728.76, -2511.47, 3469.1, -2858.15, 3178.13, -3178.13, 2858.15, -3469.1, 2511.47, -3728.76, 2140.41, -3954.8, 1747.27, -4144.92, 1334.34, -4296.81, 903.955, -4408.15, 458.405, -4476.65, 0, -4500, -458.405, -4476.65, -903.955, -4408.15, -1334.34, -4296.81, -1747.27, -4144.92, -2140.41, -3954.8, -2511.47, -3728.76, -2858.15, -3469.1, -3178.13, -3178.13, -3469.1, -2858.15, -3728.76, -2511.47, -3954.8, -2140.41, -4144.92, -1747.27, -4296.81, -1334.34, -4408.15, -903.955, -4476.65, -458.405, -4500, 0, -4476.65, 458.405, -4408.15, 903.955, -4296.81, 1334.34, -4144.92, 1747.27, -3954.8, 2140.41, -3728.76, 2511.47, -3469.1, 2858.15, -3178.13, 3178.13, -2858.15, 3469.1, -2511.47, 3728.76, -2140.41, 3954.8, -1747.27, 4144.92, -1334.34, 4296.81, -903.955, 4408.15, -458.405, 4476.65, 0, 4500, 458.405, 4476.65, 903.955, 4408.15, 1334.34, 4296.81, 1747.27, 4144.92, 2140.41, 3954.8, 2511.47, 3728.76, 2858.15, 3469.1, 3178.13, 3178.13, 3469.1, 2858.15, 3728.76, 2511.47, 3954.8, 2140.41, 4144.92, 1747.27, 4296.81, 1334.34, 4408.15, 903.955, 4476.65, 458.405, 4500, 0)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Planet4_Orbit"]
+position = Vector2(4500, 0)
+rotation = -1.5708
+rotates = false
+
+[node name="Planet4" type="StaticBody2D" parent="Planet4_Orbit/PathFollow2D"]
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Planet4_Orbit/PathFollow2D/Planet4"]
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("4_ftf7w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Planet4_Orbit/PathFollow2D/Planet4"]
+shape = SubResource("CircleShape2D_mv7c2")
+
+[node name="Planet5_Orbit" type="Path2D" parent="." node_paths=PackedStringArray("line")]
+curve = SubResource("Curve2D_mv7c2")
+script = SubResource("GDScript_oqr1i")
+line = NodePath("Planet5_Orbit_line")
+orbitRadius = 5500.0
+line_width = 30.0
+
+[node name="Planet5_Orbit_line" type="Line2D" parent="Planet5_Orbit"]
+points = PackedVector2Array(5500, 0, 5471.47, -560.272, 5387.74, -1104.83, 5251.65, -1630.87, 5066.02, -2135.55, 4833.65, -2616.06, 4557.37, -3069.58, 4240.01, -3493.29, 3884.38, -3884.38, 3493.29, -4240.01, 3069.58, -4557.37, 2616.06, -4833.65, 2135.55, -5066.02, 1630.87, -5251.65, 1104.83, -5387.74, 560.272, -5471.47, 0, -5500, -560.272, -5471.47, -1104.83, -5387.74, -1630.87, -5251.65, -2135.55, -5066.02, -2616.06, -4833.65, -3069.58, -4557.37, -3493.29, -4240.01, -3884.38, -3884.38, -4240.01, -3493.29, -4557.37, -3069.58, -4833.65, -2616.06, -5066.02, -2135.55, -5251.65, -1630.87, -5387.74, -1104.83, -5471.47, -560.272, -5500, 0, -5471.47, 560.272, -5387.74, 1104.83, -5251.65, 1630.87, -5066.02, 2135.55, -4833.65, 2616.06, -4557.37, 3069.58, -4240.01, 3493.29, -3884.38, 3884.38, -3493.29, 4240.01, -3069.58, 4557.37, -2616.06, 4833.65, -2135.55, 5066.02, -1630.87, 5251.65, -1104.83, 5387.74, -560.272, 5471.47, 0, 5500, 560.272, 5471.47, 1104.83, 5387.74, 1630.87, 5251.65, 2135.55, 5066.02, 2616.06, 4833.65, 3069.58, 4557.37, 3493.29, 4240.01, 3884.38, 3884.38, 4240.01, 3493.29, 4557.37, 3069.58, 4833.65, 2616.06, 5066.02, 2135.55, 5251.65, 1630.87, 5387.74, 1104.83, 5471.47, 560.272, 5500, 0)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Planet5_Orbit"]
+position = Vector2(5500, 0)
+rotation = -1.5708
+rotates = false
+
+[node name="Planet5" type="StaticBody2D" parent="Planet5_Orbit/PathFollow2D"]
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="Planet5_Orbit/PathFollow2D/Planet5"]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_w4qqe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Planet5_Orbit/PathFollow2D/Planet5"]
+shape = SubResource("CircleShape2D_yqr88")
+
+[node name="Star" type="StaticBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Star"]
+scale = Vector2(5, 5)
+texture = ExtResource("6_d4m0j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Star"]
+shape = SubResource("CircleShape2D_oqr1i")
+
+[node name="MouseCursor" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(-11904, -6656)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ijlju")
