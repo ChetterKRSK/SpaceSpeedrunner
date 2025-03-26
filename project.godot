@@ -14,7 +14,7 @@ config/name="SpaceSpeedrunners"
 run/main_scene="uid://b8pcc0jysh0rb"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
-config/git_sha="f343aac3d29957800956863f8c3e48dad29dd675"
+config/git_sha="2f9944ec63da16e2f06949b0e2cb4badbe61dd47"
 
 [display]
 

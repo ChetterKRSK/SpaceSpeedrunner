@@ -3,7 +3,6 @@ extends Node2D
 @export var planetPaths: Array[PathFollow2D]
 @export var planetOrbitSpeed: Array[float]
 
-@onready var a: PathFollow2D = $Planet1_Orbit/PathFollow2D
 @onready var mouseCursor: Sprite2D = $MouseCursor
 
 var planetOrbitDistances: Array[float]
