@@ -1,13 +1,13 @@
-[gd_scene load_steps=22 format=3 uid="uid://b0x017ss6meho"]
+[gd_scene load_steps=22 format=3 uid="uid://cjoafyepp6opj"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
-[ext_resource type="Texture2D" uid="uid://e8f4ya12ohp" path="res://assets/Sprites/SpaceBG1.jpg" id="2_2aj80"]
 [ext_resource type="Texture2D" uid="uid://cg8d6scweyojp" path="res://assets/Sprites/Planet2.png" id="2_vdwas"]
 [ext_resource type="Texture2D" uid="uid://ck5wuiqdc7snw" path="res://assets/Sprites/Planet3.png" id="3_2aj80"]
 [ext_resource type="Texture2D" uid="uid://yq0luvem7lf" path="res://assets/Sprites/Planet4.png" id="4_ftf7w"]
 [ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
+[ext_resource type="Texture2D" uid="uid://e8f4ya12ohp" path="res://assets/Sprites/SpaceBG1.jpg" id="8_2aj80"]
 [ext_resource type="Texture2D" uid="uid://d1mitx1fwe68h" path="res://assets/Sprites/Cursor.png" id="9_ftf7w"]
 
 [sub_resource type="Curve2D" id="Curve2D_vdwas"]
@@ -70,10 +70,7 @@ func make_default_curve():
 
 	return retval
 
-
-func updateButtonEvent():
-	line.width = line_width
-	
+func set_calculated_curve():
 	curve.clear_points()
 	var orbitSmooth = orbitRadius / (20./11)
 	curve.add_point(Vector2(orbitRadius, 0), Vector2(), Vector2(0, -orbitSmooth))
@@ -81,6 +78,11 @@ func updateButtonEvent():
 	curve.add_point(Vector2(-orbitRadius, 0), Vector2(0, -orbitSmooth), Vector2(0, orbitSmooth))
 	curve.add_point(Vector2(0, orbitRadius), Vector2(-orbitSmooth, 0), Vector2(orbitSmooth, 0))
 	curve.add_point(Vector2(orbitRadius, 0), Vector2(0, orbitSmooth), Vector2())
+	
+
+func updateButtonEvent():
+	line.width = line_width
+	set_calculated_curve()
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2aj80"]
@@ -130,11 +132,13 @@ script = ExtResource("1_vdwas")
 planetPaths = [NodePath("MainObjectsSystem/PlanetOrbit1/PathFollow2D"), NodePath("MainObjectsSystem/PlanetOrbit2/PathFollow2D"), NodePath("MainObjectsSystem/PlanetOrbit3/PathFollow2D"), NodePath("MainObjectsSystem/PlanetOrbit4/PathFollow2D"), NodePath("MainObjectsSystem/PlanetOrbit5/PathFollow2D")]
 planetOrbitSpeed = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 
+[node name="Manager" type="Node2D" parent="."]
+
 [node name="MainObjectsSystem" type="Node2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem"]
-scale = Vector2(6.27685, 6.27685)
-texture = ExtResource("2_2aj80")
+[node name="BG" type="Sprite2D" parent="MainObjectsSystem"]
+scale = Vector2(6.37593, 6.37593)
+texture = ExtResource("8_2aj80")
 
 [node name="PlanetOrbit1" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_vdwas")
@@ -286,9 +290,8 @@ texture = ExtResource("6_d4m0j")
 shape = SubResource("CircleShape2D_oqr1i")
 
 [node name="MouseCursor" type="Sprite2D" parent="."]
-self_modulate = Color(1, 0, 0, 1)
-position = Vector2(-11904, -6656)
-scale = Vector2(0.5, 0.5)
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-12000, -6650)
 texture = ExtResource("9_ftf7w")
 
 [node name="MainCamera" type="Camera2D" parent="."]
@@ -298,3 +301,10 @@ limit_left = -12000
 limit_top = -6750
 limit_right = 12000
 limit_bottom = 6750
+limit_smoothed = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2(-12000, -6750)
+points = PackedVector2Array(0, -5, 24005, -5, 24005, 13506)

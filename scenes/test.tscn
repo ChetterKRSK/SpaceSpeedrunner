@@ -1,7 +1,6 @@
-[gd_scene load_steps=36 format=3 uid="uid://b8pcc0jysh0rb"]
+[gd_scene load_steps=35 format=3 uid="uid://b8pcc0jysh0rb"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_errlg"]
-[ext_resource type="Script" uid="uid://d27ja620w0k8r" path="res://scenes/planet.gd" id="1_lpvoh"]
 [ext_resource type="Script" uid="uid://c2qh6qk63qy86" path="res://scenes/player.gd" id="2_74lek"]
 [ext_resource type="Texture2D" uid="uid://dqaqxhfnpl8ah" path="res://assets/FREE_Samurai 2D Pixel Art v1.2/IDLE.png" id="2_bl13t"]
 [ext_resource type="Texture2D" uid="uid://ouydfohjyalt" path="res://assets/FREE_Samurai 2D Pixel Art v1.2/RUN.png" id="3_iyx0m"]
@@ -220,7 +219,6 @@ zoom = Vector2(2, 2)
 [node name="Planet" type="StaticBody2D" parent="."]
 collision_layer = 2
 collision_mask = 7
-script = ExtResource("1_lpvoh")
 
 [node name="Sprite2D" type="Sprite2D" parent="Planet"]
 texture = ExtResource("1_errlg")
