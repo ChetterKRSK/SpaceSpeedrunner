@@ -8,22 +8,21 @@ enum GAME_STATES{
 }
 var GAME_STATE = GAME_STATES.ON_STAR_MAP
 
-@export var planetPaths: Array[PathFollow2D]
-@export var planetOrbitSpeed: Array[float]
-
 @onready var mouseCursor: Sprite2D = $MouseCursor
 @onready var mainCamera: Camera2D = $MainCamera
 
+@export var planetPaths: Array[PathFollow2D]
+@export var planetOrbitSpeed: Array[float]
+
 var cameraZoomLimit: Array[float] = [0.08, 2]
-var cameraZoomStep: float = 1.5
+var mouseCursorScale: Array[float] = [0.05, 1]
+var cameraZoomStep: float = 1.15
 var planetOrbitDistances: Array[float]
 var lastSelectedOrbit = 0
 var lastMousePosition: Vector2
 
-#var tween: Tween
 
 func _ready() -> void:
-	#mainCamera.zoom = Vector2(1, 1)
 	for path: PathFollow2D in planetPaths:
 		path.progress_ratio = randf_range(0, 1)
 		planetOrbitDistances.append(path.get_parent().curve.get_point_position(0).distance_to(Vector2()))
@@ -37,7 +36,7 @@ func _process(delta: float) -> void:
 	for i in range(planetPaths.size()):
 		planetPaths[i].progress_ratio += planetOrbitSpeed[i] * delta
 	
-	cameraMoving()
+	cameraMovingZooming()
 
 func _input(event) -> void:
 	movingOrbitCursorOnMap(event)
@@ -51,25 +50,38 @@ func movingOrbitCursorOnMap(event):
 			if mouseDistance - distance > -250 and mouseDistance - distance < 250:
 				lastSelectedOrbit = planetOrbitDistances.find(distance)
 	
-func cameraMoving():
+func cameraMovingZooming():
 	if Input.is_action_just_pressed("Zoom_In_Map") or Input.is_action_pressed("Zoom_In_Map"):
+		print(mainCamera.get_viewport_transform())
 		if mainCamera.zoom.x < cameraZoomLimit[1] / cameraZoomStep:
-			var tween = get_tree().create_tween()
-			tween.tween_property(mainCamera, "zoom", mainCamera.zoom * cameraZoomStep, 0.5)
+			var lastPos = get_global_mouse_position()
+			mainCamera.zoom *= cameraZoomStep
+			mainCamera.position += (lastPos - get_global_mouse_position())
+			#tween.parallel().tween_property(mainCamera, "position", mainCamera.position + (get_global_mouse_position() - a), 0.5)
+			#tween.parallel().tween_property(mainCamera, "zoom", mainCamera.zoom * cameraZoomStep, 0.5)
 		else:
-			var tween = get_tree().create_tween()
-			tween.tween_property(mainCamera, "zoom", Vector2(cameraZoomLimit[1], cameraZoomLimit[1]), 0.5)
+			var lastPos = get_global_mouse_position()
+			mainCamera.zoom = Vector2(cameraZoomLimit[1], cameraZoomLimit[1])
+			mainCamera.position += (lastPos - get_global_mouse_position())
+			#tween.parallel().tween_property(mainCamera, "position", mainCamera.position + (lastA - get_global_mouse_position()), 0.5)
+			#tween.parallel().tween_property(mainCamera, "zoom", Vector2(cameraZoomLimit[1], cameraZoomLimit[1]), 0.5)
 	if Input.is_action_just_pressed("Zoom_Out_Map") or Input.is_action_pressed("Zoom_Out_Map"):
+		print(mainCamera.get_viewport_transform())
 		if mainCamera.zoom.x > cameraZoomLimit[0] * cameraZoomStep:
-			var tween = get_tree().create_tween()
-			tween.tween_property(mainCamera, "zoom", mainCamera.zoom / cameraZoomStep, 0.5)
+			var lastPos = get_global_mouse_position()
+			mainCamera.zoom /= cameraZoomStep
+			mainCamera.position += (lastPos - get_global_mouse_position())
+			#tween.parallel().tween_property(mainCamera, "position", mainCamera.position + (get_global_mouse_position() - a), 0.5)
+			#tween.parallel().tween_property(mainCamera, "zoom", mainCamera.zoom / cameraZoomStep, 0.5)
 		else:
-			var tween = get_tree().create_tween()
-			tween.tween_property(mainCamera, "zoom", Vector2(cameraZoomLimit[0], cameraZoomLimit[0]), 0.5)
-
-	if Input.is_action_just_pressed("Mouse_Left_Button"):
+			mainCamera.zoom = Vector2(cameraZoomLimit[0], cameraZoomLimit[0])
+			mainCamera.position = Vector2(0, 0)
+			#tween.parallel().tween_property(mainCamera, "position", Vector2(0, 0), 0.5)
+			#tween.parallel().tween_property(mainCamera, "zoom", Vector2(cameraZoomLimit[0], cameraZoomLimit[0]), 0.5)
+	if Input.is_action_just_pressed("Drag_Map"):
 		lastMousePosition = get_global_mouse_position()
-	if Input.is_action_pressed("Mouse_Left_Button"):
+	if Input.is_action_pressed("Drag_Map"):
+		print(mainCamera.get_viewport_transform())
 		mainCamera.position += lastMousePosition - get_global_mouse_position()
 		if mainCamera.position.x < mainCamera.limit_left + (mainCamera.get_viewport_rect().size.x / 2) / mainCamera.zoom.x:
 			mainCamera.position.x = mainCamera.limit_left + (mainCamera.get_viewport_rect().size.x / 2) / mainCamera.zoom.x

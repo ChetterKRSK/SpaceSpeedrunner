@@ -132,7 +132,8 @@ planetOrbitSpeed = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 
 [node name="MainObjectsSystem" type="Node2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem"]
+[node name="BG" type="Sprite2D" parent="MainObjectsSystem"]
+z_index = -5
 scale = Vector2(6.27685, 6.27685)
 texture = ExtResource("2_2aj80")
 
@@ -288,7 +289,6 @@ shape = SubResource("CircleShape2D_oqr1i")
 [node name="MouseCursor" type="Sprite2D" parent="."]
 self_modulate = Color(1, 0, 0, 1)
 position = Vector2(-11904, -6656)
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_ftf7w")
 
 [node name="MainCamera" type="Camera2D" parent="."]
