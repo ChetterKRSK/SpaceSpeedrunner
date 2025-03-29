@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=27 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
@@ -86,6 +86,9 @@ func updateButtonEvent():
 [sub_resource type="CircleShape2D" id="CircleShape2D_2aj80"]
 radius = 128.004
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_w4qqe"]
+radius = 320.0
+
 [sub_resource type="Curve2D" id="Curve2D_oqr1i"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, -1375, 2500, 0, 1375, 0, -1375, 0, 0, -2500, 0, -1375, 0, 1375, -2500, 0, -1375, 0, 1375, 0, 0, 2500, 0, 1375, 0, 0, 2500, 0)
@@ -94,6 +97,9 @@ point_count = 5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tp0y7"]
 radius = 160.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d4m0j"]
+radius = 400.0
 
 [sub_resource type="Curve2D" id="Curve2D_tp0y7"]
 _data = {
@@ -104,6 +110,9 @@ point_count = 5
 [sub_resource type="CircleShape2D" id="CircleShape2D_c3h2c"]
 radius = 224.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_b0yit"]
+radius = 560.0
+
 [sub_resource type="Curve2D" id="Curve2D_c3h2c"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, -2475, 4500, 0, 2475, 0, -2475, 0, 0, -4500, 0, -2475, 0, 2475, -4500, 0, -2475, 0, 2475, 0, 0, 4500, 0, 2475, 0, 0, 4500, 0)
@@ -112,6 +121,9 @@ point_count = 5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mv7c2"]
 radius = 168.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i1cje"]
+radius = 420.0
 
 [sub_resource type="Curve2D" id="Curve2D_mv7c2"]
 _data = {
@@ -122,12 +134,14 @@ point_count = 5
 [sub_resource type="CircleShape2D" id="CircleShape2D_yqr88"]
 radius = 192.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ftf7w"]
+radius = 480.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_oqr1i"]
 radius = 640.0
 
-[node name="GameScene" type="Node2D" node_paths=PackedStringArray("planetPaths", "planetOrbits")]
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("planetOrbits")]
 script = ExtResource("1_vdwas")
-planetPaths = [NodePath("MainObjectsSystem/PlanetOrbit1/PathFollow2D"), NodePath("MainObjectsSystem/PlanetOrbit2/PathFollow2D"), NodePath("MainObjectsSystem/PlanetOrbit3/PathFollow2D"), NodePath("MainObjectsSystem/PlanetOrbit4/PathFollow2D"), NodePath("MainObjectsSystem/PlanetOrbit5/PathFollow2D")]
 planetOrbits = [NodePath("MainObjectsSystem/PlanetOrbit1"), NodePath("MainObjectsSystem/PlanetOrbit2"), NodePath("MainObjectsSystem/PlanetOrbit3"), NodePath("MainObjectsSystem/PlanetOrbit4"), NodePath("MainObjectsSystem/PlanetOrbit5")]
 planetOrbitSpeed = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 
@@ -206,14 +220,24 @@ position = Vector2(1500, 0)
 rotation = -1.5708
 rotates = false
 
-[node name="Planet2" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D"]
+[node name="Planet1" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D"]
 rotation = 1.5708
+collision_layer = 2
+collision_mask = 0
+input_pickable = true
 
-[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet2"]
+[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
 texture = ExtResource("1_ijlju")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
 shape = SubResource("CircleShape2D_2aj80")
+
+[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/GravityArea"]
+shape = SubResource("CircleShape2D_w4qqe")
 
 [node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_oqr1i")
@@ -235,6 +259,9 @@ rotates = false
 
 [node name="Planet2" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D"]
 rotation = 1.5708
+collision_layer = 2
+collision_mask = 0
+input_pickable = true
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
 scale = Vector2(1.25, 1.25)
@@ -242,6 +269,13 @@ texture = ExtResource("2_vdwas")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
 shape = SubResource("CircleShape2D_tp0y7")
+
+[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/GravityArea"]
+shape = SubResource("CircleShape2D_d4m0j")
 
 [node name="PlanetOrbit3" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_tp0y7")
@@ -264,6 +298,9 @@ rotates = false
 [node name="Planet3" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D"]
 position = Vector2(-1.74841e-07, 4)
 rotation = 1.5708
+collision_layer = 2
+collision_mask = 0
+input_pickable = true
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
 scale = Vector2(1.75, 1.75)
@@ -271,6 +308,13 @@ texture = ExtResource("3_2aj80")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
 shape = SubResource("CircleShape2D_c3h2c")
+
+[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/GravityArea"]
+shape = SubResource("CircleShape2D_b0yit")
 
 [node name="PlanetOrbit4" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_c3h2c")
@@ -292,6 +336,9 @@ rotates = false
 
 [node name="Planet4" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D"]
 rotation = 1.5708
+collision_layer = 2
+collision_mask = 0
+input_pickable = true
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
 scale = Vector2(1.3, 1.3)
@@ -299,6 +346,13 @@ texture = ExtResource("4_ftf7w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
 shape = SubResource("CircleShape2D_mv7c2")
+
+[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/GravityArea"]
+shape = SubResource("CircleShape2D_i1cje")
 
 [node name="PlanetOrbit5" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_mv7c2")
@@ -320,6 +374,9 @@ rotates = false
 
 [node name="Planet5" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D"]
 rotation = 1.5708
+collision_layer = 2
+collision_mask = 0
+input_pickable = true
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
 scale = Vector2(1.5, 1.5)
@@ -327,6 +384,13 @@ texture = ExtResource("5_w4qqe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
 shape = SubResource("CircleShape2D_yqr88")
+
+[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/GravityArea"]
+shape = SubResource("CircleShape2D_ftf7w")
 
 [node name="Star" type="StaticBody2D" parent="MainObjectsSystem"]
 
@@ -349,3 +413,14 @@ limit_left = -12000
 limit_top = -6750
 limit_right = 12000
 limit_bottom = 6750
+
+[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="." method="_on_planet_input_event" binds= [0]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="." method="_on_planet_mouse_exited"]
+[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="." method="_on_planet_input_event" binds= [1]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="." method="_on_planet_mouse_exited"]
+[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="." method="_on_planet_input_event" binds= [2]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="." method="_on_planet_mouse_exited"]
+[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="." method="_on_planet_input_event" binds= [3]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="." method="_on_planet_mouse_exited"]
+[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="." method="_on_planet_input_event" binds= [4]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="." method="_on_planet_mouse_exited"]
