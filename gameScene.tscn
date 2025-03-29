@@ -415,12 +415,17 @@ limit_right = 12000
 limit_bottom = 6750
 
 [connection signal="input_event" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="." method="_on_planet_input_event" binds= [0]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="." method="_on_planet_mouse_entered" binds= [0]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="." method="_on_planet_mouse_exited"]
 [connection signal="input_event" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="." method="_on_planet_input_event" binds= [1]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="." method="_on_planet_mouse_entered" binds= [1]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="." method="_on_planet_mouse_exited"]
 [connection signal="input_event" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="." method="_on_planet_input_event" binds= [2]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="." method="_on_planet_mouse_entered" binds= [2]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="." method="_on_planet_mouse_exited"]
 [connection signal="input_event" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="." method="_on_planet_input_event" binds= [3]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="." method="_on_planet_mouse_entered" binds= [3]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="." method="_on_planet_mouse_exited"]
 [connection signal="input_event" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="." method="_on_planet_input_event" binds= [4]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="." method="_on_planet_mouse_entered" binds= [4]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="." method="_on_planet_mouse_exited"]

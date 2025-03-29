@@ -21,6 +21,7 @@ var mouseCursorSize: Array[float] = [0.1, 0, 0] # standart, min, max
 var selectedOrbit: float = 0
 var isMouseOnOrbit: bool = false
 var selectedPlanet
+var isCursorOnPlanet: bool = false
 
 var planetPaths: Array[PathFollow2D]
 var planetOrbitDistances: Array[float]
@@ -95,10 +96,12 @@ func cameraMovingZooming():
 	
 	if selectedPlanet != null:
 		mainCamera.position = planetPaths[selectedPlanet].position
-		return
+		#if Input.is_action_just_pressed("Mouse_Left_Button"):
+			#selectedPlanet = null
 	if Input.is_action_just_pressed("Drag_Map"):
 		lastMousePosition = get_global_mouse_position()
 	if Input.is_action_pressed("Drag_Map"):
+		selectedPlanet = null
 		mainCamera.position += lastMousePosition - get_global_mouse_position()
 		if mainCamera.position.x < mainCamera.limit_left + (mainCamera.get_viewport_rect().size.x / 2) / mainCamera.zoom.x:
 			mainCamera.position.x = mainCamera.limit_left + (mainCamera.get_viewport_rect().size.x / 2) / mainCamera.zoom.x
@@ -123,7 +126,15 @@ func planetOrbitMoving(delta: float):
 
 
 func _on_planet_input_event(viewport: Node, event: InputEvent, shape_idx: int, extra_arg_0: int) -> void:
-	selectedPlanet = extra_arg_0
+	if event is InputEventMouseButton:
+		if Input.is_action_just_pressed("Mouse_Left_Button"):
+			if selectedPlanet == null or selectedPlanet != extra_arg_0:
+				selectedPlanet = extra_arg_0
+			else:
+				selectedPlanet = null
 
+func _on_planet_mouse_entered(extra_arg_0: int) -> void:
+	isCursorOnPlanet = true
+	
 func _on_planet_mouse_exited() -> void:
-	selectedPlanet = null
+	isCursorOnPlanet = false
