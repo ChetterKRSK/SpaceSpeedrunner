@@ -12,17 +12,33 @@ var GAME_STATE = GAME_STATES.ON_STAR_MAP
 @onready var mainCamera: Camera2D = $MainCamera
 
 @export var planetPaths: Array[PathFollow2D]
+@export var planetOrbits: Array[Path2D]
 @export var planetOrbitSpeed: Array[float]
 
 var cameraZoomLimit: Array[float] = [0.08, 2]
-var mouseCursorScale: Array[float] = [0.05, 1]
 var cameraZoomStep: float = 1.15
-var planetOrbitDistances: Array[float]
+var planetOrbitLineWidthStandart = 3
+var mouseCursorSizeStandart = 0.1
 var lastSelectedOrbit = 0
+var isMouseOnOrbit = false
+
+var planetOrbitDistances: Array[float]
 var lastMousePosition: Vector2
 
 
 func _ready() -> void:
+	mainCamera.zoom = Vector2(1, 1)
+	setStandartValues()
+	
+func _process(delta: float) -> void:
+	planetOrbitMoving(delta)
+	cameraMovingZooming()
+	print(isMouseOnOrbit)
+
+func _input(event) -> void:
+	movingOrbitCursorOnMap(event)
+
+func setStandartValues():
 	for path: PathFollow2D in planetPaths:
 		path.progress_ratio = randf_range(0, 1)
 		planetOrbitDistances.append(path.get_parent().curve.get_point_position(0).distance_to(Vector2()))
@@ -32,27 +48,30 @@ func _ready() -> void:
 		planetOrbitSpeed[i] = (0.1/6) / rndMinutes # (0.1/6) - 60s
 		planetOrbitSpeed[i] = -planetOrbitSpeed[i] if randi_range(0, 10) <= 1 else planetOrbitSpeed[i]
 
-func _process(delta: float) -> void:
-	for i in range(planetPaths.size()):
-		planetPaths[i].progress_ratio += planetOrbitSpeed[i] * delta
-	
-	cameraMovingZooming()
-
-func _input(event) -> void:
-	movingOrbitCursorOnMap(event)
-
 func movingOrbitCursorOnMap(event):
 	if event is InputEventMouseMotion:
 		var angleMousePosition: float = (get_global_mouse_position() - Vector2()).angle()
-		mouseCursor.position = Vector2(planetOrbitDistances[lastSelectedOrbit] * cos(angleMousePosition), planetOrbitDistances[lastSelectedOrbit] * sin(angleMousePosition))
 		var mouseDistance = get_global_mouse_position().distance_to(Vector2())
 		for distance: float in planetOrbitDistances:
-			if mouseDistance - distance > -250 and mouseDistance - distance < 250:
-				lastSelectedOrbit = planetOrbitDistances.find(distance)
-	
+			if mouseDistance - planetOrbitDistances[0] < -10 / mainCamera.zoom.x:
+				lastSelectedOrbit = 0
+				isMouseOnOrbit = false
+				break
+			elif mouseDistance - planetOrbitDistances[-1] > 10 / mainCamera.zoom.x:
+				lastSelectedOrbit = planetOrbitDistances.size() - 1
+				isMouseOnOrbit = false
+				break
+			else:
+				if mouseDistance - distance > -10 / mainCamera.zoom.x and mouseDistance - distance < 10 / mainCamera.zoom.x:
+					lastSelectedOrbit = planetOrbitDistances.find(distance)
+					isMouseOnOrbit = true
+					break
+				else:
+					isMouseOnOrbit = false
+		mouseCursor.position = Vector2(planetOrbitDistances[lastSelectedOrbit] * cos(angleMousePosition), planetOrbitDistances[lastSelectedOrbit] * sin(angleMousePosition))
+		
 func cameraMovingZooming():
 	if Input.is_action_just_pressed("Zoom_In_Map") or Input.is_action_pressed("Zoom_In_Map"):
-		print(mainCamera.get_viewport_transform())
 		if mainCamera.zoom.x < cameraZoomLimit[1] / cameraZoomStep:
 			var lastPos = get_global_mouse_position()
 			mainCamera.zoom *= cameraZoomStep
@@ -65,8 +84,8 @@ func cameraMovingZooming():
 			mainCamera.position += (lastPos - get_global_mouse_position())
 			#tween.parallel().tween_property(mainCamera, "position", mainCamera.position + (lastA - get_global_mouse_position()), 0.5)
 			#tween.parallel().tween_property(mainCamera, "zoom", Vector2(cameraZoomLimit[1], cameraZoomLimit[1]), 0.5)
+			
 	if Input.is_action_just_pressed("Zoom_Out_Map") or Input.is_action_pressed("Zoom_Out_Map"):
-		print(mainCamera.get_viewport_transform())
 		if mainCamera.zoom.x > cameraZoomLimit[0] * cameraZoomStep:
 			var lastPos = get_global_mouse_position()
 			mainCamera.zoom /= cameraZoomStep
@@ -78,10 +97,17 @@ func cameraMovingZooming():
 			mainCamera.position = Vector2(0, 0)
 			#tween.parallel().tween_property(mainCamera, "position", Vector2(0, 0), 0.5)
 			#tween.parallel().tween_property(mainCamera, "zoom", Vector2(cameraZoomLimit[0], cameraZoomLimit[0]), 0.5)
+	
+	var newMouseCursorScale = mouseCursorSizeStandart / mainCamera.zoom.x
+	mouseCursor.scale = Vector2(newMouseCursorScale, newMouseCursorScale)
+	var newPlanetOrbitLineWidth = planetOrbitLineWidthStandart / mainCamera.zoom.x
+	for orbit in planetOrbits:
+		orbit.line_width = newPlanetOrbitLineWidth
+		orbit.updateButtonEvent()
+
 	if Input.is_action_just_pressed("Drag_Map"):
 		lastMousePosition = get_global_mouse_position()
 	if Input.is_action_pressed("Drag_Map"):
-		print(mainCamera.get_viewport_transform())
 		mainCamera.position += lastMousePosition - get_global_mouse_position()
 		if mainCamera.position.x < mainCamera.limit_left + (mainCamera.get_viewport_rect().size.x / 2) / mainCamera.zoom.x:
 			mainCamera.position.x = mainCamera.limit_left + (mainCamera.get_viewport_rect().size.x / 2) / mainCamera.zoom.x
@@ -91,3 +117,16 @@ func cameraMovingZooming():
 			mainCamera.position.y = mainCamera.limit_top + (mainCamera.get_viewport_rect().size.y / 2) / mainCamera.zoom.y
 		if mainCamera.position.y > mainCamera.limit_bottom - (mainCamera.get_viewport_rect().size.y / 2) / mainCamera.zoom.y:
 			mainCamera.position.y = mainCamera.limit_bottom - (mainCamera.get_viewport_rect().size.y / 2) / mainCamera.zoom.y
+
+func planetOrbitMoving(delta: float):
+	for i in range(planetPaths.size()):
+		planetPaths[i].progress_ratio += planetOrbitSpeed[i] * delta
+
+
+func _on_planet_mouse_entered() -> void:
+	pass
+
+
+func _on_planet_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton:
+		pass

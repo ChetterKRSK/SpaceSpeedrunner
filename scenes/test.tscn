@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://b8pcc0jysh0rb"]
+[gd_scene load_steps=35 format=3 uid="uid://bgpqodrj0wh8w"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_errlg"]
 [ext_resource type="Script" uid="uid://c2qh6qk63qy86" path="res://scenes/player.gd" id="2_74lek"]
