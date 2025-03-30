@@ -1,31 +1,43 @@
 extends StaticBody2D
 
-@onready var main_camera: Camera2D
-@onready var info_window: Control = $UI/InfoWindow
+@onready var mainCamera: Camera2D
+@onready var infoWindow: Control = $UI/InfoWindow
 
 @export var planetName: String
 
 var endOfTurnSecond: float = 0
 
+var infoWindowStandartPosition: Vector2
+
 func _ready() -> void:
-	main_camera = get_viewport().get_camera_2d()
-	if info_window:
+	mainCamera = get_viewport().get_camera_2d()
+	if infoWindow:
+		infoWindowStandartPosition = infoWindow.position
 		updateUI()
 
 func _process(delta: float) -> void:
-	if info_window:
+	if infoWindow:
 		updateUI()
 		resizeUI()
 	
 
 func showInfoWindow():
-	info_window.visible = true
+	infoWindow.visible = true
 	
 func hideInfoWindow():
-	info_window.visible = false
+	infoWindow.visible = false
 
 func resizeUI():
-	info_window.scale = Vector2(1 / main_camera.zoom.x, 1/ main_camera.zoom.y)
+	infoWindow.scale = Vector2(1 / mainCamera.zoom.x, 1/ mainCamera.zoom.y)
+	infoWindow.position = infoWindowStandartPosition
+	if infoWindow.global_position.x < mainCamera.limit_left:
+		infoWindow.position.x = infoWindowStandartPosition.x + mainCamera.limit_left - infoWindow.global_position.x
+	if infoWindow.global_position.x + infoWindow.get_global_rect().size.x > mainCamera.limit_right:
+		infoWindow.position.x = infoWindowStandartPosition.x - (infoWindow.global_position.x + infoWindow.get_global_rect().size.x - mainCamera.limit_right)
+	if infoWindow.global_position.y < mainCamera.limit_top:
+		infoWindow.position.y = infoWindowStandartPosition.y + mainCamera.limit_top - infoWindow.global_position.y
+	if infoWindow.global_position.y + infoWindow.get_global_rect().size.y > mainCamera.limit_bottom:
+		infoWindow.position.y = infoWindowStandartPosition.y - (infoWindow.global_position.y + infoWindow.get_global_rect().size.y - mainCamera.limit_bottom)
 
 func updateUI():
 	$UI/InfoWindow/VBoxContainer/PlanetName.text = "''%s''" % planetName
