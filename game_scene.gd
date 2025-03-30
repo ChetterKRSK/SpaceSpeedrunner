@@ -53,7 +53,7 @@ func setStandartValues():
 	for i in planetOrbitSpeed.size():
 		var rndMinutes: float = randf_range(2, 8)
 		planetOrbitSpeed[i] = (0.1/6) / rndMinutes # (0.1/6) - 60s
-		planetOrbitSpeed[i] = -planetOrbitSpeed[i] if randi_range(0, 10) <= 4 else planetOrbitSpeed[i]
+		planetOrbitSpeed[i] = -planetOrbitSpeed[i] if randi_range(0, 10) <= 1 else planetOrbitSpeed[i]
 
 func movingOrbitCursorOnMap(event):
 	if event is InputEventMouseMotion:
@@ -99,12 +99,11 @@ func cameraMovingZooming():
 	
 	if Input.is_action_just_pressed("Mouse_Left_Button"):
 		if isCursorOnPlanet:
-			if selectedPlanet != null:
+			if selectedPlanet != null and selectedPlanet != targetMousePlanet:
 				planets[selectedPlanet].hideInfoWindow()
 			selectedPlanet = targetMousePlanet
 			cameraZoomLimit[4] = cameraZoomLimit[2] / planets[selectedPlanet].find_child("Sprite2D").scale.x
-			if mainCamera.zoom.x > cameraZoomLimit[4]:
-				changeCameraZoom()
+			changeCameraZoom()
 			planets[targetMousePlanet].showInfoWindow()
 		elif !isCursorOnPlanet and selectedPlanet != null:
 			planets[selectedPlanet].hideInfoWindow()
@@ -131,7 +130,10 @@ func cameraMovingZooming():
 			mainCamera.position.y = mainCamera.limit_bottom - (mainCamera.get_viewport_rect().size.y / 2) / mainCamera.zoom.y
 
 func changeCameraZoom():
-	mainCamera.zoom = Vector2(cameraZoomLimit[4], cameraZoomLimit[4])
+	if mainCamera.zoom.x > cameraZoomLimit[4]:
+		mainCamera.zoom = Vector2(cameraZoomLimit[4], cameraZoomLimit[4])
+	elif mainCamera.zoom.x < cameraZoomLimit[3]:
+		mainCamera.zoom = Vector2(cameraZoomLimit[3], cameraZoomLimit[3])
 
 func adjustingUI():
 	var newMouseCursorScale = mouseCursorSize[0] / mainCamera.zoom.x

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ck5wuiqdc7snw" path="res://assets/Sprites/Planet3.png" id="3_2aj80"]
 [ext_resource type="Script" uid="uid://b7tvmb83siua3" path="res://scripts/planet.gd" id="3_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://yq0luvem7lf" path="res://assets/Sprites/Planet4.png" id="4_ftf7w"]
+[ext_resource type="Theme" uid="uid://du7np0egwtb80" path="res://styles/planetInfoWindow.tres" id="5_d4m0j"]
 [ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
 [ext_resource type="Texture2D" uid="uid://d1mitx1fwe68h" path="res://assets/Sprites/Cursor.png" id="9_ftf7w"]
@@ -89,14 +90,6 @@ radius = 128.004
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4qqe"]
 radius = 256.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4qqe"]
-bg_color = Color(0, 0, 0, 0.752941)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 0.501961)
 
 [sub_resource type="Curve2D" id="Curve2D_oqr1i"]
 _data = {
@@ -349,6 +342,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 280)
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow"]
 layout_mode = 1
@@ -358,37 +352,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
+theme = ExtResource("5_d4m0j")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 1
-vertical_alignment = 1
+horizontal_alignment = 2
 
 [node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
-horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_oqr1i")
@@ -461,6 +461,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 280)
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow"]
 layout_mode = 1
@@ -470,37 +471,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
+theme = ExtResource("5_d4m0j")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
+theme_override_constants/separation = 0
 
 [node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 1
-vertical_alignment = 1
+horizontal_alignment = 2
 
 [node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
-horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="PlanetOrbit3" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_tp0y7")
@@ -574,6 +582,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 280)
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow"]
 layout_mode = 1
@@ -583,37 +592,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
+theme = ExtResource("5_d4m0j")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
+theme_override_constants/separation = 0
 
 [node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 1
-vertical_alignment = 1
+horizontal_alignment = 2
 
 [node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
-horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="PlanetOrbit4" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_c3h2c")
@@ -686,6 +702,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 280)
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow"]
 layout_mode = 1
@@ -695,37 +712,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
+theme = ExtResource("5_d4m0j")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
+theme_override_constants/separation = 0
 
 [node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 1
-vertical_alignment = 1
+horizontal_alignment = 2
 
 [node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
-horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="PlanetOrbit5" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_mv7c2")
@@ -798,6 +822,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 280)
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow"]
 layout_mode = 1
@@ -807,37 +832,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
+theme = ExtResource("5_d4m0j")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
+theme_override_constants/separation = 0
 
 [node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 1
-vertical_alignment = 1
+horizontal_alignment = 2
 
 [node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+theme = ExtResource("5_d4m0j")
 
 [node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
-horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="Star" type="StaticBody2D" parent="MainObjectsSystem"]
 

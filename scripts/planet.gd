@@ -6,8 +6,8 @@ extends StaticBody2D
 @export var planetName: String
 
 var endOfTurnSecond: float = 0
-
 var infoWindowStandartPosition: Vector2
+var isInfoWindowShow = false
 
 func _ready() -> void:
 	mainCamera = get_viewport().get_camera_2d()
@@ -18,17 +18,27 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if infoWindow:
 		updateUI()
-		resizeUI()
+		if isInfoWindowShow:
+			resizeUI()
 	
 
 func showInfoWindow():
 	infoWindow.visible = true
+	var tween = get_tree().create_tween()
+	tween.tween_property(infoWindow, "scale", Vector2(1 / mainCamera.zoom.x, 1/ mainCamera.zoom.y), 0.25)
+	isInfoWindowShow = true
 	
 func hideInfoWindow():
+	isInfoWindowShow = false
+	var tween = get_tree().create_tween()
+	tween.tween_property(infoWindow, "scale", Vector2(), 0.25)
+	await tween.finished
 	infoWindow.visible = false
 
 func resizeUI():
-	infoWindow.scale = Vector2(1 / mainCamera.zoom.x, 1/ mainCamera.zoom.y)
+	var tween = get_tree().create_tween()
+	tween.tween_property(infoWindow, "scale", Vector2(1 / mainCamera.zoom.x, 1/ mainCamera.zoom.y), 0.25)
+	#infoWindow.scale = Vector2(1 / mainCamera.zoom.x, 1/ mainCamera.zoom.y)
 	infoWindow.position = infoWindowStandartPosition
 	if infoWindow.global_position.x < mainCamera.limit_left:
 		infoWindow.position.x = infoWindowStandartPosition.x + mainCamera.limit_left - infoWindow.global_position.x
