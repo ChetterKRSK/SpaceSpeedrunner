@@ -1,0 +1,126 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2kb6e0rb60e8"]
+
+[ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="2_ggt7d"]
+
+[sub_resource type="GDScript" id="GDScript_ftf7w"]
+script/source = "extends StaticBody2D
+
+@onready var main_camera: Camera2D
+@onready var info_window: Control = $UI/InfoWindow
+
+@export var planetName: String
+
+func _ready() -> void:
+	main_camera = get_viewport().get_camera_2d()
+
+func _process(delta: float) -> void:
+	if info_window:
+		resizeUI()
+	
+
+func showInfoWindow():
+	info_window.visible = true
+	
+func hideInfoWindow():
+	info_window.visible = false
+
+func resizeUI():
+	info_window.scale = Vector2(1 / main_camera.zoom.x, 1/ main_camera.zoom.y)
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2aj80"]
+radius = 128.004
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w4qqe"]
+radius = 320.0
+
+[node name="Planet1" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
+input_pickable = true
+script = SubResource("GDScript_ftf7w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ggt7d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2aj80")
+
+[node name="GravityArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GravityArea"]
+shape = SubResource("CircleShape2D_w4qqe")
+
+[node name="UI" type="Control" parent="."]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = 375.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(375, 375)
+mouse_filter = 2
+
+[node name="InfoWindow" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 95.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = -95.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 280)
+mouse_filter = 2
+
+[node name="BG" type="Panel" parent="UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlanetName" type="Label" parent="UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resources" type="HBoxContainer" parent="UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="TurnoverTime" type="Label" parent="UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "ОСТАЛОСЬ: 05:32"
+horizontal_alignment = 1
+vertical_alignment = 1

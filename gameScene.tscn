@@ -1,10 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=29 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
 [ext_resource type="Texture2D" uid="uid://d0vw5hu814uri" path="res://assets/Sprites/SpaceBG2.png" id="2_ftf7w"]
 [ext_resource type="Texture2D" uid="uid://cg8d6scweyojp" path="res://assets/Sprites/Planet2.png" id="2_vdwas"]
 [ext_resource type="Texture2D" uid="uid://ck5wuiqdc7snw" path="res://assets/Sprites/Planet3.png" id="3_2aj80"]
+[ext_resource type="Script" uid="uid://b7tvmb83siua3" path="res://scripts/planet.gd" id="3_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://yq0luvem7lf" path="res://assets/Sprites/Planet4.png" id="4_ftf7w"]
 [ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
@@ -94,6 +95,73 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, -1375, 2500, 0, 1375, 0, -1375, 0, 0, -2500, 0, -1375, 0, 1375, -2500, 0, -1375, 0, 1375, 0, 0, 2500, 0, 1375, 0, 0, 2500, 0)
 }
 point_count = 5
+
+[sub_resource type="GDScript" id="GDScript_w4qqe"]
+script/source = "@tool
+extends Path2D
+
+@export var line: Line2D
+
+@export var update_curve_at_runtime: bool = false
+@export var orbitRadius: float = 10
+@export var line_width: float = 10
+
+@export_tool_button(\"Обновить орбиту\") var updateButton: Callable = updateButtonEvent
+
+func _ready():
+	if Engine.is_editor_hint():
+		if line == null:
+			line = Line2D.new()
+			set_line_defaults()
+			line.points= curve.tessellate()
+			add_child(line)
+			line.owner=owner
+
+	if Engine.is_editor_hint() or update_curve_at_runtime:
+		if not curve.changed.is_connected(curve_changed):
+			curve.changed.connect(curve_changed)
+
+func _enter_tree():
+	if Engine.is_editor_hint() or update_curve_at_runtime:
+		if not curve.changed.is_connected(curve_changed):
+			curve.changed.connect(curve_changed)
+
+func _exit_tree():
+	if curve.changed.is_connected(curve_changed):
+		curve.changed.disconnect(curve_changed)
+
+func curve_changed():
+	line.points=curve.tessellate()
+	line.width = line_width
+
+func set_line_defaults():
+	line.begin_cap_mode= Line2D.LINE_CAP_ROUND
+	line.joint_mode=Line2D.LINE_JOINT_ROUND
+	line.width = line_width
+	line.width_curve = null
+	line.name = name+\"Line\"
+
+func make_default_curve():
+	var retval = Curve.new()
+	retval.min_value = 0
+	retval.max_value = 1
+	retval.add_point(Vector2(0,1))
+	retval.add_point(Vector2(1,0))
+
+	return retval
+
+
+func updateButtonEvent():
+	line.width = line_width
+	
+	curve.clear_points()
+	var orbitSmooth = orbitRadius / (20./11)
+	curve.add_point(Vector2(orbitRadius, 0), Vector2(), Vector2(0, -orbitSmooth))
+	curve.add_point(Vector2(0, -orbitRadius), Vector2(orbitSmooth, 0), Vector2(-orbitSmooth, 0))
+	curve.add_point(Vector2(-orbitRadius, 0), Vector2(0, -orbitSmooth), Vector2(0, orbitSmooth))
+	curve.add_point(Vector2(0, orbitRadius), Vector2(-orbitSmooth, 0), Vector2(orbitSmooth, 0))
+	curve.add_point(Vector2(orbitRadius, 0), Vector2(0, orbitSmooth), Vector2())
+"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tp0y7"]
 radius = 160.0
@@ -217,14 +285,15 @@ begin_cap_mode = 2
 
 [node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit1"]
 position = Vector2(1500, 0)
-rotation = -1.5708
+progress = 9420.15
 rotates = false
 
 [node name="Planet1" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D"]
-rotation = 1.5708
 collision_layer = 2
 collision_mask = 0
 input_pickable = true
+script = ExtResource("3_w4qqe")
+planetName = "Древесный уголь"
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
 texture = ExtResource("1_ijlju")
@@ -239,12 +308,85 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/GravityArea"]
 shape = SubResource("CircleShape2D_w4qqe")
 
+[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = 375.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(375, 375)
+mouse_filter = 2
+
+[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 95.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = -95.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 280)
+mouse_filter = 2
+
+[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "ОСТАЛОСЬ: 05:32"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_oqr1i")
-script = SubResource("GDScript_oqr1i")
+script = SubResource("GDScript_w4qqe")
 line = NodePath("PlanetOrbit2Line")
 orbitRadius = 2500.0
-line_width = 35.0
+line_width = 25.0
 
 [node name="PlanetOrbit2Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit2"]
 points = PackedVector2Array(2500, 0, 2487.03, -254.669, 2448.97, -502.197, 2387.12, -741.302, 2302.73, -970.703, 2197.11, -1189.12, 2071.53, -1395.26, 1927.28, -1587.86, 1765.63, -1765.63, 1587.86, -1927.28, 1395.26, -2071.53, 1189.12, -2197.11, 970.703, -2302.73, 741.302, -2387.12, 502.197, -2448.97, 254.669, -2487.03, 0, -2500, -254.669, -2487.03, -502.197, -2448.97, -741.302, -2387.12, -970.703, -2302.73, -1189.12, -2197.11, -1395.26, -2071.53, -1587.86, -1927.28, -1765.63, -1765.63, -1927.28, -1587.86, -2071.53, -1395.26, -2197.11, -1189.12, -2302.73, -970.703, -2387.12, -741.302, -2448.97, -502.197, -2487.03, -254.669, -2500, 0, -2487.03, 254.669, -2448.97, 502.197, -2387.12, 741.302, -2302.73, 970.703, -2197.11, 1189.12, -2071.53, 1395.26, -1927.28, 1587.86, -1765.63, 1765.63, -1587.86, 1927.28, -1395.26, 2071.53, -1189.12, 2197.11, -970.703, 2302.73, -741.302, 2387.12, -502.197, 2448.97, -254.669, 2487.03, 0, 2500, 254.669, 2487.03, 502.197, 2448.97, 741.302, 2387.12, 970.703, 2302.73, 1189.12, 2197.11, 1395.26, 2071.53, 1587.86, 1927.28, 1765.63, 1765.63, 1927.28, 1587.86, 2071.53, 1395.26, 2197.11, 1189.12, 2302.73, 970.703, 2387.12, 741.302, 2448.97, 502.197, 2487.03, 254.669, 2500, 0)
@@ -254,14 +396,14 @@ begin_cap_mode = 2
 
 [node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit2"]
 position = Vector2(2500, 0)
-rotation = -1.5708
 rotates = false
 
 [node name="Planet2" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D"]
-rotation = 1.5708
 collision_layer = 2
 collision_mask = 0
 input_pickable = true
+script = ExtResource("3_w4qqe")
+planetName = "Бурый наемник"
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
 scale = Vector2(1.25, 1.25)
@@ -276,6 +418,79 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/GravityArea"]
 shape = SubResource("CircleShape2D_d4m0j")
+
+[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = 375.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(375, 375)
+mouse_filter = 2
+
+[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 95.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = -95.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 280)
+mouse_filter = 2
+
+[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "ОСТАЛОСЬ: 05:32"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlanetOrbit3" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_tp0y7")
@@ -292,15 +507,15 @@ begin_cap_mode = 2
 
 [node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit3"]
 position = Vector2(3500, 0)
-rotation = -1.5708
 rotates = false
 
 [node name="Planet3" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D"]
 position = Vector2(-1.74841e-07, 4)
-rotation = 1.5708
 collision_layer = 2
 collision_mask = 0
 input_pickable = true
+script = ExtResource("3_w4qqe")
+planetName = "Синий монстр"
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
 scale = Vector2(1.75, 1.75)
@@ -315,6 +530,79 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/GravityArea"]
 shape = SubResource("CircleShape2D_b0yit")
+
+[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -379.0
+offset_right = 375.0
+offset_bottom = 371.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(375, 375)
+mouse_filter = 2
+
+[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 95.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = -95.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 280)
+mouse_filter = 2
+
+[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "ОСТАЛОСЬ: 05:32"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlanetOrbit4" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_c3h2c")
@@ -331,14 +619,14 @@ begin_cap_mode = 2
 
 [node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit4"]
 position = Vector2(4500, 0)
-rotation = -1.5708
 rotates = false
 
 [node name="Planet4" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D"]
-rotation = 1.5708
 collision_layer = 2
 collision_mask = 0
 input_pickable = true
+script = ExtResource("3_w4qqe")
+planetName = "Прилунение"
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
 scale = Vector2(1.3, 1.3)
@@ -353,6 +641,79 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/GravityArea"]
 shape = SubResource("CircleShape2D_i1cje")
+
+[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = 375.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(375, 375)
+mouse_filter = 2
+
+[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 95.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = -95.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 280)
+mouse_filter = 2
+
+[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "ОСТАЛОСЬ: 05:32"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlanetOrbit5" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_mv7c2")
@@ -369,14 +730,14 @@ begin_cap_mode = 2
 
 [node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit5"]
 position = Vector2(5500, 0)
-rotation = -1.5708
 rotates = false
 
 [node name="Planet5" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D"]
-rotation = 1.5708
 collision_layer = 2
 collision_mask = 0
 input_pickable = true
+script = ExtResource("3_w4qqe")
+planetName = "Недалекий гигант"
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
 scale = Vector2(1.5, 1.5)
@@ -391,6 +752,79 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/GravityArea"]
 shape = SubResource("CircleShape2D_ftf7w")
+
+[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = 375.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(375, 375)
+mouse_filter = 2
+
+[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 95.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = -95.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 280)
+mouse_filter = 2
+
+[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "ОСТАЛОСЬ: 05:32"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Star" type="StaticBody2D" parent="MainObjectsSystem"]
 
@@ -414,18 +848,13 @@ limit_top = -6750
 limit_right = 12000
 limit_bottom = 6750
 
-[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="." method="_on_planet_input_event" binds= [0]]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="." method="_on_planet_mouse_entered" binds= [0]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="." method="_on_planet_mouse_exited"]
-[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="." method="_on_planet_input_event" binds= [1]]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="." method="_on_planet_mouse_entered" binds= [1]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="." method="_on_planet_mouse_exited"]
-[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="." method="_on_planet_input_event" binds= [2]]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="." method="_on_planet_mouse_entered" binds= [2]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="." method="_on_planet_mouse_exited"]
-[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="." method="_on_planet_input_event" binds= [3]]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="." method="_on_planet_mouse_entered" binds= [3]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="." method="_on_planet_mouse_exited"]
-[connection signal="input_event" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="." method="_on_planet_input_event" binds= [4]]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="." method="_on_planet_mouse_entered" binds= [4]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="." method="_on_planet_mouse_exited"]
