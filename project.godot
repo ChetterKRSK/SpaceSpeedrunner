@@ -78,6 +78,7 @@ Drag_Map={
 
 [physics]
 
+2d/default_gravity=0.0
 2d/default_gravity_vector=Vector2(0, 0)
 
 [rendering]

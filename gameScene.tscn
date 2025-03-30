@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=31 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
 [ext_resource type="Texture2D" uid="uid://d1mitx1fwe68h" path="res://assets/Sprites/Cursor.png" id="9_ftf7w"]
+[ext_resource type="PackedScene" uid="uid://dkfy6v0wwcf2y" path="res://scenes/player.tscn" id="12_b0yit"]
 
 [sub_resource type="Curve2D" id="Curve2D_vdwas"]
 _data = {
@@ -189,10 +190,10 @@ _data = {
 point_count = 5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mv7c2"]
-radius = 168.0
+radius = 166.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i1cje"]
-radius = 336.0
+radius = 332.0
 
 [sub_resource type="Curve2D" id="Curve2D_mv7c2"]
 _data = {
@@ -213,6 +214,7 @@ radius = 640.0
 script = ExtResource("1_vdwas")
 planetOrbits = [NodePath("MainObjectsSystem/PlanetOrbit1"), NodePath("MainObjectsSystem/PlanetOrbit2"), NodePath("MainObjectsSystem/PlanetOrbit3"), NodePath("MainObjectsSystem/PlanetOrbit4"), NodePath("MainObjectsSystem/PlanetOrbit5")]
 planetOrbitSpeed = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
+planetStartPosition = Array[float]([0.0, -99.0, -99.0, -99.0, -99.0])
 
 [node name="MainObjectsSystem" type="Node2D" parent="."]
 
@@ -291,7 +293,7 @@ rotates = false
 
 [node name="Planet1" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D"]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 5
 input_pickable = true
 script = ExtResource("3_w4qqe")
 planetName = "Древесный уголь"
@@ -304,7 +306,11 @@ shape = SubResource("CircleShape2D_2aj80")
 
 [node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
 collision_layer = 8
-collision_mask = 0
+collision_mask = 5
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/GravityArea"]
 shape = SubResource("CircleShape2D_w4qqe")
@@ -390,6 +396,9 @@ theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
 vertical_alignment = 2
 
+[node name="Player" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" instance=ExtResource("12_b0yit")]
+position = Vector2(0, -144)
+
 [node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_oqr1i")
 script = SubResource("GDScript_w4qqe")
@@ -409,7 +418,7 @@ rotates = false
 
 [node name="Planet2" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D"]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 5
 input_pickable = true
 script = ExtResource("3_w4qqe")
 planetName = "Бурый наемник"
@@ -423,7 +432,11 @@ shape = SubResource("CircleShape2D_tp0y7")
 
 [node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
 collision_layer = 8
-collision_mask = 0
+collision_mask = 5
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/GravityArea"]
 shape = SubResource("CircleShape2D_d4m0j")
@@ -530,7 +543,7 @@ rotates = false
 [node name="Planet3" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D"]
 position = Vector2(-1.74841e-07, 4)
 collision_layer = 2
-collision_mask = 0
+collision_mask = 5
 input_pickable = true
 script = ExtResource("3_w4qqe")
 planetName = "Синий монстр"
@@ -544,7 +557,11 @@ shape = SubResource("CircleShape2D_c3h2c")
 
 [node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
 collision_layer = 8
-collision_mask = 0
+collision_mask = 5
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/GravityArea"]
 shape = SubResource("CircleShape2D_b0yit")
@@ -650,7 +667,7 @@ rotates = false
 
 [node name="Planet4" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D"]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 5
 input_pickable = true
 script = ExtResource("3_w4qqe")
 planetName = "Прилунение"
@@ -664,7 +681,11 @@ shape = SubResource("CircleShape2D_mv7c2")
 
 [node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
 collision_layer = 8
-collision_mask = 0
+collision_mask = 5
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/GravityArea"]
 shape = SubResource("CircleShape2D_i1cje")
@@ -770,7 +791,7 @@ rotates = false
 
 [node name="Planet5" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D"]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 5
 input_pickable = true
 script = ExtResource("3_w4qqe")
 planetName = "Недалекий гигант"
@@ -784,7 +805,11 @@ shape = SubResource("CircleShape2D_yqr88")
 
 [node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
 collision_layer = 8
-collision_mask = 0
+collision_mask = 5
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/GravityArea"]
 shape = SubResource("CircleShape2D_ftf7w")
