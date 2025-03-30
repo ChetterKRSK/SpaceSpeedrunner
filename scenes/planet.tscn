@@ -32,7 +32,7 @@ func resizeUI():
 radius = 128.004
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4qqe"]
-radius = 320.0
+radius = 256.0
 
 [node name="Planet1" type="StaticBody2D"]
 collision_layer = 2

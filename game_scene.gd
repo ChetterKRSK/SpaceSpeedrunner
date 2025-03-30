@@ -14,7 +14,7 @@ var GAME_STATE = GAME_STATES.ON_STAR_MAP
 @export var planetOrbits: Array[Path2D]
 @export var planetOrbitSpeed: Array[float]
 
-var cameraZoomLimit: Array[float] = [1, 0.08, 2] # standart, min, max
+var cameraZoomLimit: Array[float] = [1, 0.08, 2, 0.08, 2] # standart, min, max, currentMin, currentMax
 var cameraZoomStep: float = 1.15
 var planetOrbitLineWidth: Array[float] = [3, 0, 0] # standart, min, max
 var mouseCursorSize: Array[float] = [0.1, 0, 0] # standart, min, max
@@ -79,13 +79,13 @@ func movingOrbitCursorOnMap(event):
 		
 func cameraMovingZooming():
 	if Input.is_action_just_pressed("Zoom_In_Map") or Input.is_action_pressed("Zoom_In_Map"):
-		if mainCamera.zoom.x < cameraZoomLimit[2] / cameraZoomStep:
+		if mainCamera.zoom.x < cameraZoomLimit[4] / cameraZoomStep:
 			var lastPos = get_global_mouse_position()
 			mainCamera.zoom *= cameraZoomStep
 			mainCamera.position += (lastPos - get_global_mouse_position())
 		else:
 			var lastPos = get_global_mouse_position()
-			mainCamera.zoom = Vector2(cameraZoomLimit[2], cameraZoomLimit[2])
+			mainCamera.zoom = Vector2(cameraZoomLimit[4], cameraZoomLimit[4])
 			mainCamera.position += (lastPos - get_global_mouse_position())
 			
 	if Input.is_action_just_pressed("Zoom_Out_Map") or Input.is_action_pressed("Zoom_Out_Map"):
@@ -102,9 +102,13 @@ func cameraMovingZooming():
 			if selectedPlanet != null:
 				planets[selectedPlanet].hideInfoWindow()
 			selectedPlanet = targetMousePlanet
+			cameraZoomLimit[4] = cameraZoomLimit[2] / planets[selectedPlanet].find_child("Sprite2D").scale.x
+			if mainCamera.zoom.x > cameraZoomLimit[4]:
+				changeCameraZoom()
 			planets[targetMousePlanet].showInfoWindow()
 		elif !isCursorOnPlanet and selectedPlanet != null:
 			planets[selectedPlanet].hideInfoWindow()
+			cameraZoomLimit[4] = cameraZoomLimit[2]
 			selectedPlanet = null
 	
 	if selectedPlanet != null:
@@ -114,6 +118,7 @@ func cameraMovingZooming():
 	if Input.is_action_pressed("Drag_Map"):
 		if selectedPlanet != null:
 			planets[targetMousePlanet].hideInfoWindow()
+			cameraZoomLimit[4] = cameraZoomLimit[2]
 			selectedPlanet = null
 		mainCamera.position += lastMousePosition - get_global_mouse_position()
 		if mainCamera.position.x < mainCamera.limit_left + (mainCamera.get_viewport_rect().size.x / 2) / mainCamera.zoom.x:
@@ -124,6 +129,9 @@ func cameraMovingZooming():
 			mainCamera.position.y = mainCamera.limit_top + (mainCamera.get_viewport_rect().size.y / 2) / mainCamera.zoom.y
 		if mainCamera.position.y > mainCamera.limit_bottom - (mainCamera.get_viewport_rect().size.y / 2) / mainCamera.zoom.y:
 			mainCamera.position.y = mainCamera.limit_bottom - (mainCamera.get_viewport_rect().size.y / 2) / mainCamera.zoom.y
+
+func changeCameraZoom():
+	mainCamera.zoom = Vector2(cameraZoomLimit[4], cameraZoomLimit[4])
 
 func adjustingUI():
 	var newMouseCursorScale = mouseCursorSize[0] / mainCamera.zoom.x

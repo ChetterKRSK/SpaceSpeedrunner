@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=30 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
@@ -88,7 +88,15 @@ func updateButtonEvent():
 radius = 128.004
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4qqe"]
-radius = 320.0
+radius = 256.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4qqe"]
+bg_color = Color(0, 0, 0, 0.752941)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.501961)
 
 [sub_resource type="Curve2D" id="Curve2D_oqr1i"]
 _data = {
@@ -167,7 +175,7 @@ func updateButtonEvent():
 radius = 160.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d4m0j"]
-radius = 400.0
+radius = 320.0
 
 [sub_resource type="Curve2D" id="Curve2D_tp0y7"]
 _data = {
@@ -179,7 +187,7 @@ point_count = 5
 radius = 224.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b0yit"]
-radius = 560.0
+radius = 448.0
 
 [sub_resource type="Curve2D" id="Curve2D_c3h2c"]
 _data = {
@@ -191,7 +199,7 @@ point_count = 5
 radius = 168.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i1cje"]
-radius = 420.0
+radius = 336.0
 
 [sub_resource type="Curve2D" id="Curve2D_mv7c2"]
 _data = {
@@ -203,7 +211,7 @@ point_count = 5
 radius = 192.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ftf7w"]
-radius = 480.0
+radius = 384.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oqr1i"]
 radius = 640.0
@@ -350,6 +358,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow"]
 layout_mode = 1
@@ -461,6 +470,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow"]
 layout_mode = 1
@@ -573,6 +583,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow"]
 layout_mode = 1
@@ -684,6 +695,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow"]
 layout_mode = 1
@@ -795,6 +807,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w4qqe")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow"]
 layout_mode = 1
