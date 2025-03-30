@@ -1,8 +1,7 @@
 extends CharacterBody2D
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
-
-var GAME_STATE = 0
+@onready var SM: StateMachine
 
 var planet: StaticBody2D
 
@@ -10,6 +9,7 @@ const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
 
 func _ready() -> void:
+	SM = get_tree().get_root().find_child("StateMachine", true, false)
 	planet = get_parent()
 
 func _physics_process(delta: float) -> void:
@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	rotation_degrees = calc_player_rotation(planet.position, position)
 	
-	if GAME_STATE == 0:
+	if SM.current_state.name == SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET]:
 		playerMovement()
 		move_and_slide()
 
@@ -44,6 +44,3 @@ func calc_player_rotation(planet_pos: Vector2, player_pos: Vector2) -> float:
 func right_direction(vector: Vector2) -> Vector2:
 	vector = vector.normalized()
 	return Vector2(vector.y, -vector.x).normalized()
-
-func _change_game_state(game_state):
-	GAME_STATE = game_state
