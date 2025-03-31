@@ -80,14 +80,14 @@ func cameraMovingZoomingOnMap():
 			cameraZoomLimit[4] = cameraZoomLimit[2]
 			selectedPlanet = null
 		GM.mainCamera.position += lastMousePosition - get_global_mouse_position()
-		if GM.mainCamera.position.x < GM.mainCamera.limit_left + (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x:
-			GM.mainCamera.position.x = GM.mainCamera.limit_left + (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x
-		if GM.mainCamera.position.x > GM.mainCamera.limit_right - (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x:
-			GM.mainCamera.position.x = GM.mainCamera.limit_right - (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x
-		if GM.mainCamera.position.y < GM.mainCamera.limit_top + (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y:
-			GM.mainCamera.position.y = GM.mainCamera.limit_top + (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y
-		if GM.mainCamera.position.y > GM.mainCamera.limit_bottom - (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y:
-			GM.mainCamera.position.y = GM.mainCamera.limit_bottom - (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y
+	if GM.mainCamera.position.x < GM.mainCamera.limit_left + (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x:
+		GM.mainCamera.position.x = GM.mainCamera.limit_left + (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x
+	if GM.mainCamera.position.x > GM.mainCamera.limit_right - (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x:
+		GM.mainCamera.position.x = GM.mainCamera.limit_right - (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x
+	if GM.mainCamera.position.y < GM.mainCamera.limit_top + (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y:
+		GM.mainCamera.position.y = GM.mainCamera.limit_top + (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y
+	if GM.mainCamera.position.y > GM.mainCamera.limit_bottom - (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y:
+		GM.mainCamera.position.y = GM.mainCamera.limit_bottom - (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y
 
 func changeCameraZoom():
 	if GM.mainCamera.zoom.x > cameraZoomLimit[4]:

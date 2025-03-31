@@ -1,15 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgpqodrj0wh8w"]
+[gd_scene load_steps=6 format=3 uid="uid://bgpqodrj0wh8w"]
 
-[ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_errlg"]
+[ext_resource type="Texture2D" uid="uid://skma4sicrr54" path="res://assets/Sprites/TestPlanet.png" id="1_bl13t"]
 [ext_resource type="PackedScene" uid="uid://dkfy6v0wwcf2y" path="res://scenes/player.tscn" id="2_bl13t"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_lpvoh"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_bl13t"]
 radius = 128.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j5jx5"]
 radius = 256.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_iyx0m"]
+radius = 8.0
+
 [node name="Level" type="Node2D"]
+position = Vector2(-1, 0)
 
 [node name="PlanetCamera" type="Camera2D" parent="."]
 ignore_rotation = false
@@ -19,12 +23,25 @@ zoom = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 5
 
+[node name="Line2D" type="Line2D" parent="Planet"]
+z_index = 5
+points = PackedVector2Array(0, 0, 0, -27.895)
+width = 2.0
+
 [node name="Sprite2D" type="Sprite2D" parent="Planet"]
-texture = ExtResource("1_errlg")
+position = Vector2(0, 1.11759e-06)
+scale = Vector2(0.408293, 0.406995)
+texture = ExtResource("1_bl13t")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Planet"]
+position = Vector2(-1, 1.11759e-06)
+scale = Vector2(0.408293, 0.406995)
+polygon = PackedVector2Array(-19.5938, -314.5, -36.7383, -312.043, -61.2305, -307.129, -102.867, -294.844, -124.91, -287.473, -151.852, -275.188, -171.445, -260.445, -178.793, -245.703, -193.488, -223.59, -227.777, -176.906, -262.066, -137.594, -296.355, -103.195, -311.051, -41.7695, -311.051, -24.5703, -289.008, 22.1133, -271.863, 61.4258, -262.066, 113.023, -254.719, 181.82, -235.125, 206.391, -217.98, 226.047, -195.938, 245.703, -151.852, 275.188, -127.359, 287.473, -93.0703, 299.758, -58.7813, 309.586, -26.9414, 314.5, 26.9414, 314.5, 117.563, 275.188, 183.691, 245.703, 208.184, 235.875, 237.574, 208.848, 271.863, 162.164, 276.762, 149.879, 286.559, 108.109, 291.457, 81.082, 315.949, -2.45703, 315.949, -22.1133, 311.051, -56.5117, 303.703, -76.168, 293.906, -105.652, 276.762, -149.879, 269.414, -159.707, 227.777, -203.934, 217.98, -218.676, 213.082, -228.504, 200.836, -243.246, 171.445, -265.359, 139.5, -282.8, 97.9688, -299.758, 46.5352, -312.043, 14.6953, -314.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Planet"]
-shape = SubResource("CircleShape2D_lpvoh")
-one_way_collision_margin = 0.0
+visible = false
+shape = SubResource("CircleShape2D_bl13t")
+disabled = true
 
 [node name="GravityArea" type="Area2D" parent="Planet"]
 collision_layer = 8
@@ -38,6 +55,15 @@ gravity_direction = Vector2(0, 0)
 shape = SubResource("CircleShape2D_j5jx5")
 
 [node name="Player" parent="Planet" instance=ExtResource("2_bl13t")]
-position = Vector2(0, -144)
+position = Vector2(1, -144)
+wall_min_slide_angle = 0.0
+
+[node name="CollisionShape2D" parent="Planet/Player" index="0"]
+visible = false
+disabled = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Planet/Player"]
+position = Vector2(0, 7)
+shape = SubResource("CircleShape2D_iyx0m")
 
 [editable path="Planet/Player"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=36 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
@@ -14,6 +14,7 @@
 [ext_resource type="Theme" uid="uid://du7np0egwtb80" path="res://styles/planetInfoWindow.tres" id="5_d4m0j"]
 [ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
+[ext_resource type="Texture2D" uid="uid://df6jx5yhfun4q" path="res://assets/Sprites/Fog.png" id="7_gh3f3"]
 [ext_resource type="Texture2D" uid="uid://d1mitx1fwe68h" path="res://assets/Sprites/Cursor.png" id="9_ftf7w"]
 [ext_resource type="PackedScene" uid="uid://dkfy6v0wwcf2y" path="res://scenes/player.tscn" id="12_b0yit"]
 
@@ -236,58 +237,83 @@ script = ExtResource("4_aui1i")
 
 [node name="BG" type="Node" parent="MainObjectsSystem"]
 
-[node name="SpaceBg" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="Stars" type="Node2D" parent="MainObjectsSystem/BG"]
+
+[node name="SpaceBg" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 position = Vector2(-11520, -6480)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg2" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="SpaceBg2" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 position = Vector2(0, -6480)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg3" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="SpaceBg3" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 position = Vector2(11520, -6480)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg4" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="SpaceBg4" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 position = Vector2(-11520, 0.000488281)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg5" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="SpaceBg5" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg6" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="SpaceBg6" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 position = Vector2(11520, 0)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg7" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="SpaceBg7" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 position = Vector2(-11520, 6480)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg8" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="SpaceBg8" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 position = Vector2(0, 6480)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg9" type="Sprite2D" parent="MainObjectsSystem/BG"]
+[node name="SpaceBg9" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
 position = Vector2(11520, 6480)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_ftf7w")
+
+[node name="Fog" type="Node2D" parent="MainObjectsSystem/BG"]
+
+[node name="Fog3" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
+modulate = Color(0, 0.294118, 0, 0.392157)
+z_index = -5
+scale = Vector2(21.8911, -21.8911)
+texture = ExtResource("7_gh3f3")
+
+[node name="Fog2" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
+modulate = Color(0.294118, 0, 0, 0.392157)
+z_index = -5
+position = Vector2(-0.00130882, 0.000232935)
+rotation = 3.14159
+scale = Vector2(22.401, -22.401)
+texture = ExtResource("7_gh3f3")
+
+[node name="Fog4" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
+modulate = Color(0, 0, 0.294118, 0.392157)
+z_index = -5
+position = Vector2(-0.00130882, 0.000232935)
+scale = Vector2(22.8711, 22.8711)
+texture = ExtResource("7_gh3f3")
 
 [node name="PlanetOrbit1" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_vdwas")
@@ -312,7 +338,14 @@ collision_layer = 2
 collision_mask = 5
 input_pickable = true
 script = ExtResource("3_w4qqe")
-planetName = "Древесный уголь"
+planetName = "Астрея вечно зелёная"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
+visible = false
+position = Vector2(-1, 1.11759e-06)
+scale = Vector2(0.408293, 0.406995)
+polygon = PackedVector2Array(-19.5938, -314.5, -36.7383, -312.043, -61.2305, -307.129, -102.867, -294.844, -124.91, -287.473, -151.852, -275.188, -171.445, -260.445, -178.793, -245.703, -193.488, -223.59, -227.777, -176.906, -262.066, -137.594, -296.355, -103.195, -311.051, -41.7695, -311.051, -24.5703, -289.008, 22.1133, -271.863, 61.4258, -262.066, 113.023, -254.719, 181.82, -235.125, 206.391, -217.98, 226.047, -195.938, 245.703, -151.852, 275.188, -127.359, 287.473, -93.0703, 299.758, -58.7813, 309.586, -26.9414, 314.5, 26.9414, 314.5, 117.563, 275.188, 183.691, 245.703, 208.184, 235.875, 237.574, 208.848, 271.863, 162.164, 276.762, 149.879, 286.559, 108.109, 291.457, 81.082, 315.949, -2.45703, 315.949, -22.1133, 311.051, -56.5117, 303.703, -76.168, 293.906, -105.652, 276.762, -149.879, 269.414, -159.707, 227.777, -203.934, 217.98, -218.676, 213.082, -228.504, 200.836, -243.246, 171.445, -265.359, 139.5, -282.8, 97.9688, -299.758, 46.5352, -312.043, 14.6953, -314.5)
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
 texture = ExtResource("1_ijlju")
@@ -411,9 +444,6 @@ size_flags_stretch_ratio = 0.5
 theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
 vertical_alignment = 2
-
-[node name="Player" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" instance=ExtResource("12_b0yit")]
-position = Vector2(0, -144)
 
 [node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_oqr1i")
@@ -557,7 +587,7 @@ position = Vector2(3500, 0)
 rotates = false
 
 [node name="Planet3" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D"]
-position = Vector2(-1.74841e-07, 4)
+position = Vector2(-1.74841e-07, 0)
 collision_layer = 2
 collision_mask = 5
 input_pickable = true
@@ -565,6 +595,7 @@ script = ExtResource("3_w4qqe")
 planetName = "Синий монстр"
 
 [node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
+position = Vector2(0, -4)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("3_2aj80")
 
@@ -663,6 +694,9 @@ size_flags_stretch_ratio = 0.5
 theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
 vertical_alignment = 2
+
+[node name="Player" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" instance=ExtResource("12_b0yit")]
+position = Vector2(0, -239)
 
 [node name="PlanetOrbit4" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
 curve = SubResource("Curve2D_c3h2c")

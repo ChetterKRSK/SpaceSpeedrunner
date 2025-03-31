@@ -9,7 +9,7 @@ var cameraZoomLimit: Array[float] = [1, 0.08, 2] # standart, min, max
 var cameraZoomStep: float = 1.15
 
 func _ready() -> void:
-	planet = $"../../MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"
+	planet = $"../../MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"
 
 
 func process(delta: float) -> void:

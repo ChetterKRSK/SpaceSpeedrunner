@@ -2,26 +2,6 @@ extends Node2D
 
 signal change_game_state
 
-enum GAME_STATES{
-	ON_PLANET,
-	ON_ORBIT,
-	ON_STAR_MAP
-}
-var GAME_STATE:
-	get():
-		return GAME_STATE
-	set(value):
-		GAME_STATE = value
-		change_game_state.emit(GAME_STATE)
-		match GAME_STATE:
-			GAME_STATES.ON_PLANET:
-				zoomOnPlanet(playersPlanet)
-				showUIOnPlanet()
-			GAME_STATES.ON_ORBIT:
-				pass
-			GAME_STATES.ON_STAR_MAP:
-				showUIOnMap()
-
 @onready var SM: StateMachine = $StateMachine
 
 @onready var mouseCursor: Sprite2D = $MouseCursor
@@ -52,10 +32,10 @@ var planets: Array[StaticBody2D]
 
 
 func _ready() -> void:
-	SM.set_state(SM.GAME_STATES_NAME[SM.GAME_STATES.ON_STAR_MAP])
+	SM.set_state(SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET])
 	setStandartValues()
 
-func _process(delta: float) -> void:	
+func _process(delta: float) -> void:
 	planetOrbitMoving(delta)
 
 func _input(event) -> void:

@@ -4,10 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://dqaqxhfnpl8ah" path="res://assets/FREE_Samurai 2D Pixel Art v1.2/IDLE.png" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://ouydfohjyalt" path="res://assets/FREE_Samurai 2D Pixel Art v1.2/RUN.png" id="3_qlg0r"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_errlg"]
-radius = 8.0
-height = 32.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_iyx0m"]
 atlas = ExtResource("2_dqkch")
 region = Rect2(0, 0, 96, 96)
@@ -203,15 +199,15 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
+radius = 7.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 6
 motion_mode = 1
 up_direction = Vector2(0, 1)
 platform_floor_layers = 4294967294
 script = ExtResource("1_qhqgy")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_errlg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)
@@ -221,3 +217,7 @@ animation = &"idle"
 autoplay = "idle"
 frame = 1
 frame_progress = 0.352369
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_qhqgy")

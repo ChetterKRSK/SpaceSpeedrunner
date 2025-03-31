@@ -1,7 +1,9 @@
 extends CharacterBody2D
 
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var SM: StateMachine
+
+@onready var line_2d: Line2D = $"../Line2D"
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 
 var planet: StaticBody2D
 
@@ -15,12 +17,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !is_on_wall():
 		velocity += get_gravity() * delta
-	rotation_degrees = calc_player_rotation(planet.position, position)
-	
-	if SM.current_state.name == SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET]:
-		playerMovement()
-		move_and_slide()
-
+	else:# velocity.x > 0.00001 or velocity.x < -0.00001 or velocity.y > 0.00001 or velocity.y < -0.00001:
+		rotation_degrees = calc_player_rotation(get_wall_normal())
+	#line_2d.points[1] = normal * 100
+	#if SM.current_state.name == SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET]:
+		#playerMovement()
+		#move_and_slide()
+	playerMovement()
+	move_and_slide()
 
 func playerMovement():
 	var direction := Input.get_axis("Move_Left", "Move_Right")
@@ -35,9 +39,8 @@ func playerMovement():
 		anim.play("idle")
 		velocity = velocity.lerp(Vector2(), 0.2)
 
-func calc_player_rotation(planet_pos: Vector2, player_pos: Vector2) -> float:
-	var relative_position = player_pos - planet_pos
-	var angle_in_radians = relative_position.angle()
+func calc_player_rotation(normalVector: Vector2) -> float:
+	var angle_in_radians = normalVector.angle()
 	var angle_in_degrees = rad_to_deg(angle_in_radians)
 	return angle_in_degrees + 90
 
