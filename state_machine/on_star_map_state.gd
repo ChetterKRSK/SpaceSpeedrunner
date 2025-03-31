@@ -25,7 +25,6 @@ var lastMousePosition: Vector2
 #endregion
 
 func _ready() -> void:
-	print("2")
 	pass
 
 func process(delta: float) -> void:
@@ -70,7 +69,7 @@ func cameraMovingZoomingOnMap():
 		else:
 			GM.mainCamera.zoom = Vector2(cameraZoomLimit[1], cameraZoomLimit[1])
 			GM.mainCamera.position = Vector2(0, 0)
-	
+
 	if selectedPlanet != null:
 		GM.mainCamera.position = GM.planetPaths[selectedPlanet].position
 	if Input.is_action_just_pressed("Drag_Map"):
@@ -89,13 +88,13 @@ func cameraMovingZoomingOnMap():
 			GM.mainCamera.position.y = GM.mainCamera.limit_top + (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y
 		if GM.mainCamera.position.y > GM.mainCamera.limit_bottom - (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y:
 			GM.mainCamera.position.y = GM.mainCamera.limit_bottom - (GM.mainCamera.get_viewport_rect().size.y / 2) / GM.mainCamera.zoom.y
-			
+
 func changeCameraZoom():
 	if GM.mainCamera.zoom.x > cameraZoomLimit[4]:
 		GM.mainCamera.zoom = Vector2(cameraZoomLimit[4], cameraZoomLimit[4])
 	elif GM.mainCamera.zoom.x < cameraZoomLimit[3]:
 		GM.mainCamera.zoom = Vector2(cameraZoomLimit[3], cameraZoomLimit[3])
-		
+
 func adjustingUI():
 	var newMouseCursorScale = mouseCursorStandartSize / GM.mainCamera.zoom.x
 	mouseCursor.scale = Vector2(newMouseCursorScale, newMouseCursorScale)
@@ -103,7 +102,7 @@ func adjustingUI():
 	for orbit in GM.planetOrbits:
 		orbit.line_width = newPlanetOrbitLineWidth
 		orbit.updateButtonEvent()
-		
+
 func movingOrbitCursorOnMap(event):
 	if event is InputEventMouseMotion:
 		var angleMousePosition: float = (get_global_mouse_position() - Vector2()).angle()

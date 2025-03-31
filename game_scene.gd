@@ -52,8 +52,7 @@ var planets: Array[StaticBody2D]
 
 
 func _ready() -> void:
-	print("1")
-	SM.set_state(SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET])
+	SM.set_state(SM.GAME_STATES_NAME[SM.GAME_STATES.ON_STAR_MAP])
 	setStandartValues()
 
 func _process(delta: float) -> void:	
