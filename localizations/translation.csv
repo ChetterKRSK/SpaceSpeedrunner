@@ -1,0 +1,5 @@
+id,"en","ru"
+TOOLTIP_INTERACT,"Press ""%s""
+to interact","Нажмите ""%s""
+для взаимодействия"
+PLANET_BEFORE_TURN,Before turn: %s,До оборота: %s

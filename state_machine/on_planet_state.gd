@@ -9,6 +9,7 @@ var playerCharacter: CharacterBody2D
 var cameraZoomLimit: Array[float] = [1, 0.08, 2, 0.08, 2] # standart, min, max, currentMin, currentMax
 var cameraZoomStep: float = 1.15
 
+
 func _ready() -> void:
 	planet = get_tree().get_nodes_in_group("planets")[0]
 	playerCharacter = get_tree().get_nodes_in_group("playerCharacter")[0]
@@ -17,18 +18,22 @@ func open() -> void:
 	cameraZoomLimit[4] = cameraZoomLimit[2] / planet.find_child("Sprite2D").scale.x
 	cameraZoomLimit[3] = cameraZoomLimit[4] - 0.5
 	
-	playerCharacter.visible = true
 	zoomOnPlanet()
 	
+	for node in get_tree().get_nodes_in_group("on_planet_state_objects"):
+		if !node.get_meta("is_situational"):
+			node.visible = true
+
 func close() -> void:
-	playerCharacter.visible = false
+	for node in get_tree().get_nodes_in_group("on_planet_state_objects"):
+		node.visible = false
 
 func process(delta: float) -> void:
 	cameraMovingZoomingOnPlanet()
 
 func physics_process(delta: float) -> void:
 	pass
-	
+
 func input(event: InputEvent) -> void:
 	toggleMap(event)
 
@@ -49,9 +54,12 @@ func cameraMovingZoomingOnPlanet():
 			GM.mainCamera.zoom = Vector2(cameraZoomLimit[3], cameraZoomLimit[3])
 
 func zoomOnPlanet():
-	GM.mainCamera.zoom = Vector2(cameraZoomLimit[4], cameraZoomLimit[4])
+	if GM.mainCamera.zoom.x > cameraZoomLimit[4]:
+		GM.mainCamera.zoom = Vector2(cameraZoomLimit[4], cameraZoomLimit[4])
+	elif GM.mainCamera.zoom.x < cameraZoomLimit[3]:
+		GM.mainCamera.zoom = Vector2(cameraZoomLimit[3], cameraZoomLimit[3])
 	GM.mainCamera.position = planet.global_position
-	
+
 func toggleMap(event):
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("Toggle_Map"):

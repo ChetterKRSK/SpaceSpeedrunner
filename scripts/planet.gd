@@ -9,6 +9,7 @@ var endOfTurnSecond: float = 0
 var infoWindowStandartPosition: Vector2
 var isInfoWindowShow = false
 
+
 func _ready() -> void:
 	mainCamera = get_viewport().get_camera_2d()
 	if infoWindow:
@@ -20,7 +21,7 @@ func _process(delta: float) -> void:
 		updateUI()
 		if isInfoWindowShow:
 			resizeUI()
-	
+
 
 func showInfoWindow():
 	infoWindow.visible = true
@@ -56,5 +57,4 @@ func updateUI():
 	var strTimer: String = str(minutes) if minutes >= 10 else "0" + str(minutes)
 	strTimer += ":"
 	strTimer += str(seconds) if seconds >= 10 else "0" + str(seconds)
-	$UI/InfoWindow/VBoxContainer/TurnoverTime.text = "ОСТАЛОСЬ: %s" % [strTimer]
-	
+	$UI/InfoWindow/VBoxContainer/TurnoverTime.text = tr("PLANET_BEFORE_TURN") % [strTimer]

@@ -17,6 +17,7 @@ var current_state: Object
 var states: Dictionary[String, Object]
 var history: Array[Object]
 
+
 func _ready() -> void:
 	for state in get_children():
 		state.fsm = self
@@ -31,6 +32,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	current_state.physics_process(delta)
+
 
 func change_state(state_name):
 	history.append(current_state)

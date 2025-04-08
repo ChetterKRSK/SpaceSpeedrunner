@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0vro1yvrd8vr"]
+
+[ext_resource type="Texture2D" uid="uid://c0gbw8mjwc2kd" path="res://assets/Sprites/ракета.png" id="1_3341w"]
+[ext_resource type="Script" uid="uid://dp6v65ivplicc" path="res://scripts/rocket.gd" id="1_dkv7l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkv7l"]
+size = Vector2(58, 85.4867)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_agf72"]
+size = Vector2(35.1108, 91.6755)
+
+[node name="Rocket" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 6
+motion_mode = 1
+platform_floor_layers = 4294967278
+script = ExtResource("1_dkv7l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -3.55271e-15)
+scale = Vector2(0.134362, 0.142686)
+texture = ExtResource("1_3341w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.25663)
+shape = SubResource("RectangleShape2D_dkv7l")
+
+[node name="InteractTooltipArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractTooltipArea"]
+position = Vector2(0, 1.83154)
+shape = SubResource("RectangleShape2D_agf72")
+debug_color = Color(0, 0.640994, 0.341342, 0.42)
+
+[node name="UI" type="Control" parent="." groups=["on_planet_state_objects"]]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InteractTooltip" type="Label" parent="UI"]
+visible = false
+offset_left = -110.0
+offset_top = -110.0
+offset_right = 110.0
+offset_bottom = -50.0
+pivot_offset = Vector2(110, 110)
+theme_override_font_sizes/font_size = 20
+text = "Для взаимодействия
+Нажмите \"%s\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="InteractTooltipArea" to="." method="_on_interact_tooltip_area_body_entered"]
+[connection signal="body_exited" from="InteractTooltipArea" to="." method="_on_interact_tooltip_area_body_exited"]

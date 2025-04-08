@@ -28,6 +28,7 @@ func _process(delta: float) -> void:
 func _input(event) -> void:
 	pass
 
+
 func setStandartValues():
 	for i in planetStartPosition.size():
 		if planetStartPosition[i] == -99:

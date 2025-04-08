@@ -24,35 +24,31 @@ var targetMousePlanet
 var lastMousePosition: Vector2
 #endregion
 
+
 func _ready() -> void:
 	pass
 
 func open() -> void:
-	mouseCursor.visible = true
-	for orbit in get_tree().get_nodes_in_group("planetOrbits"):
-		orbit.line.visible = true
-	for planet in get_tree().get_nodes_in_group("planets"):
-		planet.find_child("UI").visible = true
-	
+	for node in get_tree().get_nodes_in_group("on_star_map_state_objects"):
+		if !node.get_meta("is_situational"):
+			node.visible = true
+
 func close() -> void:
-	mouseCursor.visible = false
-	for orbit in get_tree().get_nodes_in_group("planetOrbits"):
-		orbit.line.visible = false
-	for planet in get_tree().get_nodes_in_group("planets"):
-		planet.find_child("UI").visible = false
+	for node in get_tree().get_nodes_in_group("on_star_map_state_objects"):
+		node.visible = false
 
 func process(delta: float) -> void:
 	selectingPlanetOnMap()
 	cameraMovingZoomingOnMap()
 	adjustingUI()
-	
+
 func physics_process(delta: float) -> void:
 	pass
 	
 func input(event: InputEvent) -> void:
 	movingOrbitCursorOnMap(event)
 	toggleMap(event)
-	
+
 
 func selectingPlanetOnMap():
 	if Input.is_action_just_pressed("Mouse_Left_Button"):
