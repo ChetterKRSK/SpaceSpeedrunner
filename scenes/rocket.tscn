@@ -34,6 +34,7 @@ shape = SubResource("RectangleShape2D_agf72")
 debug_color = Color(0, 0.640994, 0.341342, 0.42)
 
 [node name="UI" type="Control" parent="." groups=["on_planet_state_objects"]]
+z_index = 5
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -41,6 +42,7 @@ offset_bottom = 40.0
 
 [node name="InteractTooltip" type="Label" parent="UI"]
 visible = false
+layout_mode = 0
 offset_left = -110.0
 offset_top = -110.0
 offset_right = 110.0

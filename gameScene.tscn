@@ -1,23 +1,22 @@
-[gd_scene load_steps=37 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=36 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
 [ext_resource type="Texture2D" uid="uid://d0vw5hu814uri" path="res://assets/Sprites/SpaceBG2.png" id="2_ftf7w"]
 [ext_resource type="Script" uid="uid://d32itkxdecy5m" path="res://state_machine/state_machine.gd" id="2_i1cje"]
-[ext_resource type="Texture2D" uid="uid://cg8d6scweyojp" path="res://assets/Sprites/Planet2.png" id="2_vdwas"]
 [ext_resource type="Texture2D" uid="uid://ck5wuiqdc7snw" path="res://assets/Sprites/Planet3.png" id="3_2aj80"]
 [ext_resource type="Script" uid="uid://sof2nveeoa7w" path="res://state_machine/on_planet_state.gd" id="3_66kf3"]
-[ext_resource type="Script" uid="uid://b7tvmb83siua3" path="res://scripts/planet.gd" id="3_w4qqe"]
 [ext_resource type="Script" uid="uid://v0ggxk4j04y" path="res://state_machine/on_star_map_state.gd" id="4_aui1i"]
 [ext_resource type="Texture2D" uid="uid://yq0luvem7lf" path="res://assets/Sprites/Planet4.png" id="4_ftf7w"]
 [ext_resource type="Script" uid="uid://bw01fdv2gvlbt" path="res://state_machine/on_planet_orbit_state.gd" id="5_0q2ys"]
-[ext_resource type="Theme" uid="uid://du7np0egwtb80" path="res://styles/planetInfoWindow.tres" id="5_d4m0j"]
 [ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
 [ext_resource type="Texture2D" uid="uid://df6jx5yhfun4q" path="res://assets/Sprites/Fog.png" id="7_gh3f3"]
 [ext_resource type="Texture2D" uid="uid://d1mitx1fwe68h" path="res://assets/Sprites/Cursor.png" id="9_ftf7w"]
 [ext_resource type="PackedScene" uid="uid://dkfy6v0wwcf2y" path="res://scenes/player.tscn" id="12_b0yit"]
 [ext_resource type="PackedScene" uid="uid://c0vro1yvrd8vr" path="res://scenes/rocket.tscn" id="12_h52ud"]
+[ext_resource type="PackedScene" uid="uid://qdohnvxii20c" path="res://scenes/basePlanet.tscn" id="13_h52ud"]
+[ext_resource type="Texture2D" uid="uid://cg8d6scweyojp" path="res://assets/Sprites/Planet2.png" id="14_usena"]
 
 [sub_resource type="Curve2D" id="Curve2D_vdwas"]
 _data = {
@@ -92,10 +91,10 @@ func updateButtonEvent():
 	curve.add_point(Vector2(orbitRadius, 0), Vector2(0, orbitSmooth), Vector2())
 "
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2aj80"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_usena"]
 radius = 128.004
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_w4qqe"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_e2420"]
 radius = 256.0
 
 [sub_resource type="Curve2D" id="Curve2D_oqr1i"]
@@ -171,10 +170,10 @@ func updateButtonEvent():
 	curve.add_point(Vector2(orbitRadius, 0), Vector2(0, orbitSmooth), Vector2())
 "
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tp0y7"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_h52ud"]
 radius = 160.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_d4m0j"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_gc1g1"]
 radius = 320.0
 
 [sub_resource type="Curve2D" id="Curve2D_tp0y7"]
@@ -183,10 +182,10 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_c3h2c"]
-radius = 224.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_1mowf"]
+radius = 224.002
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_b0yit"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_pvdr1"]
 radius = 448.0
 
 [sub_resource type="Curve2D" id="Curve2D_c3h2c"]
@@ -195,10 +194,10 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mv7c2"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_e07w8"]
 radius = 166.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_i1cje"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_e1m76"]
 radius = 332.0
 
 [sub_resource type="Curve2D" id="Curve2D_mv7c2"]
@@ -207,10 +206,10 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_yqr88"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_wk0ko"]
 radius = 192.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ftf7w"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_gh3f3"]
 radius = 384.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oqr1i"]
@@ -315,645 +314,168 @@ position = Vector2(-0.00130882, 0.000232935)
 scale = Vector2(22.8711, 22.8711)
 texture = ExtResource("7_gh3f3")
 
-[node name="PlanetOrbit1" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
+[node name="PlanetOrbit0" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_vdwas")
 script = SubResource("GDScript_oqr1i")
-line = NodePath("PlanetOrbit1Line")
+line = NodePath("PlanetOrbit0Line")
 orbitRadius = 1500.0
 line_width = 35.0
 
-[node name="PlanetOrbit1Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit1" groups=["on_star_map_state_objects"]]
+[node name="PlanetOrbit0Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit0" groups=["on_star_map_state_objects"]]
 points = PackedVector2Array(1500, 0, 1492.22, -152.802, 1469.38, -301.318, 1432.27, -444.781, 1381.64, -582.422, 1318.27, -713.47, 1242.92, -837.158, 1156.37, -952.716, 1059.38, -1059.38, 952.716, -1156.37, 837.158, -1242.92, 713.47, -1318.27, 582.422, -1381.64, 444.781, -1432.27, 301.318, -1469.38, 152.802, -1492.22, 0, -1500, -152.802, -1492.22, -301.318, -1469.38, -444.781, -1432.27, -582.422, -1381.64, -713.47, -1318.27, -837.158, -1242.92, -952.716, -1156.37, -1059.38, -1059.38, -1156.37, -952.716, -1242.92, -837.158, -1318.27, -713.47, -1381.64, -582.422, -1432.27, -444.781, -1469.38, -301.318, -1492.22, -152.802, -1500, 0, -1492.22, 152.802, -1469.38, 301.318, -1432.27, 444.781, -1381.64, 582.422, -1318.27, 713.47, -1242.92, 837.158, -1156.37, 952.716, -1059.38, 1059.38, -952.716, 1156.37, -837.158, 1242.92, -713.47, 1318.27, -582.422, 1381.64, -444.781, 1432.27, -301.318, 1469.38, -152.802, 1492.22, 0, 1500, 152.802, 1492.22, 301.318, 1469.38, 444.781, 1432.27, 582.422, 1381.64, 713.47, 1318.27, 837.158, 1242.92, 952.716, 1156.37, 1059.38, 1059.38, 1156.37, 952.716, 1242.92, 837.158, 1318.27, 713.47, 1381.64, 582.422, 1432.27, 444.781, 1469.38, 301.318, 1492.22, 152.802, 1500, 0)
 width = 35.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit1" groups=["planetPathFollows"]]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit0" groups=["planetPathFollows"]]
 position = Vector2(1500, 0)
 progress = 9420.15
 rotates = false
 
-[node name="Planet1" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D" groups=["planets"]]
-collision_layer = 2
-collision_mask = 21
-input_pickable = true
-script = ExtResource("3_w4qqe")
+[node name="Planet" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D" instance=ExtResource("13_h52ud")]
 planetName = "Астрея вечно зелёная"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
-visible = false
-position = Vector2(-1, 1.11759e-06)
-scale = Vector2(0.408293, 0.406995)
-polygon = PackedVector2Array(-19.5938, -314.5, -36.7383, -312.043, -61.2305, -307.129, -102.867, -294.844, -124.91, -287.473, -151.852, -275.188, -171.445, -260.445, -178.793, -245.703, -193.488, -223.59, -227.777, -176.906, -262.066, -137.594, -296.355, -103.195, -311.051, -41.7695, -311.051, -24.5703, -289.008, 22.1133, -271.863, 61.4258, -262.066, 113.023, -254.719, 181.82, -235.125, 206.391, -217.98, 226.047, -195.938, 245.703, -151.852, 275.188, -127.359, 287.473, -93.0703, 299.758, -58.7813, 309.586, -26.9414, 314.5, 26.9414, 314.5, 117.563, 275.188, 183.691, 245.703, 208.184, 235.875, 237.574, 208.848, 271.863, 162.164, 276.762, 149.879, 286.559, 108.109, 291.457, 81.082, 315.949, -2.45703, 315.949, -22.1133, 311.051, -56.5117, 303.703, -76.168, 293.906, -105.652, 276.762, -149.879, 269.414, -159.707, 227.777, -203.934, 217.98, -218.676, 213.082, -228.504, 200.836, -243.246, 171.445, -265.359, 139.5, -282.8, 97.9688, -299.758, 46.5352, -312.043, 14.6953, -314.5)
-disabled = true
-
-[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
+[node name="Sprite2D" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" index="0"]
+position = Vector2(-0.5, -0.5)
+scale = Vector2(1.00391, 1.00391)
 texture = ExtResource("1_ijlju")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
-shape = SubResource("CircleShape2D_2aj80")
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" index="1"]
+shape = SubResource("CircleShape2D_usena")
 
-[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1"]
-collision_layer = 8
-collision_mask = 21
-gravity_space_override = 3
-gravity_point = true
-gravity_point_center = Vector2(0, 0)
-gravity_direction = Vector2(0, 0)
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet/GravityArea" index="0"]
+shape = SubResource("CircleShape2D_e2420")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/GravityArea"]
-shape = SubResource("CircleShape2D_w4qqe")
-
-[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" groups=["on_star_map_state_objects"]]
-z_index = 5
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -375.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = 375.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(375, 375)
-mouse_filter = 2
-
-[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 95.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = -95.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(0, 280)
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 2
-
-[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "ОСТАЛОСЬ: 05:32"
-vertical_alignment = 2
-uppercase = true
-
-[node name="Rocket" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" groups=["on_planet_state_objects"] instance=ExtResource("12_h52ud")]
+[node name="Rocket" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" groups=["on_planet_state_objects"] instance=ExtResource("12_h52ud")]
 position = Vector2(165, -43)
 rotation = 1.34869
 
-[node name="Player" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" groups=["on_planet_state_objects", "playerCharacter"] instance=ExtResource("12_b0yit")]
+[node name="Player" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" groups=["on_planet_state_objects", "playerCharacter"] instance=ExtResource("12_b0yit")]
 position = Vector2(0, -143)
 
-[node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
+[node name="PlanetOrbit1" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_oqr1i")
 script = SubResource("GDScript_w4qqe")
-line = NodePath("PlanetOrbit2Line")
+line = NodePath("PlanetOrbit1Line")
 orbitRadius = 2500.0
 line_width = 25.0
 
-[node name="PlanetOrbit2Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit2" groups=["on_star_map_state_objects"]]
+[node name="PlanetOrbit1Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit1" groups=["on_star_map_state_objects"]]
 points = PackedVector2Array(2500, 0, 2487.03, -254.669, 2448.97, -502.197, 2387.12, -741.302, 2302.73, -970.703, 2197.11, -1189.12, 2071.53, -1395.26, 1927.28, -1587.86, 1765.63, -1765.63, 1587.86, -1927.28, 1395.26, -2071.53, 1189.12, -2197.11, 970.703, -2302.73, 741.302, -2387.12, 502.197, -2448.97, 254.669, -2487.03, 0, -2500, -254.669, -2487.03, -502.197, -2448.97, -741.302, -2387.12, -970.703, -2302.73, -1189.12, -2197.11, -1395.26, -2071.53, -1587.86, -1927.28, -1765.63, -1765.63, -1927.28, -1587.86, -2071.53, -1395.26, -2197.11, -1189.12, -2302.73, -970.703, -2387.12, -741.302, -2448.97, -502.197, -2487.03, -254.669, -2500, 0, -2487.03, 254.669, -2448.97, 502.197, -2387.12, 741.302, -2302.73, 970.703, -2197.11, 1189.12, -2071.53, 1395.26, -1927.28, 1587.86, -1765.63, 1765.63, -1587.86, 1927.28, -1395.26, 2071.53, -1189.12, 2197.11, -970.703, 2302.73, -741.302, 2387.12, -502.197, 2448.97, -254.669, 2487.03, 0, 2500, 254.669, 2487.03, 502.197, 2448.97, 741.302, 2387.12, 970.703, 2302.73, 1189.12, 2197.11, 1395.26, 2071.53, 1587.86, 1927.28, 1765.63, 1765.63, 1927.28, 1587.86, 2071.53, 1395.26, 2197.11, 1189.12, 2302.73, 970.703, 2387.12, 741.302, 2448.97, 502.197, 2487.03, 254.669, 2500, 0)
 width = 35.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit2" groups=["planetPathFollows"]]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit1" groups=["planetPathFollows"]]
 position = Vector2(2500, 0)
 rotates = false
 
-[node name="Planet2" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D" groups=["planets"]]
-collision_layer = 2
-collision_mask = 21
-input_pickable = true
-script = ExtResource("3_w4qqe")
-planetName = "Бурый наемник"
+[node name="Planet" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D" instance=ExtResource("13_h52ud")]
+planetName = "Бурый наёмник"
 
-[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("2_vdwas")
+[node name="Sprite2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet" index="0"]
+position = Vector2(-0.500085, -0.499991)
+scale = Vector2(1.25391, 1.25391)
+texture = ExtResource("14_usena")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
-shape = SubResource("CircleShape2D_tp0y7")
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet" index="1"]
+shape = SubResource("CircleShape2D_h52ud")
 
-[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2"]
-collision_layer = 8
-collision_mask = 21
-gravity_space_override = 3
-gravity_point = true
-gravity_point_center = Vector2(0, 0)
-gravity_direction = Vector2(0, 0)
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet/GravityArea" index="0"]
+shape = SubResource("CircleShape2D_gc1g1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/GravityArea"]
-shape = SubResource("CircleShape2D_d4m0j")
-
-[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" groups=["on_star_map_state_objects"]]
-z_index = 5
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -375.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = 375.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(375, 375)
-mouse_filter = 2
-
-[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 95.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = -95.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(0, 280)
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-theme_override_constants/separation = 0
-
-[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 2
-
-[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "ОСТАЛОСЬ: 05:32"
-vertical_alignment = 2
-uppercase = true
-
-[node name="PlanetOrbit3" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
+[node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_tp0y7")
 script = SubResource("GDScript_oqr1i")
-line = NodePath("PlanetOrbit3Line")
+line = NodePath("PlanetOrbit2Line")
 orbitRadius = 3500.0
 line_width = 30.0
 
-[node name="PlanetOrbit3Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit3" groups=["on_star_map_state_objects"]]
+[node name="PlanetOrbit2Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit2" groups=["on_star_map_state_objects"]]
 points = PackedVector2Array(3500, 0, 3481.84, -356.537, 3428.56, -703.076, 3341.96, -1037.82, 3223.83, -1358.98, 3075.96, -1664.76, 2900.15, -1953.37, 2698.19, -2223, 2471.88, -2471.88, 2223, -2698.19, 1953.37, -2900.15, 1664.76, -3075.96, 1358.98, -3223.83, 1037.82, -3341.96, 703.076, -3428.56, 356.537, -3481.84, 0, -3500, -356.537, -3481.84, -703.076, -3428.56, -1037.82, -3341.96, -1358.98, -3223.83, -1664.76, -3075.96, -1953.37, -2900.15, -2223, -2698.19, -2471.88, -2471.88, -2698.19, -2223, -2900.15, -1953.37, -3075.96, -1664.76, -3223.83, -1358.98, -3341.96, -1037.82, -3428.56, -703.076, -3481.84, -356.537, -3500, 0, -3481.84, 356.537, -3428.56, 703.076, -3341.96, 1037.82, -3223.83, 1358.98, -3075.96, 1664.76, -2900.15, 1953.37, -2698.19, 2223, -2471.88, 2471.88, -2223, 2698.19, -1953.37, 2900.15, -1664.76, 3075.96, -1358.98, 3223.83, -1037.82, 3341.96, -703.076, 3428.56, -356.537, 3481.84, 0, 3500, 356.537, 3481.84, 703.076, 3428.56, 1037.82, 3341.96, 1358.98, 3223.83, 1664.76, 3075.96, 1953.37, 2900.15, 2223, 2698.19, 2471.88, 2471.88, 2698.19, 2223, 2900.15, 1953.37, 3075.96, 1664.76, 3223.83, 1358.98, 3341.96, 1037.82, 3428.56, 703.076, 3481.84, 356.537, 3500, 0)
 width = 30.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit3" groups=["planetPathFollows"]]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit2" groups=["planetPathFollows"]]
 position = Vector2(3500, 0)
 rotates = false
 
-[node name="Planet3" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D" groups=["planets"]]
-position = Vector2(-1.74841e-07, 0)
-collision_layer = 2
-collision_mask = 21
-input_pickable = true
-script = ExtResource("3_w4qqe")
+[node name="Planet" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D" instance=ExtResource("13_h52ud")]
 planetName = "Синий монстр"
 
-[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
-position = Vector2(0, -4)
-scale = Vector2(1.75, 1.75)
+[node name="Sprite2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet" index="0"]
+position = Vector2(-1.00002, -1.00001)
+scale = Vector2(1.75781, 1.75781)
 texture = ExtResource("3_2aj80")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
-shape = SubResource("CircleShape2D_c3h2c")
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet" index="1"]
+shape = SubResource("CircleShape2D_1mowf")
 
-[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3"]
-collision_layer = 8
-collision_mask = 21
-gravity_space_override = 3
-gravity_point = true
-gravity_point_center = Vector2(0, 0)
-gravity_direction = Vector2(0, 0)
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet/GravityArea" index="0"]
+shape = SubResource("CircleShape2D_pvdr1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/GravityArea"]
-shape = SubResource("CircleShape2D_b0yit")
-
-[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" groups=["on_star_map_state_objects"]]
-z_index = 5
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -375.0
-offset_top = -379.0
-offset_right = 375.0
-offset_bottom = 371.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(375, 375)
-mouse_filter = 2
-
-[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 95.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = -95.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(0, 280)
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-theme_override_constants/separation = 0
-
-[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 2
-
-[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "ОСТАЛОСЬ: 05:32"
-vertical_alignment = 2
-uppercase = true
-
-[node name="PlanetOrbit4" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
+[node name="PlanetOrbit3" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_c3h2c")
 script = SubResource("GDScript_oqr1i")
-line = NodePath("PlanetOrbit4Line")
+line = NodePath("PlanetOrbit3Line")
 orbitRadius = 4500.0
 line_width = 30.0
 
-[node name="PlanetOrbit4Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit4" groups=["on_star_map_state_objects"]]
+[node name="PlanetOrbit3Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit3" groups=["on_star_map_state_objects"]]
 points = PackedVector2Array(4500, 0, 4476.65, -458.405, 4408.15, -903.955, 4296.81, -1334.34, 4144.92, -1747.27, 3954.8, -2140.41, 3728.76, -2511.47, 3469.1, -2858.15, 3178.13, -3178.13, 2858.15, -3469.1, 2511.47, -3728.76, 2140.41, -3954.8, 1747.27, -4144.92, 1334.34, -4296.81, 903.955, -4408.15, 458.405, -4476.65, 0, -4500, -458.405, -4476.65, -903.955, -4408.15, -1334.34, -4296.81, -1747.27, -4144.92, -2140.41, -3954.8, -2511.47, -3728.76, -2858.15, -3469.1, -3178.13, -3178.13, -3469.1, -2858.15, -3728.76, -2511.47, -3954.8, -2140.41, -4144.92, -1747.27, -4296.81, -1334.34, -4408.15, -903.955, -4476.65, -458.405, -4500, 0, -4476.65, 458.405, -4408.15, 903.955, -4296.81, 1334.34, -4144.92, 1747.27, -3954.8, 2140.41, -3728.76, 2511.47, -3469.1, 2858.15, -3178.13, 3178.13, -2858.15, 3469.1, -2511.47, 3728.76, -2140.41, 3954.8, -1747.27, 4144.92, -1334.34, 4296.81, -903.955, 4408.15, -458.405, 4476.65, 0, 4500, 458.405, 4476.65, 903.955, 4408.15, 1334.34, 4296.81, 1747.27, 4144.92, 2140.41, 3954.8, 2511.47, 3728.76, 2858.15, 3469.1, 3178.13, 3178.13, 3469.1, 2858.15, 3728.76, 2511.47, 3954.8, 2140.41, 4144.92, 1747.27, 4296.81, 1334.34, 4408.15, 903.955, 4476.65, 458.405, 4500, 0)
 width = 30.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit4" groups=["planetPathFollows"]]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit3" groups=["planetPathFollows"]]
 position = Vector2(4500, 0)
 rotates = false
 
-[node name="Planet4" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D" groups=["planets"]]
-collision_layer = 2
-collision_mask = 21
-input_pickable = true
-script = ExtResource("3_w4qqe")
+[node name="Planet" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D" instance=ExtResource("13_h52ud")]
 planetName = "Прилунение"
 
-[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
-scale = Vector2(1.3, 1.3)
+[node name="Sprite2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet" index="0"]
+position = Vector2(-0.500079, -0.5)
+scale = Vector2(1.30078, 1.30078)
 texture = ExtResource("4_ftf7w")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
-shape = SubResource("CircleShape2D_mv7c2")
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet" index="1"]
+shape = SubResource("CircleShape2D_e07w8")
 
-[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4"]
-collision_layer = 8
-collision_mask = 21
-gravity_space_override = 3
-gravity_point = true
-gravity_point_center = Vector2(0, 0)
-gravity_direction = Vector2(0, 0)
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet/GravityArea" index="0"]
+shape = SubResource("CircleShape2D_e1m76")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/GravityArea"]
-shape = SubResource("CircleShape2D_i1cje")
-
-[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" groups=["on_star_map_state_objects"]]
-z_index = 5
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -375.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = 375.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(375, 375)
-mouse_filter = 2
-
-[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 95.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = -95.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(0, 280)
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-theme_override_constants/separation = 0
-
-[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 2
-
-[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "ОСТАЛОСЬ: 05:32"
-vertical_alignment = 2
-uppercase = true
-
-[node name="PlanetOrbit5" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
+[node name="PlanetOrbit4" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_mv7c2")
 script = SubResource("GDScript_oqr1i")
-line = NodePath("PlanetOrbit5Line")
+line = NodePath("PlanetOrbit4Line")
 orbitRadius = 5500.0
 line_width = 30.0
 
-[node name="PlanetOrbit5Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit5" groups=["on_star_map_state_objects"]]
+[node name="PlanetOrbit4Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit4" groups=["on_star_map_state_objects"]]
 points = PackedVector2Array(5500, 0, 5471.47, -560.272, 5387.74, -1104.83, 5251.65, -1630.87, 5066.02, -2135.55, 4833.65, -2616.06, 4557.37, -3069.58, 4240.01, -3493.29, 3884.38, -3884.38, 3493.29, -4240.01, 3069.58, -4557.37, 2616.06, -4833.65, 2135.55, -5066.02, 1630.87, -5251.65, 1104.83, -5387.74, 560.272, -5471.47, 0, -5500, -560.272, -5471.47, -1104.83, -5387.74, -1630.87, -5251.65, -2135.55, -5066.02, -2616.06, -4833.65, -3069.58, -4557.37, -3493.29, -4240.01, -3884.38, -3884.38, -4240.01, -3493.29, -4557.37, -3069.58, -4833.65, -2616.06, -5066.02, -2135.55, -5251.65, -1630.87, -5387.74, -1104.83, -5471.47, -560.272, -5500, 0, -5471.47, 560.272, -5387.74, 1104.83, -5251.65, 1630.87, -5066.02, 2135.55, -4833.65, 2616.06, -4557.37, 3069.58, -4240.01, 3493.29, -3884.38, 3884.38, -3493.29, 4240.01, -3069.58, 4557.37, -2616.06, 4833.65, -2135.55, 5066.02, -1630.87, 5251.65, -1104.83, 5387.74, -560.272, 5471.47, 0, 5500, 560.272, 5471.47, 1104.83, 5387.74, 1630.87, 5251.65, 2135.55, 5066.02, 2616.06, 4833.65, 3069.58, 4557.37, 3493.29, 4240.01, 3884.38, 3884.38, 4240.01, 3493.29, 4557.37, 3069.58, 4833.65, 2616.06, 5066.02, 2135.55, 5251.65, 1630.87, 5387.74, 1104.83, 5471.47, 560.272, 5500, 0)
 width = 30.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit5" groups=["planetPathFollows"]]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit4" groups=["planetPathFollows"]]
 position = Vector2(5500, 0)
 rotates = false
 
-[node name="Planet5" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D" groups=["planets"]]
-collision_layer = 2
-collision_mask = 21
-input_pickable = true
-script = ExtResource("3_w4qqe")
+[node name="Planet" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D" instance=ExtResource("13_h52ud")]
 planetName = "Недалекий гигант"
 
-[node name="Sprite2D" type="Sprite2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
-scale = Vector2(1.5, 1.5)
+[node name="Sprite2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet" index="0"]
+position = Vector2(-0.999939, -1)
+scale = Vector2(1.50781, 1.50781)
 texture = ExtResource("5_w4qqe")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
-shape = SubResource("CircleShape2D_yqr88")
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet" index="1"]
+shape = SubResource("CircleShape2D_wk0ko")
 
-[node name="GravityArea" type="Area2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5"]
-collision_layer = 8
-collision_mask = 21
-gravity_space_override = 3
-gravity_point = true
-gravity_point_center = Vector2(0, 0)
-gravity_direction = Vector2(0, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/GravityArea"]
-shape = SubResource("CircleShape2D_ftf7w")
-
-[node name="UI" type="Control" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" groups=["on_star_map_state_objects"]]
-z_index = 5
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -375.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = 375.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(375, 375)
-mouse_filter = 2
-
-[node name="InfoWindow" type="Control" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 95.0
-offset_top = -375.0
-offset_right = 375.0
-offset_bottom = -95.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(0, 280)
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="BG" type="Panel" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-theme_override_constants/separation = 0
-
-[node name="PlanetName" type="Label" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 2
-
-[node name="Resources" type="HBoxContainer" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-theme = ExtResource("5_d4m0j")
-
-[node name="TurnoverTime" type="Label" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5/UI/InfoWindow/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("5_d4m0j")
-text = "ОСТАЛОСЬ: 05:32"
-vertical_alignment = 2
-uppercase = true
+[node name="CollisionShape2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet/GravityArea" index="0"]
+shape = SubResource("CircleShape2D_gh3f3")
 
 [node name="Star" type="StaticBody2D" parent="MainObjectsSystem"]
 
@@ -977,13 +499,53 @@ limit_top = -6750
 limit_right = 12000
 limit_bottom = 6750
 
-[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [0]]
-[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
-[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [1]]
-[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet2" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
-[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [2]]
-[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
-[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [3]]
-[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet4" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
-[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [4]]
-[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit5/PathFollow2D/Planet5" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[node name="AllUIs" type="CanvasLayer" parent="."]
+
+[node name="UIStarMap" type="Control" parent="AllUIs" groups=["on_star_map_state_objects"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CloseMapButton" type="Button" parent="AllUIs/UIStarMap"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = 150.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_font_sizes/font_size = 60
+text = "X"
+
+[node name="UIPlanet" type="Control" parent="AllUIs" groups=["on_planet_state_objects"]]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [0]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [1]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [2]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [3]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [4]]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="pressed" from="AllUIs/UIStarMap/CloseMapButton" to="StateMachine/OnStarMap" method="_on_close_map_button_pressed"]
+
+[editable path="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet"]
+[editable path="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet"]
+[editable path="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet"]
+[editable path="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet"]
+[editable path="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet"]

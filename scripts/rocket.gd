@@ -22,8 +22,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
-	if availableForInteraction and Input.is_action_just_pressed("Interact"):
-		print("FLIGHT!")
+	if SM.current_state.name == SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET]:
+		interact(event)
 
 
 func calc_player_rotation(normalVector: Vector2) -> float:
@@ -35,6 +35,9 @@ func right_direction(vector: Vector2) -> Vector2:
 	vector = vector.normalized()
 	return Vector2(vector.y, -vector.x).normalized()
 
+func interact(event):
+	if availableForInteraction and Input.is_action_just_pressed("Interact"):
+		print("FLIGHT!")
 
 func _on_interact_tooltip_area_body_entered(body: Node2D) -> void:
 	interactTooltip.visible = true

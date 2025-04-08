@@ -20,7 +20,7 @@ var history: Array[Object]
 
 func _ready() -> void:
 	for state in get_children():
-		state.fsm = self
+		state.SM = self
 		states[state.name] = state
 		state.close()
 

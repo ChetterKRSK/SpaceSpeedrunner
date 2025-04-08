@@ -17,6 +17,7 @@ var selectedOrbit: float = 0
 var isMouseOnOrbit: bool = false
 var selectedPlanet
 var isCursorOnPlanet: bool = false
+var isMapToFlight: bool = false
 #endregion
 
 #region temp переменные
@@ -121,16 +122,16 @@ func movingOrbitCursorOnMap(event):
 		var angleMousePosition: float = (get_global_mouse_position() - Vector2()).angle()
 		var mouseDistance = get_global_mouse_position().distance_to(Vector2())
 		for distance: float in GM.planetOrbitDistances:
-			if mouseDistance - GM.planetOrbitDistances[0] < -10 / GM.mainCamera.zoom.x:
+			if mouseDistance - GM.planetOrbitDistances[0] < -15 / GM.mainCamera.zoom.x:
 				selectedOrbit = 0
 				isMouseOnOrbit = false
 				break
-			elif mouseDistance - GM.planetOrbitDistances[-1] > 10 / GM.mainCamera.zoom.x:
+			elif mouseDistance - GM.planetOrbitDistances[-1] > 15 / GM.mainCamera.zoom.x:
 				selectedOrbit = GM.planetOrbitDistances.size() - 1
 				isMouseOnOrbit = false
 				break
 			else:
-				if mouseDistance - distance > -10 / GM.mainCamera.zoom.x and mouseDistance - distance < 10 / GM.mainCamera.zoom.x:
+				if mouseDistance - distance > -15 / GM.mainCamera.zoom.x and mouseDistance - distance < 15 / GM.mainCamera.zoom.x:
 					selectedOrbit = GM.planetOrbitDistances.find(distance)
 					isMouseOnOrbit = true
 					break
@@ -150,3 +151,6 @@ func _on_planet_mouse_entered(extra_arg_0: int) -> void:
 
 func _on_planet_mouse_exited() -> void:
 	isCursorOnPlanet = false
+
+func _on_close_map_button_pressed() -> void:
+	SM.change_to_previous_state()

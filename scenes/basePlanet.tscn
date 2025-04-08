@@ -1,59 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2kb6e0rb60e8"]
+[gd_scene load_steps=3 format=3 uid="uid://qdohnvxii20c"]
 
-[ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="2_ggt7d"]
+[ext_resource type="Script" uid="uid://b7tvmb83siua3" path="res://scripts/planet.gd" id="1_2g4jo"]
+[ext_resource type="Theme" uid="uid://du7np0egwtb80" path="res://styles/planetInfoWindow.tres" id="3_5xita"]
 
-[sub_resource type="GDScript" id="GDScript_ftf7w"]
-script/source = "extends StaticBody2D
-
-@onready var main_camera: Camera2D
-@onready var info_window: Control = $UI/InfoWindow
-
-@export var planetName: String
-
-func _ready() -> void:
-	main_camera = get_viewport().get_camera_2d()
-
-func _process(delta: float) -> void:
-	if info_window:
-		resizeUI()
-	
-
-func showInfoWindow():
-	info_window.visible = true
-	
-func hideInfoWindow():
-	info_window.visible = false
-
-func resizeUI():
-	info_window.scale = Vector2(1 / main_camera.zoom.x, 1/ main_camera.zoom.y)
-"
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_2aj80"]
-radius = 128.004
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_w4qqe"]
-radius = 256.0
-
-[node name="Planet1" type="StaticBody2D"]
+[node name="Planet" type="StaticBody2D" groups=["planets"]]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 21
 input_pickable = true
-script = SubResource("GDScript_ftf7w")
+script = ExtResource("1_2g4jo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_ggt7d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_2aj80")
 
 [node name="GravityArea" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 0
+collision_mask = 21
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GravityArea"]
-shape = SubResource("CircleShape2D_w4qqe")
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." groups=["on_star_map_state_objects"]]
 z_index = 5
 layout_mode = 3
 anchors_preset = 8
@@ -71,6 +41,7 @@ pivot_offset = Vector2(375, 375)
 mouse_filter = 2
 
 [node name="InfoWindow" type="Control" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -85,6 +56,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0, 280)
 mouse_filter = 2
+theme = ExtResource("3_5xita")
 
 [node name="BG" type="Panel" parent="UI/InfoWindow"]
 layout_mode = 1
@@ -94,33 +66,42 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("3_5xita")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/InfoWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("3_5xita")
+theme_override_constants/separation = 0
 
 [node name="PlanetName" type="Label" parent="UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
-text = "\"ДРЕВЕСНЫЙ УГОЛЬ\""
-horizontal_alignment = 1
-vertical_alignment = 1
+theme = ExtResource("3_5xita")
+text = "NAME"
+horizontal_alignment = 2
 
 [node name="Resources" type="HBoxContainer" parent="UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+theme = ExtResource("3_5xita")
 
 [node name="TurnoverTime" type="Label" parent="UI/InfoWindow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+theme = ExtResource("3_5xita")
 text = "ОСТАЛОСЬ: 05:32"
-horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
+uppercase = true
