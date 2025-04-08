@@ -32,7 +32,7 @@ func _input(event) -> void:
 
 func setStandartValues():
 	for i in planetStartPosition.size():
-		if planetStartPosition[i] == -99:
+		if planetStartPosition[i] == -9:
 			planetStartPosition[i] = randf_range(0, 1)
 			get_tree().get_nodes_in_group("planetPathFollows")[i].progress_ratio = planetStartPosition[i]
 	

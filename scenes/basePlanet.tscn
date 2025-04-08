@@ -102,6 +102,6 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
 theme = ExtResource("3_5xita")
-text = "ОСТАЛОСЬ: 05:32"
+text = "ОСТАЛОСЬ: 00:00"
 vertical_alignment = 2
 uppercase = true

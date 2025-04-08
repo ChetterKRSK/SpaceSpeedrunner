@@ -1,8 +1,7 @@
-[gd_scene load_steps=36 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=52 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
-[ext_resource type="Texture2D" uid="uid://d0vw5hu814uri" path="res://assets/Sprites/SpaceBG2.png" id="2_ftf7w"]
 [ext_resource type="Script" uid="uid://d32itkxdecy5m" path="res://state_machine/state_machine.gd" id="2_i1cje"]
 [ext_resource type="Texture2D" uid="uid://ck5wuiqdc7snw" path="res://assets/Sprites/Planet3.png" id="3_2aj80"]
 [ext_resource type="Script" uid="uid://sof2nveeoa7w" path="res://state_machine/on_planet_state.gd" id="3_66kf3"]
@@ -11,12 +10,130 @@
 [ext_resource type="Script" uid="uid://bw01fdv2gvlbt" path="res://state_machine/on_planet_orbit_state.gd" id="5_0q2ys"]
 [ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
-[ext_resource type="Texture2D" uid="uid://df6jx5yhfun4q" path="res://assets/Sprites/Fog.png" id="7_gh3f3"]
 [ext_resource type="Texture2D" uid="uid://d1mitx1fwe68h" path="res://assets/Sprites/Cursor.png" id="9_ftf7w"]
 [ext_resource type="PackedScene" uid="uid://dkfy6v0wwcf2y" path="res://scenes/player.tscn" id="12_b0yit"]
 [ext_resource type="PackedScene" uid="uid://c0vro1yvrd8vr" path="res://scenes/rocket.tscn" id="12_h52ud"]
 [ext_resource type="PackedScene" uid="uid://qdohnvxii20c" path="res://scenes/basePlanet.tscn" id="13_h52ud"]
 [ext_resource type="Texture2D" uid="uid://cg8d6scweyojp" path="res://assets/Sprites/Planet2.png" id="14_usena"]
+
+[sub_resource type="Curve" id="Curve_gh3f3"]
+_data = [Vector2(0.00132275, 0.0152687), 0.0, 0.0, 0, 0, Vector2(0.247354, 1), 4.00246, 0.0, 0, 0, Vector2(0.747354, 1), -3.46624e-07, -3.97895, 0, 1, Vector2(0.998677, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_h52ud"]
+width = 32
+curve = SubResource("Curve_gh3f3")
+
+[sub_resource type="Gradient" id="Gradient_gh3f3"]
+offsets = PackedFloat32Array(0, 0.324638, 0.681159, 1)
+colors = PackedColorArray(0.837468, 0.722979, 0.710894, 1, 0.802946, 0.775847, 0.617518, 1, 0.739568, 0.858777, 0.753155, 1, 0.672341, 0.86191, 0.882517, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h52ud"]
+gradient = SubResource("Gradient_gh3f3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gh3f3"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 100, 1)
+angle_min = -360.0
+angle_max = 360.0
+direction = Vector3(1, 1, 0)
+spread = 180.0
+initial_velocity_max = 0.02
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.1
+color_ramp = SubResource("GradientTexture1D_h52ud")
+alpha_curve = SubResource("CurveTexture_h52ud")
+
+[sub_resource type="Curve" id="Curve_h52ud"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252645, 1), 3.95812, 0.0, 1, 0, Vector2(0.747354, 1), 0.0, -3.95811, 0, 1, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_usena"]
+width = 32
+curve = SubResource("Curve_h52ud")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e2420"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 100, 1)
+angle_min = -360.0
+angle_max = 360.0
+direction = Vector3(1, 1, 0)
+spread = 180.0
+initial_velocity_max = 0.02
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_usena")
+color_ramp = SubResource("GradientTexture1D_h52ud")
+alpha_curve = SubResource("CurveTexture_h52ud")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h52ud"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 100, 1)
+angle_min = -360.0
+angle_max = 360.0
+direction = Vector3(1, 1, 0)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_usena")
+color_ramp = SubResource("GradientTexture1D_h52ud")
+alpha_curve = SubResource("CurveTexture_h52ud")
+
+[sub_resource type="Gradient" id="Gradient_aui1i"]
+offsets = PackedFloat32Array(0, 0.9975)
+colors = PackedColorArray(1, 0, 0, 0.101961, 1, 0, 0, 0.0509804)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0q2ys"]
+noise_type = 2
+seed = 1
+frequency = 0.0024
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gh3f3"]
+width = 1920
+height = 1080
+color_ramp = SubResource("Gradient_aui1i")
+noise = SubResource("FastNoiseLite_0q2ys")
+
+[sub_resource type="Gradient" id="Gradient_h52ud"]
+offsets = PackedFloat32Array(0, 0.9975)
+colors = PackedColorArray(0, 1, 0, 0.101961, 0, 1, 0, 0.0509804)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_usena"]
+noise_type = 2
+seed = 2
+frequency = 0.0041
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e2420"]
+width = 1920
+height = 1080
+color_ramp = SubResource("Gradient_h52ud")
+noise = SubResource("FastNoiseLite_usena")
+
+[sub_resource type="Gradient" id="Gradient_gc1g1"]
+offsets = PackedFloat32Array(0, 0.9975)
+colors = PackedColorArray(0, 0, 1, 0.101961, 0, 0, 1, 0.0509804)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1mowf"]
+noise_type = 2
+seed = 3
+frequency = 0.0064
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pvdr1"]
+width = 1920
+height = 1080
+color_ramp = SubResource("Gradient_gc1g1")
+noise = SubResource("FastNoiseLite_1mowf")
 
 [sub_resource type="Curve2D" id="Curve2D_vdwas"]
 _data = {
@@ -218,7 +335,7 @@ radius = 640.0
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_vdwas")
 planetOrbitSpeed = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
-planetStartPosition = Array[float]([0.0, -99.0, -99.0, -99.0, -99.0])
+planetStartPosition = Array[float]([-9.0, -9.0, -9.0, -9.0, -9.0])
 
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource("2_i1cje")
@@ -236,83 +353,54 @@ script = ExtResource("4_aui1i")
 
 [node name="BG" type="Node" parent="MainObjectsSystem"]
 
+[node name="BlackBG" type="Polygon2D" parent="MainObjectsSystem/BG"]
+z_index = -5
+scale = Vector2(115.64, 1)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-110, 7500, -110, -7500, 110, -7500, 110, 7500)
+
 [node name="Stars" type="Node2D" parent="MainObjectsSystem/BG"]
-
-[node name="SpaceBg" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
 z_index = -5
-position = Vector2(-11520, -6480)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
 
-[node name="SpaceBg2" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
-z_index = -5
-position = Vector2(0, -6480)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
+[node name="MainStars" type="GPUParticles2D" parent="MainObjectsSystem/BG/Stars"]
+scale = Vector2(121, 68.5)
+amount = 10000
+texture = ExtResource("9_ftf7w")
+lifetime = 120.0
+preprocess = 120.0
+randomness = 0.25
+process_material = SubResource("ParticleProcessMaterial_gh3f3")
 
-[node name="SpaceBg3" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
-z_index = -5
-position = Vector2(11520, -6480)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
+[node name="TwinklingStars" type="GPUParticles2D" parent="MainObjectsSystem/BG/Stars"]
+scale = Vector2(121, 68.5)
+amount = 100
+texture = ExtResource("9_ftf7w")
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_e2420")
 
-[node name="SpaceBg4" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
-z_index = -5
-position = Vector2(-11520, 0.000488281)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
-
-[node name="SpaceBg5" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
-z_index = -5
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
-
-[node name="SpaceBg6" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
-z_index = -5
-position = Vector2(11520, 0)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
-
-[node name="SpaceBg7" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
-z_index = -5
-position = Vector2(-11520, 6480)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
-
-[node name="SpaceBg8" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
-z_index = -5
-position = Vector2(0, 6480)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
-
-[node name="SpaceBg9" type="Sprite2D" parent="MainObjectsSystem/BG/Stars"]
-z_index = -5
-position = Vector2(11520, 6480)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_ftf7w")
+[node name="FallingStars" type="GPUParticles2D" parent="MainObjectsSystem/BG/Stars"]
+scale = Vector2(121, 68.5)
+amount = 10
+texture = ExtResource("9_ftf7w")
+lifetime = 5.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_h52ud")
 
 [node name="Fog" type="Node2D" parent="MainObjectsSystem/BG"]
-
-[node name="Fog3" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
-modulate = Color(0, 0.294118, 0, 0.392157)
+process_mode = 4
 z_index = -5
-scale = Vector2(21.8911, -21.8911)
-texture = ExtResource("7_gh3f3")
 
-[node name="Fog2" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
-modulate = Color(0.294118, 0, 0, 0.392157)
-z_index = -5
-position = Vector2(-0.00130882, 0.000232935)
-rotation = 3.14159
-scale = Vector2(22.401, -22.401)
-texture = ExtResource("7_gh3f3")
+[node name="FogRed" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
+scale = Vector2(13.2802, 13.8889)
+texture = SubResource("NoiseTexture2D_gh3f3")
 
-[node name="Fog4" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
-modulate = Color(0, 0, 0.294118, 0.392157)
-z_index = -5
-position = Vector2(-0.00130882, 0.000232935)
-scale = Vector2(22.8711, 22.8711)
-texture = ExtResource("7_gh3f3")
+[node name="FogGreen" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
+scale = Vector2(13.2802, 13.8889)
+texture = SubResource("NoiseTexture2D_e2420")
+
+[node name="FogBlue" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
+scale = Vector2(13.2802, 13.8889)
+texture = SubResource("NoiseTexture2D_pvdr1")
 
 [node name="PlanetOrbit0" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_vdwas")
@@ -322,6 +410,7 @@ orbitRadius = 1500.0
 line_width = 35.0
 
 [node name="PlanetOrbit0Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit0" groups=["on_star_map_state_objects"]]
+z_index = -1
 points = PackedVector2Array(1500, 0, 1492.22, -152.802, 1469.38, -301.318, 1432.27, -444.781, 1381.64, -582.422, 1318.27, -713.47, 1242.92, -837.158, 1156.37, -952.716, 1059.38, -1059.38, 952.716, -1156.37, 837.158, -1242.92, 713.47, -1318.27, 582.422, -1381.64, 444.781, -1432.27, 301.318, -1469.38, 152.802, -1492.22, 0, -1500, -152.802, -1492.22, -301.318, -1469.38, -444.781, -1432.27, -582.422, -1381.64, -713.47, -1318.27, -837.158, -1242.92, -952.716, -1156.37, -1059.38, -1059.38, -1156.37, -952.716, -1242.92, -837.158, -1318.27, -713.47, -1381.64, -582.422, -1432.27, -444.781, -1469.38, -301.318, -1492.22, -152.802, -1500, 0, -1492.22, 152.802, -1469.38, 301.318, -1432.27, 444.781, -1381.64, 582.422, -1318.27, 713.47, -1242.92, 837.158, -1156.37, 952.716, -1059.38, 1059.38, -952.716, 1156.37, -837.158, 1242.92, -713.47, 1318.27, -582.422, 1381.64, -444.781, 1432.27, -301.318, 1469.38, -152.802, 1492.22, 0, 1500, 152.802, 1492.22, 301.318, 1469.38, 444.781, 1432.27, 582.422, 1381.64, 713.47, 1318.27, 837.158, 1242.92, 952.716, 1156.37, 1059.38, 1059.38, 1156.37, 952.716, 1242.92, 837.158, 1318.27, 713.47, 1381.64, 582.422, 1432.27, 444.781, 1469.38, 301.318, 1492.22, 152.802, 1500, 0)
 width = 35.0
 joint_mode = 2
@@ -333,7 +422,7 @@ progress = 9420.15
 rotates = false
 
 [node name="Planet" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D" instance=ExtResource("13_h52ud")]
-planetName = "Астрея вечно зелёная"
+planetName = "Астрея зелёная"
 
 [node name="Sprite2D" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" index="0"]
 position = Vector2(-0.5, -0.5)
@@ -361,6 +450,7 @@ orbitRadius = 2500.0
 line_width = 25.0
 
 [node name="PlanetOrbit1Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit1" groups=["on_star_map_state_objects"]]
+z_index = -1
 points = PackedVector2Array(2500, 0, 2487.03, -254.669, 2448.97, -502.197, 2387.12, -741.302, 2302.73, -970.703, 2197.11, -1189.12, 2071.53, -1395.26, 1927.28, -1587.86, 1765.63, -1765.63, 1587.86, -1927.28, 1395.26, -2071.53, 1189.12, -2197.11, 970.703, -2302.73, 741.302, -2387.12, 502.197, -2448.97, 254.669, -2487.03, 0, -2500, -254.669, -2487.03, -502.197, -2448.97, -741.302, -2387.12, -970.703, -2302.73, -1189.12, -2197.11, -1395.26, -2071.53, -1587.86, -1927.28, -1765.63, -1765.63, -1927.28, -1587.86, -2071.53, -1395.26, -2197.11, -1189.12, -2302.73, -970.703, -2387.12, -741.302, -2448.97, -502.197, -2487.03, -254.669, -2500, 0, -2487.03, 254.669, -2448.97, 502.197, -2387.12, 741.302, -2302.73, 970.703, -2197.11, 1189.12, -2071.53, 1395.26, -1927.28, 1587.86, -1765.63, 1765.63, -1587.86, 1927.28, -1395.26, 2071.53, -1189.12, 2197.11, -970.703, 2302.73, -741.302, 2387.12, -502.197, 2448.97, -254.669, 2487.03, 0, 2500, 254.669, 2487.03, 502.197, 2448.97, 741.302, 2387.12, 970.703, 2302.73, 1189.12, 2197.11, 1395.26, 2071.53, 1587.86, 1927.28, 1765.63, 1765.63, 1927.28, 1587.86, 2071.53, 1395.26, 2197.11, 1189.12, 2302.73, 970.703, 2387.12, 741.302, 2448.97, 502.197, 2487.03, 254.669, 2500, 0)
 width = 35.0
 joint_mode = 2
@@ -392,6 +482,7 @@ orbitRadius = 3500.0
 line_width = 30.0
 
 [node name="PlanetOrbit2Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit2" groups=["on_star_map_state_objects"]]
+z_index = -1
 points = PackedVector2Array(3500, 0, 3481.84, -356.537, 3428.56, -703.076, 3341.96, -1037.82, 3223.83, -1358.98, 3075.96, -1664.76, 2900.15, -1953.37, 2698.19, -2223, 2471.88, -2471.88, 2223, -2698.19, 1953.37, -2900.15, 1664.76, -3075.96, 1358.98, -3223.83, 1037.82, -3341.96, 703.076, -3428.56, 356.537, -3481.84, 0, -3500, -356.537, -3481.84, -703.076, -3428.56, -1037.82, -3341.96, -1358.98, -3223.83, -1664.76, -3075.96, -1953.37, -2900.15, -2223, -2698.19, -2471.88, -2471.88, -2698.19, -2223, -2900.15, -1953.37, -3075.96, -1664.76, -3223.83, -1358.98, -3341.96, -1037.82, -3428.56, -703.076, -3481.84, -356.537, -3500, 0, -3481.84, 356.537, -3428.56, 703.076, -3341.96, 1037.82, -3223.83, 1358.98, -3075.96, 1664.76, -2900.15, 1953.37, -2698.19, 2223, -2471.88, 2471.88, -2223, 2698.19, -1953.37, 2900.15, -1664.76, 3075.96, -1358.98, 3223.83, -1037.82, 3341.96, -703.076, 3428.56, -356.537, 3481.84, 0, 3500, 356.537, 3481.84, 703.076, 3428.56, 1037.82, 3341.96, 1358.98, 3223.83, 1664.76, 3075.96, 1953.37, 2900.15, 2223, 2698.19, 2471.88, 2471.88, 2698.19, 2223, 2900.15, 1953.37, 3075.96, 1664.76, 3223.83, 1358.98, 3341.96, 1037.82, 3428.56, 703.076, 3481.84, 356.537, 3500, 0)
 width = 30.0
 joint_mode = 2
@@ -423,6 +514,7 @@ orbitRadius = 4500.0
 line_width = 30.0
 
 [node name="PlanetOrbit3Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit3" groups=["on_star_map_state_objects"]]
+z_index = -1
 points = PackedVector2Array(4500, 0, 4476.65, -458.405, 4408.15, -903.955, 4296.81, -1334.34, 4144.92, -1747.27, 3954.8, -2140.41, 3728.76, -2511.47, 3469.1, -2858.15, 3178.13, -3178.13, 2858.15, -3469.1, 2511.47, -3728.76, 2140.41, -3954.8, 1747.27, -4144.92, 1334.34, -4296.81, 903.955, -4408.15, 458.405, -4476.65, 0, -4500, -458.405, -4476.65, -903.955, -4408.15, -1334.34, -4296.81, -1747.27, -4144.92, -2140.41, -3954.8, -2511.47, -3728.76, -2858.15, -3469.1, -3178.13, -3178.13, -3469.1, -2858.15, -3728.76, -2511.47, -3954.8, -2140.41, -4144.92, -1747.27, -4296.81, -1334.34, -4408.15, -903.955, -4476.65, -458.405, -4500, 0, -4476.65, 458.405, -4408.15, 903.955, -4296.81, 1334.34, -4144.92, 1747.27, -3954.8, 2140.41, -3728.76, 2511.47, -3469.1, 2858.15, -3178.13, 3178.13, -2858.15, 3469.1, -2511.47, 3728.76, -2140.41, 3954.8, -1747.27, 4144.92, -1334.34, 4296.81, -903.955, 4408.15, -458.405, 4476.65, 0, 4500, 458.405, 4476.65, 903.955, 4408.15, 1334.34, 4296.81, 1747.27, 4144.92, 2140.41, 3954.8, 2511.47, 3728.76, 2858.15, 3469.1, 3178.13, 3178.13, 3469.1, 2858.15, 3728.76, 2511.47, 3954.8, 2140.41, 4144.92, 1747.27, 4296.81, 1334.34, 4408.15, 903.955, 4476.65, 458.405, 4500, 0)
 width = 30.0
 joint_mode = 2
@@ -454,6 +546,7 @@ orbitRadius = 5500.0
 line_width = 30.0
 
 [node name="PlanetOrbit4Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit4" groups=["on_star_map_state_objects"]]
+z_index = -1
 points = PackedVector2Array(5500, 0, 5471.47, -560.272, 5387.74, -1104.83, 5251.65, -1630.87, 5066.02, -2135.55, 4833.65, -2616.06, 4557.37, -3069.58, 4240.01, -3493.29, 3884.38, -3884.38, 3493.29, -4240.01, 3069.58, -4557.37, 2616.06, -4833.65, 2135.55, -5066.02, 1630.87, -5251.65, 1104.83, -5387.74, 560.272, -5471.47, 0, -5500, -560.272, -5471.47, -1104.83, -5387.74, -1630.87, -5251.65, -2135.55, -5066.02, -2616.06, -4833.65, -3069.58, -4557.37, -3493.29, -4240.01, -3884.38, -3884.38, -4240.01, -3493.29, -4557.37, -3069.58, -4833.65, -2616.06, -5066.02, -2135.55, -5251.65, -1630.87, -5387.74, -1104.83, -5471.47, -560.272, -5500, 0, -5471.47, 560.272, -5387.74, 1104.83, -5251.65, 1630.87, -5066.02, 2135.55, -4833.65, 2616.06, -4557.37, 3069.58, -4240.01, 3493.29, -3884.38, 3884.38, -3493.29, 4240.01, -3069.58, 4557.37, -2616.06, 4833.65, -2135.55, 5066.02, -1630.87, 5251.65, -1104.83, 5387.74, -560.272, 5471.47, 0, 5500, 560.272, 5471.47, 1104.83, 5387.74, 1630.87, 5251.65, 2135.55, 5066.02, 2616.06, 4833.65, 3069.58, 4557.37, 3493.29, 4240.01, 3884.38, 3884.38, 4240.01, 3493.29, 4557.37, 3069.58, 4833.65, 2616.06, 5066.02, 2135.55, 5251.65, 1630.87, 5387.74, 1104.83, 5471.47, 560.272, 5500, 0)
 width = 30.0
 joint_mode = 2
@@ -488,7 +581,7 @@ shape = SubResource("CircleShape2D_oqr1i")
 
 [node name="MouseCursor" type="Sprite2D" parent="." groups=["on_star_map_state_objects"]]
 self_modulate = Color(1, 0, 0, 1)
-position = Vector2(-11904, -6656)
+position = Vector2(-20000, -20000)
 texture = ExtResource("9_ftf7w")
 
 [node name="MainCamera" type="Camera2D" parent="."]
