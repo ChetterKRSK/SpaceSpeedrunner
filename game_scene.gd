@@ -1,9 +1,8 @@
 extends Node2D
 
 @onready var SM: StateMachine = $StateMachine
-
 @onready var mouseCursor: Sprite2D = $MouseCursor
-@onready var mainCamera: Camera2D = $MainCamera
+@onready var mainCamera: Camera2D
 
 @export var planetOrbitSpeed: Array[float]
 @export var planetStartPosition: Array[float]
@@ -19,7 +18,9 @@ var planetOrbitDistances: Array[float]
 
 
 func _ready() -> void:
+	mainCamera = get_viewport().get_camera_2d()
 	SM.set_state(SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET])
+	
 	setStandartValues()
 
 func _process(delta: float) -> void:

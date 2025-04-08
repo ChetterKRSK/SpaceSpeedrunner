@@ -447,7 +447,7 @@ vertical_alignment = 2
 uppercase = true
 
 [node name="Rocket" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" groups=["on_planet_state_objects"] instance=ExtResource("12_h52ud")]
-position = Vector2(164, -44)
+position = Vector2(165, -43)
 rotation = 1.34869
 
 [node name="Player" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" groups=["on_planet_state_objects", "playerCharacter"] instance=ExtResource("12_b0yit")]

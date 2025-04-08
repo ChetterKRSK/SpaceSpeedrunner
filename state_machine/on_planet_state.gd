@@ -1,8 +1,7 @@
 extends Node2D
 
-var fsm: StateMachine
-
-@onready var GM: Node2D = $"../.."
+var GM: Node2D
+var SM: StateMachine
 
 var planet
 var playerCharacter: CharacterBody2D
@@ -11,6 +10,7 @@ var cameraZoomStep: float = 1.15
 
 
 func _ready() -> void:
+	GM = get_node("/root/GameScene")
 	planet = get_tree().get_nodes_in_group("planets")[0]
 	playerCharacter = get_tree().get_nodes_in_group("playerCharacter")[0]
 
@@ -21,8 +21,7 @@ func open() -> void:
 	zoomOnPlanet()
 	
 	for node in get_tree().get_nodes_in_group("on_planet_state_objects"):
-		if !node.get_meta("is_situational"):
-			node.visible = true
+		node.visible = true
 
 func close() -> void:
 	for node in get_tree().get_nodes_in_group("on_planet_state_objects"):
@@ -63,4 +62,4 @@ func zoomOnPlanet():
 func toggleMap(event):
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("Toggle_Map"):
-			fsm.change_state(fsm.GAME_STATES_NAME[fsm.GAME_STATES.ON_STAR_MAP])
+			SM.change_state(SM.GAME_STATES_NAME[SM.GAME_STATES.ON_STAR_MAP])

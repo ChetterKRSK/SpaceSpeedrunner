@@ -1,13 +1,11 @@
 extends CharacterBody2D
 
-@onready var SM: StateMachine
-
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 
+var SM: StateMachine
 var planet: StaticBody2D
 
 const SPEED = 200.0
-const JUMP_VELOCITY = -400.0
 
 
 func _ready() -> void:
@@ -36,7 +34,7 @@ func playerMovement():
 		elif direction < 0:
 			anim.flip_h = true
 		anim.play("run")
-		velocity = velocity.lerp(right_direction(position.direction_to(planet.position)) * SPEED * direction, 0.1)
+		velocity = velocity.lerp(right_direction(position.direction_to(planet.position)) * SPEED * direction, 0.05)
 	if !direction and is_on_wall():
 		anim.play("idle")
 		velocity = velocity.lerp(Vector2(), 0.2)

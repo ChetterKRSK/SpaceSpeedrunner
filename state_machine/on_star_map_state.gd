@@ -1,9 +1,9 @@
 extends Node2D
 
-var fsm: StateMachine
-
-@onready var GM: Node2D = $"../.."
 @onready var mouseCursor: Sprite2D = $"../../MouseCursor"
+
+var GM: Node2D
+var SM: StateMachine
 
 #region Общие переменные
 var cameraZoomLimit: Array[float] = [1, 0.08, 2, 0.08, 2] # standart, min, max, currentMin, currentMax
@@ -26,12 +26,11 @@ var lastMousePosition: Vector2
 
 
 func _ready() -> void:
-	pass
+	GM = get_node("/root/GameScene")
 
 func open() -> void:
 	for node in get_tree().get_nodes_in_group("on_star_map_state_objects"):
-		if !node.get_meta("is_situational"):
-			node.visible = true
+		node.visible = true
 
 func close() -> void:
 	for node in get_tree().get_nodes_in_group("on_star_map_state_objects"):
@@ -143,7 +142,7 @@ func movingOrbitCursorOnMap(event):
 func toggleMap(event):
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("Toggle_Map"):
-			fsm.change_to_previous_state()
+			SM.change_to_previous_state()
 
 func _on_planet_mouse_entered(extra_arg_0: int) -> void:
 	isCursorOnPlanet = true

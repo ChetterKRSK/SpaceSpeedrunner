@@ -9,7 +9,7 @@ enum GAME_STATES{
 var GAME_STATES_NAME: Dictionary[int, String] = {
 	GAME_STATES.ON_PLANET: "OnPlanet",
 	GAME_STATES.ON_PLANET_ORBIT: "OnPlanetOrbit",
-	GAME_STATES.ON_STAR_MAP: "OnStarMap",
+	GAME_STATES.ON_STAR_MAP: "OnStarMap"
 }
 
 var current_state: Object
