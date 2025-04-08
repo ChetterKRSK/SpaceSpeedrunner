@@ -21,6 +21,7 @@ func _ready() -> void:
 	for state in get_children():
 		state.fsm = self
 		states[state.name] = state
+		state.close()
 
 func _process(delta: float) -> void:
 	current_state.process(delta)
@@ -28,9 +29,23 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	current_state.input(event)
 
+func _physics_process(delta: float) -> void:
+	current_state.physics_process(delta)
+
 func change_state(state_name):
-	history.append(current_state.name)
+	history.append(current_state)
+	if history.size() > 10:
+		history.pop_front()
+	current_state.close()
 	set_state(state_name)
+
+func change_to_previous_state():
+	history.append(current_state)
+	if history.size() > 10:
+		history.pop_front()
+	current_state.close()
+	set_state(history[-2].name)
 
 func set_state(state_name):
 	current_state = states[state_name]
+	current_state.open()

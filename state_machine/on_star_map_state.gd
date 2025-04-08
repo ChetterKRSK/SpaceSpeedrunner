@@ -27,26 +27,44 @@ var lastMousePosition: Vector2
 func _ready() -> void:
 	pass
 
+func open() -> void:
+	mouseCursor.visible = true
+	for orbit in get_tree().get_nodes_in_group("planetOrbits"):
+		orbit.line.visible = true
+	for planet in get_tree().get_nodes_in_group("planets"):
+		planet.find_child("UI").visible = true
+	
+func close() -> void:
+	mouseCursor.visible = false
+	for orbit in get_tree().get_nodes_in_group("planetOrbits"):
+		orbit.line.visible = false
+	for planet in get_tree().get_nodes_in_group("planets"):
+		planet.find_child("UI").visible = false
+
 func process(delta: float) -> void:
 	selectingPlanetOnMap()
 	cameraMovingZoomingOnMap()
 	adjustingUI()
-
+	
+func physics_process(delta: float) -> void:
+	pass
+	
 func input(event: InputEvent) -> void:
 	movingOrbitCursorOnMap(event)
+	toggleMap(event)
 	
 
 func selectingPlanetOnMap():
 	if Input.is_action_just_pressed("Mouse_Left_Button"):
 		if isCursorOnPlanet:
 			if selectedPlanet != null and selectedPlanet != targetMousePlanet:
-				GM.planets[selectedPlanet].hideInfoWindow()
+				get_tree().get_nodes_in_group("planets")[selectedPlanet].hideInfoWindow()
 			selectedPlanet = targetMousePlanet
-			cameraZoomLimit[4] = cameraZoomLimit[2] / GM.planets[selectedPlanet].find_child("Sprite2D").scale.x
+			cameraZoomLimit[4] = cameraZoomLimit[2] / get_tree().get_nodes_in_group("planets")[selectedPlanet].find_child("Sprite2D").scale.x
 			changeCameraZoom()
-			GM.planets[targetMousePlanet].showInfoWindow()
+			get_tree().get_nodes_in_group("planets")[targetMousePlanet].showInfoWindow()
 		elif !isCursorOnPlanet and selectedPlanet != null:
-			GM.planets[selectedPlanet].hideInfoWindow()
+			get_tree().get_nodes_in_group("planets")[selectedPlanet].hideInfoWindow()
 			cameraZoomLimit[4] = cameraZoomLimit[2]
 			selectedPlanet = null
 
@@ -62,21 +80,21 @@ func cameraMovingZoomingOnMap():
 			GM.mainCamera.position += (lastPos - get_global_mouse_position())
 			
 	if Input.is_action_just_pressed("Zoom_Out_Map") or Input.is_action_pressed("Zoom_Out_Map"):
-		if GM.mainCamera.zoom.x > cameraZoomLimit[1] * cameraZoomStep:
+		if GM.mainCamera.zoom.x > cameraZoomLimit[3] * cameraZoomStep:
 			var lastPos = get_global_mouse_position()
 			GM.mainCamera.zoom /= cameraZoomStep
 			GM.mainCamera.position += (lastPos - get_global_mouse_position())
 		else:
-			GM.mainCamera.zoom = Vector2(cameraZoomLimit[1], cameraZoomLimit[1])
+			GM.mainCamera.zoom = Vector2(cameraZoomLimit[3], cameraZoomLimit[3])
 			GM.mainCamera.position = Vector2(0, 0)
 
 	if selectedPlanet != null:
-		GM.mainCamera.position = GM.planetPaths[selectedPlanet].position
+		GM.mainCamera.position = get_tree().get_nodes_in_group("planetPathFollows")[selectedPlanet].position
 	if Input.is_action_just_pressed("Drag_Map"):
 		lastMousePosition = get_global_mouse_position()
 	if Input.is_action_pressed("Drag_Map"):
 		if selectedPlanet != null:
-			GM.planets[targetMousePlanet].hideInfoWindow()
+			get_tree().get_nodes_in_group("planets")[targetMousePlanet].hideInfoWindow()
 			cameraZoomLimit[4] = cameraZoomLimit[2]
 			selectedPlanet = null
 		GM.mainCamera.position += lastMousePosition - get_global_mouse_position()
@@ -99,7 +117,7 @@ func adjustingUI():
 	var newMouseCursorScale = mouseCursorStandartSize / GM.mainCamera.zoom.x
 	mouseCursor.scale = Vector2(newMouseCursorScale, newMouseCursorScale)
 	var newPlanetOrbitLineWidth = planetOrbitStandartLineWidth / GM.mainCamera.zoom.x
-	for orbit in GM.planetOrbits:
+	for orbit in get_tree().get_nodes_in_group("planetOrbits"):
 		orbit.line_width = newPlanetOrbitLineWidth
 		orbit.updateButtonEvent()
 
@@ -126,6 +144,10 @@ func movingOrbitCursorOnMap(event):
 		mouseCursor.position.x = GM.planetOrbitDistances[selectedOrbit] * cos(angleMousePosition)
 		mouseCursor.position.y = GM.planetOrbitDistances[selectedOrbit] * sin(angleMousePosition)
 
+func toggleMap(event):
+	if event is InputEventKey:
+		if Input.is_action_just_pressed("Toggle_Map"):
+			fsm.change_to_previous_state()
 
 func _on_planet_mouse_entered(extra_arg_0: int) -> void:
 	isCursorOnPlanet = true

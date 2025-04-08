@@ -17,13 +17,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !is_on_wall():
 		velocity += get_gravity() * delta
-	else:# velocity.x > 0.00001 or velocity.x < -0.00001 or velocity.y > 0.00001 or velocity.y < -0.00001:
+	else:
 		rotation_degrees = calc_player_rotation(get_wall_normal())
-	#line_2d.points[1] = normal * 100
-	#if SM.current_state.name == SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET]:
-		#playerMovement()
-		#move_and_slide()
-	playerMovement()
+		
+	if SM.current_state.name == SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET]:
+		playerMovement()
+		
 	move_and_slide()
 
 func playerMovement():

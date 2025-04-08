@@ -58,7 +58,7 @@ shape = SubResource("CircleShape2D_j5jx5")
 position = Vector2(1, -144)
 wall_min_slide_angle = 0.0
 
-[node name="CollisionShape2D" parent="Planet/Player" index="0"]
+[node name="CollisionShape2D" parent="Planet/Player" index="1"]
 visible = false
 disabled = true
 

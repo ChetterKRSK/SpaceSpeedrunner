@@ -215,9 +215,8 @@ radius = 384.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_oqr1i"]
 radius = 640.0
 
-[node name="GameScene" type="Node2D" node_paths=PackedStringArray("planetOrbits")]
+[node name="GameScene" type="Node2D"]
 script = ExtResource("1_vdwas")
-planetOrbits = [NodePath("MainObjectsSystem/PlanetOrbit1"), NodePath("MainObjectsSystem/PlanetOrbit2"), NodePath("MainObjectsSystem/PlanetOrbit3"), NodePath("MainObjectsSystem/PlanetOrbit4"), NodePath("MainObjectsSystem/PlanetOrbit5")]
 planetOrbitSpeed = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 planetStartPosition = Array[float]([0.0, -99.0, -99.0, -99.0, -99.0])
 
@@ -315,7 +314,7 @@ position = Vector2(-0.00130882, 0.000232935)
 scale = Vector2(22.8711, 22.8711)
 texture = ExtResource("7_gh3f3")
 
-[node name="PlanetOrbit1" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
+[node name="PlanetOrbit1" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_vdwas")
 script = SubResource("GDScript_oqr1i")
 line = NodePath("PlanetOrbit1Line")
@@ -328,12 +327,12 @@ width = 35.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit1"]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit1" groups=["planetPathFollows"]]
 position = Vector2(1500, 0)
 progress = 9420.15
 rotates = false
 
-[node name="Planet1" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D"]
+[node name="Planet1" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D" groups=["planets"]]
 collision_layer = 2
 collision_mask = 5
 input_pickable = true
@@ -445,7 +444,10 @@ theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
 vertical_alignment = 2
 
-[node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
+[node name="Player" parent="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet1" groups=["playerCharacter"] instance=ExtResource("12_b0yit")]
+position = Vector2(0, -143)
+
+[node name="PlanetOrbit2" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_oqr1i")
 script = SubResource("GDScript_w4qqe")
 line = NodePath("PlanetOrbit2Line")
@@ -458,11 +460,11 @@ width = 35.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit2"]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit2" groups=["planetPathFollows"]]
 position = Vector2(2500, 0)
 rotates = false
 
-[node name="Planet2" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D"]
+[node name="Planet2" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit2/PathFollow2D" groups=["planets"]]
 collision_layer = 2
 collision_mask = 5
 input_pickable = true
@@ -569,7 +571,7 @@ theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
 vertical_alignment = 2
 
-[node name="PlanetOrbit3" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
+[node name="PlanetOrbit3" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_tp0y7")
 script = SubResource("GDScript_oqr1i")
 line = NodePath("PlanetOrbit3Line")
@@ -582,11 +584,11 @@ width = 30.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit3"]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit3" groups=["planetPathFollows"]]
 position = Vector2(3500, 0)
 rotates = false
 
-[node name="Planet3" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D"]
+[node name="Planet3" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D" groups=["planets"]]
 position = Vector2(-1.74841e-07, 0)
 collision_layer = 2
 collision_mask = 5
@@ -695,10 +697,7 @@ theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
 vertical_alignment = 2
 
-[node name="Player" parent="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet3" instance=ExtResource("12_b0yit")]
-position = Vector2(0, -239)
-
-[node name="PlanetOrbit4" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
+[node name="PlanetOrbit4" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_c3h2c")
 script = SubResource("GDScript_oqr1i")
 line = NodePath("PlanetOrbit4Line")
@@ -711,11 +710,11 @@ width = 30.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit4"]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit4" groups=["planetPathFollows"]]
 position = Vector2(4500, 0)
 rotates = false
 
-[node name="Planet4" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D"]
+[node name="Planet4" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit4/PathFollow2D" groups=["planets"]]
 collision_layer = 2
 collision_mask = 5
 input_pickable = true
@@ -822,7 +821,7 @@ theme = ExtResource("5_d4m0j")
 text = "ОСТАЛОСЬ: 05:32"
 vertical_alignment = 2
 
-[node name="PlanetOrbit5" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line")]
+[node name="PlanetOrbit5" type="Path2D" parent="MainObjectsSystem" node_paths=PackedStringArray("line") groups=["planetOrbits"]]
 curve = SubResource("Curve2D_mv7c2")
 script = SubResource("GDScript_oqr1i")
 line = NodePath("PlanetOrbit5Line")
@@ -835,11 +834,11 @@ width = 30.0
 joint_mode = 2
 begin_cap_mode = 2
 
-[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit5"]
+[node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit5" groups=["planetPathFollows"]]
 position = Vector2(5500, 0)
 rotates = false
 
-[node name="Planet5" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D"]
+[node name="Planet5" type="StaticBody2D" parent="MainObjectsSystem/PlanetOrbit5/PathFollow2D" groups=["planets"]]
 collision_layer = 2
 collision_mask = 5
 input_pickable = true
