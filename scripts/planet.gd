@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 func showInfoWindow():
 	infoWindow.visible = true
 	var tween = get_tree().create_tween()
-	tween.tween_property(infoWindow, "scale", Vector2(1 / GM.mainCamera.zoom.x, 1/ GM.mainCamera.zoom.y), 0.25)
+	tween.tween_property(infoWindow, "scale", Vector2(1 / GM.mainCamera.zoom.x, 1 / GM.mainCamera.zoom.y), 0.25)
 	isInfoWindowShow = true
 
 func hideInfoWindow():
@@ -38,7 +38,7 @@ func hideInfoWindow():
 
 func resizeUI():
 	var tween = get_tree().create_tween()
-	tween.tween_property(infoWindow, "scale", Vector2(1 / GM.mainCamera.zoom.x, 1/ GM.mainCamera.zoom.y), 0.25)
+	tween.tween_property(infoWindow, "scale", Vector2(1 / GM.mainCamera.zoom.x, 1 / GM.mainCamera.zoom.y), 0.25)
 	infoWindow.position = infoWindowStandartPosition
 	if infoWindow.global_position.x < GM.mainCamera.limit_left:
 		infoWindow.position.x = infoWindowStandartPosition.x + GM.mainCamera.limit_left - infoWindow.global_position.x

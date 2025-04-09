@@ -19,14 +19,14 @@ func _physics_process(delta: float) -> void:
 		rotation_degrees = calc_player_rotation(get_wall_normal())
 		
 	if SM.current_state.name == SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET]:
-		playerMovement()
+		playerMovement(delta)
 	else:
 		velocity = Vector2()
 		
 	move_and_slide()
 
 
-func playerMovement():
+func playerMovement(delta):
 	var direction := Input.get_axis("Move_Left", "Move_Right")
 	if direction and is_on_wall():
 		if direction > 0:

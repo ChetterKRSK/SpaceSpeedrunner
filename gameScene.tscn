@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=54 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://c0vro1yvrd8vr" path="res://scenes/rocket.tscn" id="12_h52ud"]
 [ext_resource type="PackedScene" uid="uid://qdohnvxii20c" path="res://scenes/basePlanet.tscn" id="13_h52ud"]
 [ext_resource type="Texture2D" uid="uid://cg8d6scweyojp" path="res://assets/Sprites/Planet2.png" id="14_usena"]
+[ext_resource type="Theme" uid="uid://du7np0egwtb80" path="res://styles/planetInfoWindow.tres" id="16_0q2ys"]
 
 [sub_resource type="Curve" id="Curve_gh3f3"]
 _data = [Vector2(0.00132275, 0.0152687), 0.0, 0.0, 0, 0, Vector2(0.247354, 1), 4.00246, 0.0, 0, 0, Vector2(0.747354, 1), -3.46624e-07, -3.97895, 0, 1, Vector2(0.998677, 0), 0.0, 0.0, 0, 0]
@@ -48,7 +49,7 @@ color_ramp = SubResource("GradientTexture1D_h52ud")
 alpha_curve = SubResource("CurveTexture_h52ud")
 
 [sub_resource type="Curve" id="Curve_h52ud"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252645, 1), 3.95812, 0.0, 1, 0, Vector2(0.747354, 1), 0.0, -3.95811, 0, 1, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.252645, 1), 0.0, 0.0, 1, 0, Vector2(0.747354, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_usena"]
@@ -97,7 +98,8 @@ colors = PackedColorArray(1, 0, 0, 0.101961, 1, 0, 0, 0.0509804)
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0q2ys"]
 noise_type = 2
 seed = 1
-frequency = 0.0024
+frequency = 0.0025
+fractal_octaves = 1
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gh3f3"]
 width = 1920
@@ -112,7 +114,8 @@ colors = PackedColorArray(0, 1, 0, 0.101961, 0, 1, 0, 0.0509804)
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_usena"]
 noise_type = 2
 seed = 2
-frequency = 0.0041
+frequency = 0.0025
+fractal_octaves = 1
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e2420"]
 width = 1920
@@ -127,7 +130,8 @@ colors = PackedColorArray(0, 0, 1, 0.101961, 0, 0, 1, 0.0509804)
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1mowf"]
 noise_type = 2
 seed = 3
-frequency = 0.0064
+frequency = 0.0025
+fractal_octaves = 1
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pvdr1"]
 width = 1920
@@ -332,6 +336,82 @@ radius = 384.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_oqr1i"]
 radius = 640.0
 
+[sub_resource type="GDScript" id="GDScript_0q2ys"]
+script/source = "extends Control
+
+@onready var orbitName: Label = $VBoxContainer/OrbitName
+@onready var turnoverTime: Label = $VBoxContainer/TurnoverTime
+
+
+var GM: Node2D
+
+var orbitNameText: String
+var currentPosition: Vector2
+var planet: int
+
+
+func _ready() -> void:
+	GM = get_node(\"/root/GameScene\")
+
+func adjust():
+	updateUI()
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(self, \"scale\", Vector2(1 / GM.mainCamera.zoom.x, 1 / GM.mainCamera.zoom.x), 0.25)
+	global_position.x = currentPosition.x
+	global_position.y = currentPosition.y - get_global_rect().size.y
+	if global_position.x < GM.mainCamera.limit_left:
+		global_position.x = currentPosition.x + GM.mainCamera.limit_left - global_position.x
+	if global_position.x + get_global_rect().size.x > GM.mainCamera.limit_right:
+		global_position.x = currentPosition.x - (global_position.x + get_global_rect().size.x - GM.mainCamera.limit_right)
+	if global_position.y < GM.mainCamera.limit_top:
+		global_position.y = currentPosition.y + GM.mainCamera.limit_top - global_position.y - get_global_rect().size.y
+	if global_position.y + get_global_rect().size.y > GM.mainCamera.limit_bottom:
+		global_position.y = currentPosition.y - (global_position.y + get_global_rect().size.y - GM.mainCamera.limit_bottom)
+
+func updateUI():
+	orbitName.text = \"Орбита \" + get_tree().get_nodes_in_group(\"planets\")[planet].planetName.to_lower()
+	
+	var planetPath: PathFollow2D = get_tree().get_nodes_in_group(\"planetPathFollows\")[planet]
+	var Bpos: Vector2 = currentPosition
+	
+	var radB = atan2(Bpos.y, Bpos.x)
+	if radB < 0: radB += 2 * PI
+	var prB = 1 - (radB / (2 * PI))
+	
+	var speed
+	var raz
+	var timeB
+	if GM.planetOrbitSpeed[planet] > 0:
+		speed = ((0.1/6) / GM.planetOrbitSpeed[planet]) * 60
+		raz = prB - planetPath.progress_ratio
+		if raz < 0: raz = 1 + raz
+		timeB = speed * (raz)
+	else:
+		speed = ((0.1/6) / -GM.planetOrbitSpeed[planet]) * 60
+		raz = planetPath.progress_ratio - prB
+		if raz < 0: raz = 1 + raz
+		timeB = speed * (raz)
+	
+	var minutes = int(timeB / 60)
+	var seconds = int(timeB) - (minutes * 60)
+	var strTimer: String = str(minutes) if minutes >= 10 else \"0\" + str(minutes)
+	strTimer += \":\"
+	strTimer += str(seconds) if seconds >= 10 else \"0\" + str(seconds)
+	
+	turnoverTime.text = \"Планета через: %s\" % strTimer
+
+func showWindow(newPosition):
+	currentPosition = newPosition
+	position = newPosition
+	visible = true
+
+func hideWindow():
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(self, \"scale\", Vector2(), 0.25)
+	await tween.finished
+	visible = false
+"
+
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_vdwas")
 planetOrbitSpeed = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
@@ -375,6 +455,7 @@ process_material = SubResource("ParticleProcessMaterial_gh3f3")
 scale = Vector2(121, 68.5)
 amount = 100
 texture = ExtResource("9_ftf7w")
+lifetime = 0.5
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_e2420")
 
@@ -387,12 +468,12 @@ randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_h52ud")
 
 [node name="Fog" type="Node2D" parent="MainObjectsSystem/BG"]
-process_mode = 4
 z_index = -5
 
 [node name="FogRed" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
 scale = Vector2(13.2802, 13.8889)
 texture = SubResource("NoiseTexture2D_gh3f3")
+region_rect = Rect2(41.185, 0, 0, 0)
 
 [node name="FogGreen" type="Sprite2D" parent="MainObjectsSystem/BG/Fog"]
 scale = Vector2(13.2802, 13.8889)
@@ -418,7 +499,6 @@ begin_cap_mode = 2
 
 [node name="PathFollow2D" type="PathFollow2D" parent="MainObjectsSystem/PlanetOrbit0" groups=["planetPathFollows"]]
 position = Vector2(1500, 0)
-progress = 9420.15
 rotates = false
 
 [node name="Planet" parent="MainObjectsSystem/PlanetOrbit0/PathFollow2D" instance=ExtResource("13_h52ud")]
@@ -452,7 +532,7 @@ line_width = 25.0
 [node name="PlanetOrbit1Line" type="Line2D" parent="MainObjectsSystem/PlanetOrbit1" groups=["on_star_map_state_objects"]]
 z_index = -1
 points = PackedVector2Array(2500, 0, 2487.03, -254.669, 2448.97, -502.197, 2387.12, -741.302, 2302.73, -970.703, 2197.11, -1189.12, 2071.53, -1395.26, 1927.28, -1587.86, 1765.63, -1765.63, 1587.86, -1927.28, 1395.26, -2071.53, 1189.12, -2197.11, 970.703, -2302.73, 741.302, -2387.12, 502.197, -2448.97, 254.669, -2487.03, 0, -2500, -254.669, -2487.03, -502.197, -2448.97, -741.302, -2387.12, -970.703, -2302.73, -1189.12, -2197.11, -1395.26, -2071.53, -1587.86, -1927.28, -1765.63, -1765.63, -1927.28, -1587.86, -2071.53, -1395.26, -2197.11, -1189.12, -2302.73, -970.703, -2387.12, -741.302, -2448.97, -502.197, -2487.03, -254.669, -2500, 0, -2487.03, 254.669, -2448.97, 502.197, -2387.12, 741.302, -2302.73, 970.703, -2197.11, 1189.12, -2071.53, 1395.26, -1927.28, 1587.86, -1765.63, 1765.63, -1587.86, 1927.28, -1395.26, 2071.53, -1189.12, 2197.11, -970.703, 2302.73, -741.302, 2387.12, -502.197, 2448.97, -254.669, 2487.03, 0, 2500, 254.669, 2487.03, 502.197, 2448.97, 741.302, 2387.12, 970.703, 2302.73, 1189.12, 2197.11, 1395.26, 2071.53, 1587.86, 1927.28, 1765.63, 1765.63, 1927.28, 1587.86, 2071.53, 1395.26, 2197.11, 1189.12, 2302.73, 970.703, 2387.12, 741.302, 2448.97, 502.197, 2487.03, 254.669, 2500, 0)
-width = 35.0
+width = 25.0
 joint_mode = 2
 begin_cap_mode = 2
 
@@ -624,6 +704,90 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
+
+[node name="UI" type="Control" parent="." groups=["on_star_map_state_objects"]]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1608.0
+offset_top = -1226.0
+offset_right = -858.0
+offset_bottom = -476.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(375, 375)
+mouse_filter = 2
+
+[node name="InfoWindow" type="Control" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 95.0
+offset_top = -375.0
+offset_right = 375.0
+offset_bottom = -95.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 280)
+mouse_filter = 2
+theme = ExtResource("16_0q2ys")
+script = SubResource("GDScript_0q2ys")
+
+[node name="BG" type="Panel" parent="UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("16_0q2ys")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/InfoWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("16_0q2ys")
+theme_override_constants/separation = 0
+
+[node name="OrbitName" type="Label" parent="UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+theme = ExtResource("16_0q2ys")
+text = "NAME"
+horizontal_alignment = 2
+
+[node name="Resources" type="HBoxContainer" parent="UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme = ExtResource("16_0q2ys")
+
+[node name="TurnoverTime" type="Label" parent="UI/InfoWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+theme = ExtResource("16_0q2ys")
+text = "ОСТАЛОСЬ: 00:00"
+vertical_alignment = 2
+uppercase = true
 
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [0]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]

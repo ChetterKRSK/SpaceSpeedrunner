@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var mouseCursor: Sprite2D = $"../../MouseCursor"
+@onready var orbitInfoWindow: Control = $"../../UI/InfoWindow"
 
 var GM: Node2D
 var SM: StateMachine
@@ -13,11 +14,12 @@ var mouseCursorStandartSize: float = 0.1
 
 #region Переменные для карты
 var cameraZoomStep: float = 1.15
-var selectedOrbit: float = 0
-var isMouseOnOrbit: bool = false
+var selectedOrbit: int = 0
 var selectedPlanet
+var isCursorOnOrbit: bool = false
 var isCursorOnPlanet: bool = false
 var isMapToFlight: bool = false
+var isOrbitShowInfoWindow: bool = false
 #endregion
 
 #region temp переменные
@@ -38,7 +40,7 @@ func close() -> void:
 		node.visible = false
 
 func process(delta: float) -> void:
-	selectingPlanetOnMap()
+	selectingObjectOnMap()
 	cameraMovingZoomingOnMap()
 	adjustingUI()
 
@@ -50,19 +52,35 @@ func input(event: InputEvent) -> void:
 	toggleMap(event)
 
 
-func selectingPlanetOnMap():
+func selectingObjectOnMap():
 	if Input.is_action_just_pressed("Mouse_Left_Button"):
 		if isCursorOnPlanet:
 			if selectedPlanet != null and selectedPlanet != targetMousePlanet:
 				get_tree().get_nodes_in_group("planets")[selectedPlanet].hideInfoWindow()
+			if isOrbitShowInfoWindow:
+				isOrbitShowInfoWindow = false
+				orbitInfoWindow.hideWindow()
 			selectedPlanet = targetMousePlanet
 			cameraZoomLimit[4] = cameraZoomLimit[2] / get_tree().get_nodes_in_group("planets")[selectedPlanet].find_child("Sprite2D").scale.x
 			changeCameraZoom()
 			get_tree().get_nodes_in_group("planets")[targetMousePlanet].showInfoWindow()
-		elif !isCursorOnPlanet and selectedPlanet != null:
+		elif isCursorOnOrbit:
+			if selectedPlanet != null:
+				get_tree().get_nodes_in_group("planets")[selectedPlanet].hideInfoWindow()
+			if isOrbitShowInfoWindow:
+				isOrbitShowInfoWindow = false
+				await orbitInfoWindow.hideWindow()
+			orbitInfoWindow.showWindow(mouseCursor.position)
+			orbitInfoWindow.planet = selectedOrbit
+			isOrbitShowInfoWindow = true
+		
+		if !isCursorOnPlanet and selectedPlanet != null:
 			get_tree().get_nodes_in_group("planets")[selectedPlanet].hideInfoWindow()
 			cameraZoomLimit[4] = cameraZoomLimit[2]
 			selectedPlanet = null
+		if !isCursorOnOrbit and isOrbitShowInfoWindow:
+			isOrbitShowInfoWindow = false
+			orbitInfoWindow.hideWindow()
 
 func cameraMovingZoomingOnMap():
 	if Input.is_action_just_pressed("Zoom_In_Map") or Input.is_action_pressed("Zoom_In_Map"):
@@ -86,6 +104,8 @@ func cameraMovingZoomingOnMap():
 
 	if selectedPlanet != null:
 		GM.mainCamera.position = get_tree().get_nodes_in_group("planetPathFollows")[selectedPlanet].position
+	if isOrbitShowInfoWindow:
+		GM.mainCamera.position = orbitInfoWindow.currentPosition
 	if Input.is_action_just_pressed("Drag_Map"):
 		lastMousePosition = get_global_mouse_position()
 	if Input.is_action_pressed("Drag_Map"):
@@ -93,6 +113,10 @@ func cameraMovingZoomingOnMap():
 			get_tree().get_nodes_in_group("planets")[targetMousePlanet].hideInfoWindow()
 			cameraZoomLimit[4] = cameraZoomLimit[2]
 			selectedPlanet = null
+		if isOrbitShowInfoWindow:
+			isOrbitShowInfoWindow = false
+			orbitInfoWindow.hideWindow()
+			
 		GM.mainCamera.position += lastMousePosition - get_global_mouse_position()
 	if GM.mainCamera.position.x < GM.mainCamera.limit_left + (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x:
 		GM.mainCamera.position.x = GM.mainCamera.limit_left + (GM.mainCamera.get_viewport_rect().size.x / 2) / GM.mainCamera.zoom.x
@@ -110,6 +134,9 @@ func changeCameraZoom():
 		GM.mainCamera.zoom = Vector2(cameraZoomLimit[3], cameraZoomLimit[3])
 
 func adjustingUI():
+	if isOrbitShowInfoWindow:
+		orbitInfoWindow.adjust()
+		
 	var newMouseCursorScale = mouseCursorStandartSize / GM.mainCamera.zoom.x
 	mouseCursor.scale = Vector2(newMouseCursorScale, newMouseCursorScale)
 	var newPlanetOrbitLineWidth = planetOrbitStandartLineWidth / GM.mainCamera.zoom.x
@@ -124,19 +151,19 @@ func movingOrbitCursorOnMap(event):
 		for distance: float in GM.planetOrbitDistances:
 			if mouseDistance - GM.planetOrbitDistances[0] < -15 / GM.mainCamera.zoom.x:
 				selectedOrbit = 0
-				isMouseOnOrbit = false
+				isCursorOnOrbit = false
 				break
 			elif mouseDistance - GM.planetOrbitDistances[-1] > 15 / GM.mainCamera.zoom.x:
 				selectedOrbit = GM.planetOrbitDistances.size() - 1
-				isMouseOnOrbit = false
+				isCursorOnOrbit = false
 				break
 			else:
 				if mouseDistance - distance > -15 / GM.mainCamera.zoom.x and mouseDistance - distance < 15 / GM.mainCamera.zoom.x:
 					selectedOrbit = GM.planetOrbitDistances.find(distance)
-					isMouseOnOrbit = true
+					isCursorOnOrbit = true
 					break
 				else:
-					isMouseOnOrbit = false
+					isCursorOnOrbit = false
 		mouseCursor.position.x = GM.planetOrbitDistances[selectedOrbit] * cos(angleMousePosition)
 		mouseCursor.position.y = GM.planetOrbitDistances[selectedOrbit] * sin(angleMousePosition)
 
