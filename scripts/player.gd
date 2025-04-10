@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var isKinematic: bool = false
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 
 var SM: StateMachine
@@ -9,14 +11,17 @@ const SPEED = 200.0
 
 
 func _ready() -> void:
-	SM = get_tree().get_root().find_child("StateMachine", true, false)
+	SM = get_node("/root/GameScene/StateMachine")
+	
 	planet = get_parent()
 
 func _physics_process(delta: float) -> void:
+	if isKinematic:
+		return
 	if !is_on_wall():
 		velocity += get_gravity() * delta
 	else:
-		rotation_degrees = calc_player_rotation(get_wall_normal())
+		rotation_degrees = calc_normal_rotation(get_wall_normal())
 		
 	if SM.current_state.name == SM.GAME_STATES_NAME[SM.GAME_STATES.ON_PLANET]:
 		playerMovement(delta)
@@ -39,7 +44,7 @@ func playerMovement(delta):
 		anim.play("idle")
 		velocity = velocity.lerp(Vector2(), 0.2)
 
-func calc_player_rotation(normalVector: Vector2) -> float:
+func calc_normal_rotation(normalVector: Vector2) -> float:
 	var angle_in_radians = normalVector.angle()
 	var angle_in_degrees = rad_to_deg(angle_in_radians)
 	return angle_in_degrees + 90
