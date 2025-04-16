@@ -32,7 +32,7 @@ func _ready() -> void:
 	GM = get_node("/root/GameScene")
 
 func open() -> void:
-	print("StarMap")
+	print("FlightStarMap")
 	for node in get_tree().get_nodes_in_group("on_star_map_state_objects"):
 		node.visible = true
 

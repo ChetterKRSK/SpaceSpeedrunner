@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal open_map_to_select_point
+
 @export var isKinematic: bool = false
 
 @onready var interactTooltip: Label = $UI/InteractTooltip
@@ -47,7 +49,7 @@ func right_direction(vector: Vector2) -> Vector2:
 
 func interact(event):
 	if availableForInteraction and Input.is_action_just_pressed("Interact"):
-		print("FLIGHT!")
+		emit_signal("open_map_to_select_point")
 
 func _on_interact_tooltip_area_body_entered(body: Node2D) -> void:
 	interactTooltip.visible = true

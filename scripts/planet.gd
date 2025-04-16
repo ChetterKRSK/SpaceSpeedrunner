@@ -23,6 +23,12 @@ func _process(delta: float) -> void:
 			resizeUI()
 
 
+func showFlightInfoWindow():
+	pass
+
+func hideFlightInfoWindow():
+	pass
+
 func showInfoWindow():
 	infoWindow.visible = true
 	var tween = get_tree().create_tween()

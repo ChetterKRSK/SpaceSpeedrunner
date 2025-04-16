@@ -43,7 +43,7 @@ func setStandartValues():
 		if planetOrbitSpeed[i] == 0.0:
 			var rndMinutes: float = randf_range(2, 8)
 			planetOrbitSpeed[i] = (0.1/6) / rndMinutes # (0.1/6) - 60s
-			planetOrbitSpeed[i] = -planetOrbitSpeed[i] if randi_range(0, 10) <= 1 else planetOrbitSpeed[i]
+			planetOrbitSpeed[i] = -planetOrbitSpeed[i] if randi_range(0, 100) < 25 else planetOrbitSpeed[i]
 
 func planetOrbitMoving(delta: float):
 	for i in range(get_tree().get_nodes_in_group("planetPathFollows").size()):

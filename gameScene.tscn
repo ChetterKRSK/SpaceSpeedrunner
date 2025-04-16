@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://ipyyy8fyw71i"]
+[gd_scene load_steps=56 format=3 uid="uid://ipyyy8fyw71i"]
 
 [ext_resource type="Texture2D" uid="uid://sxem2r1i44in" path="res://assets/Sprites/Planet1.png" id="1_ijlju"]
 [ext_resource type="Script" uid="uid://dh4n41emaw2ty" path="res://game_scene.gd" id="1_vdwas"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://bw01fdv2gvlbt" path="res://state_machine/on_planet_orbit_state.gd" id="5_0q2ys"]
 [ext_resource type="Texture2D" uid="uid://bt74xwkj42yrf" path="res://assets/Sprites/Planet5.png" id="5_w4qqe"]
 [ext_resource type="Texture2D" uid="uid://b6ntb3d3se2jb" path="res://assets/Sprites/Star.png" id="6_d4m0j"]
+[ext_resource type="Script" uid="uid://fp0q5bnlqqur" path="res://state_machine/on_flight_star_map_state.gd" id="6_gh3f3"]
 [ext_resource type="Texture2D" uid="uid://d1mitx1fwe68h" path="res://assets/Sprites/Cursor.png" id="9_ftf7w"]
 [ext_resource type="PackedScene" uid="uid://dkfy6v0wwcf2y" path="res://scenes/player.tscn" id="12_b0yit"]
 [ext_resource type="PackedScene" uid="uid://c0vro1yvrd8vr" path="res://scenes/rocket.tscn" id="12_h52ud"]
@@ -447,6 +448,9 @@ script = ExtResource("5_0q2ys")
 [node name="OnStarMap" type="Node2D" parent="StateMachine"]
 script = ExtResource("4_aui1i")
 
+[node name="OnFlightStarMap" type="Node2D" parent="StateMachine"]
+script = ExtResource("6_gh3f3")
+
 [node name="MainObjectsSystem" type="Node2D" parent="."]
 
 [node name="BG" type="Node2D" parent="MainObjectsSystem"]
@@ -817,15 +821,26 @@ vertical_alignment = 2
 uppercase = true
 
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [0]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_entered" binds= [0]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_exited"]
+[connection signal="open_map_to_select_point" from="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet/Rocket" to="StateMachine/OnPlanet" method="_on_rocket_open_map_to_select_point"]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [1]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_entered" binds= [1]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit1/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_exited"]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [2]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_entered" binds= [2]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit2/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_exited"]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [3]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_entered" binds= [3]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit3/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_exited"]
 [connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_entered" binds= [4]]
+[connection signal="mouse_entered" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_entered" binds= [4]]
 [connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet" to="StateMachine/OnStarMap" method="_on_planet_mouse_exited"]
+[connection signal="mouse_exited" from="MainObjectsSystem/PlanetOrbit4/PathFollow2D/Planet" to="StateMachine/OnFlightStarMap" method="_on_planet_mouse_exited"]
 [connection signal="pressed" from="AllUIs/UIStarMap/CloseMapButton" to="StateMachine/OnStarMap" method="_on_close_map_button_pressed"]
 
 [editable path="MainObjectsSystem/PlanetOrbit0/PathFollow2D/Planet"]

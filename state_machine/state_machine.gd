@@ -4,12 +4,14 @@ class_name StateMachine
 enum GAME_STATES{
 	ON_PLANET,
 	ON_PLANET_ORBIT,
-	ON_STAR_MAP
+	ON_STAR_MAP,
+	ON_FLIGHT_STAR_MAP
 }
 var GAME_STATES_NAME: Dictionary[int, String] = {
 	GAME_STATES.ON_PLANET: "OnPlanet",
 	GAME_STATES.ON_PLANET_ORBIT: "OnPlanetOrbit",
-	GAME_STATES.ON_STAR_MAP: "OnStarMap"
+	GAME_STATES.ON_STAR_MAP: "OnStarMap",
+	GAME_STATES.ON_FLIGHT_STAR_MAP: "OnFlightStarMap"
 }
 
 var current_state: Object

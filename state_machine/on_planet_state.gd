@@ -63,3 +63,7 @@ func toggleMap(event):
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("Toggle_Map"):
 			SM.change_state(SM.GAME_STATES_NAME[SM.GAME_STATES.ON_STAR_MAP])
+
+
+func _on_rocket_open_map_to_select_point() -> void:
+	SM.change_state(SM.GAME_STATES_NAME[SM.GAME_STATES.ON_FLIGHT_STAR_MAP])

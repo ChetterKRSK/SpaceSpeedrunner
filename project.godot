@@ -19,6 +19,7 @@ config/git_sha="701fecf2141853fa8fc029f321d71644f42aef5d"
 [autoload]
 
 Inventory="*res://scripts/inventory.gd"
+Items="*res://scripts/items.gd"
 
 [display]
 
